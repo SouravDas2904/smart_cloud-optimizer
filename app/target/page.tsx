@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { CheckCircle2, ChevronRight, Crosshair, ShieldAlert, ShieldCheck, Undo2, X } from "lucide-react";
+import { Check, CheckCircle2, ChevronRight, Crosshair, ShieldAlert, ShieldCheck, Undo2, X } from "lucide-react";
 import { useApp } from "../providers";
 import { EnvPill, Loading, PageTitle, RiskPill } from "@/components/ui";
 import { planForTarget, type PlanItem } from "@/lib/engine";
@@ -155,7 +155,14 @@ export default function HitMyTarget() {
           <div className="mt-2 text-xs text-slate-500">{kg.toFixed(0)} kg CO₂ avoided a month</div>
 
           <div className="mt-auto pt-6">
-            <button className="btn-primary w-full justify-center py-2.5" onClick={apply}><CheckCircle2 size={15} /> Apply this plan</button>
+            {/* pale until used; green with a tick once the plan is applied */}
+            <button onClick={apply}
+              className={cls("btn w-full justify-center border py-2.5",
+                applied
+                  ? "border-[#22c55e]/50 bg-[#22c55e]/15 text-[#4ade80] hover:bg-[#22c55e]/20"
+                  : "border-brand-500/30 bg-brand-500/10 text-brand-500 hover:border-brand-500/60 hover:bg-brand-500/20")}>
+              {applied ? <><Check size={16} strokeWidth={2.5} /> Applied</> : <><CheckCircle2 size={15} /> Apply this plan</>}
+            </button>
             <p className="mt-2 text-center text-xs text-slate-500">
               {applied
                 ? <>Applied. See <Link className="underline" href="/savings">Before vs after</Link> or export from <Link className="underline" href="/report">Report</Link>.</>
