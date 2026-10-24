@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, isValidElement, useEffect, useMemo, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Area, ComposedChart, CartesianGrid, Line, ReferenceArea, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { useApp } from "../../providers";
@@ -49,7 +49,11 @@ export default function ResourceDetail() {
   const fmtT = (t: number) => new Date(t).toLocaleDateString("en-IN", { day: "2-digit", month: "short" });
   const fmtFull = (t: number) => new Date(t).toLocaleString("en-IN", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Asia/Kolkata" });
 
-  const chart = (title: string, children: React.ReactNode, domain?: [number, number], unit = "%") => (
+  const chart = (title: string, children: React.ReactNode, domain?: [number, number], unit = "%") => {
+    // Recharts only sees direct children, so unwrap a <>...</> fragment
+    const series = isValidElement(children) && children.type === Fragment
+      ? (children.props as { children: React.ReactNode }).children : children;
+    return (
     <div className="card card-pad">
       <h3 className="mb-2 text-sm font-semibold text-slate-800">{title}</h3>
       <div className="h-48">
@@ -60,12 +64,13 @@ export default function ResourceDetail() {
             <YAxis domain={domain ?? ["auto", "auto"]} tick={{ fontSize: 10 }} stroke="#94a3b8" unit={unit} />
             <Tooltip labelFormatter={(t: number) => fmtFull(t)} formatter={(v: number) => (v == null ? "—" : v.toFixed(1))} />
             {alert?.start && <ReferenceArea x1={new Date(alert.start).getTime()} x2={new Date(alert.end!).getTime()} fill="#fee2e2" fillOpacity={0.6} />}
-            {children}
+            {series}
           </ComposedChart>
         </ResponsiveContainer>
       </div>
     </div>
-  );
+    );
+  };
 
   return (
     <div className="space-y-5">

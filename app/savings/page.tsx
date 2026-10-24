@@ -42,7 +42,8 @@ export default function Savings() {
             <BarChart data={water} margin={{ left: 10, right: 10 }}>
               <CartesianGrid vertical={false} stroke="#eef2f7" />
               <XAxis dataKey="name" tick={{ fontSize: 11 }} stroke="#94a3b8" interval={0} />
-              <YAxis tickFormatter={(v) => inrShort(v)} tick={{ fontSize: 11 }} stroke="#94a3b8" width={64} />
+              <YAxis tickFormatter={(v) => inrShort(v)} tick={{ fontSize: 11 }} stroke="#94a3b8" width={64} allowDataOverflow
+                domain={[Math.floor((t.after * 0.85) / 50000) * 50000, Math.ceil((t.before * 1.02) / 50000) * 50000]} />
               <Tooltip formatter={(v: number, n) => (n === "base" ? null : inr(v))} />
               <Bar isAnimationActive={false} dataKey="base" stackId="a" fill="transparent" />
               <Bar isAnimationActive={false} dataKey="value" stackId="a" radius={[4, 4, 0, 0]}>

@@ -27,7 +27,7 @@ export default function Forecast() {
   return (
     <div className="space-y-5">
       <PageTitle title="Cost forecast"
-        sub={`Holt-Winters exponential smoothing (level + trend + weekly seasonality) on daily cost. Back-tested on the last 7 days: ${f.mape_7d}% average error. The green line applies the recommendations you have accepted.`}
+        sub={`Holt-Winters exponential smoothing (level + damped trend + weekly seasonality) on daily cost. Back-tested on the last 7 days: ${f.mape_7d}% average error. The green line applies the recommendations you have accepted.`}
         right={
           <div className="flex gap-1 rounded-lg bg-slate-100 p-1 text-sm">
             {([30, 60, 90] as const).map((h) => (
