@@ -45,16 +45,16 @@ export default function Forecast() {
         <div className="h-80">
           <ResponsiveContainer>
             <ComposedChart data={rows} margin={{ left: 10, right: 10, top: 8 }}>
-              <CartesianGrid vertical={false} stroke="#eef2f7" />
-              <XAxis dataKey="date" tick={{ fontSize: 10 }} stroke="#94a3b8" minTickGap={30} />
-              <YAxis tickFormatter={(v) => inrShort(v)} tick={{ fontSize: 10 }} stroke="#94a3b8" width={60} domain={["auto", "auto"]} />
+              <CartesianGrid vertical={false} stroke="#1c1c20" />
+              <XAxis dataKey="date" tick={{ fontSize: 10 }} stroke="#4a4a52" minTickGap={30} />
+              <YAxis tickFormatter={(v) => inrShort(v)} tick={{ fontSize: 10 }} stroke="#4a4a52" width={70} domain={["auto", "auto"]} />
               <Tooltip formatter={(v: number | number[]) => Array.isArray(v) ? `${inr(v[0])} – ${inr(v[1])}` : inr(v)} />
               <Legend />
-              <Area dataKey="band" name="Forecast range" stroke="none" fill="#e2e8f0" isAnimationActive={false} />
-              <Line dataKey="actual" name="Actual daily cost" stroke="#0f172a" dot={false} strokeWidth={1.6} isAnimationActive={false} />
-              <Line dataKey="forecast" name="Do nothing" stroke="#ef4444" dot={false} strokeDasharray="5 3" isAnimationActive={false} />
-              <Line dataKey="optimised" name="With accepted recommendations" stroke="#10b981" dot={false} strokeWidth={2} isAnimationActive={false} />
-              <ReferenceLine y={budgetDaily} stroke="#f59e0b" strokeDasharray="4 4" label={{ value: "daily budget", fontSize: 10, fill: "#b45309", position: "insideBottomRight" }} />
+              <Area dataKey="band" name="Forecast range" stroke="none" fill="#26262b" isAnimationActive={false} />
+              <Line dataKey="actual" name="Actual daily cost" stroke="#0a0a0b" dot={false} strokeWidth={1.6} isAnimationActive={false} />
+              <Line dataKey="forecast" name="Do nothing" stroke="#ff5a4e" dot={false} strokeDasharray="5 3" isAnimationActive={false} />
+              <Line dataKey="optimised" name="With accepted recommendations" stroke="#c6f432" dot={false} strokeWidth={2} isAnimationActive={false} />
+              <ReferenceLine y={budgetDaily} stroke="#ff9f1c" strokeDasharray="4 4" label={{ value: "daily budget", fontSize: 10, fill: "#ffb44d", position: "insideBottomRight" }} />
             </ComposedChart>
           </ResponsiveContainer>
         </div>

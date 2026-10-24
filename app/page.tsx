@@ -4,7 +4,9 @@ import Link from "next/link";
 import { AlertTriangle, ArrowRight, IndianRupee, PiggyBank, Server, TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { useApp } from "./providers";
-import { Kpi, Loading, PageTitle } from "@/components/ui";
+import { Kpi, Loading } from "@/components/ui";
+import { FleetGrid } from "@/components/FleetGrid";
+import { CountUp, WasteTicker } from "@/components/motion";
 import { RecCard } from "@/components/RecCard";
 import { totals } from "@/lib/engine";
 import { ACTION_LABEL, CHART, ENV_COLOR, inr, inrShort } from "@/lib/format";
@@ -32,20 +34,48 @@ export default function Overview() {
 
   return (
     <div className="space-y-5">
-      <PageTitle
-        title="Monday morning overview"
-        sub={`${s.n_vms} VMs and ${s.n_resources - s.n_vms} disks/IPs across ${Object.keys(s.by_region).length} regions, analysed from ${(s.n_points / 1e6).toFixed(1)} million metric readings (30 days, every ${s.step_min} minutes).`}
-      />
+      <section className="card overflow-hidden">
+        <div className="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+          <div className="flex flex-col border-b border-slate-200 p-5 md:p-7 lg:border-b-0 lg:border-r">
+            <div className="label text-brand-500">Monday morning · 30-day analysis</div>
+            <h1 className="mt-4 text-[30px] font-semibold leading-[1.05] tracking-[-0.035em] text-slate-900 md:text-[40px]">
+              <span className="text-save-600"><CountUp value={s.potential_saving} format={inrShort} ms={1200} /></span> a month
+              <br />is leaking out of this estate.
+            </h1>
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-500">
+              {s.n_vms} VMs and {s.n_resources - s.n_vms} disks and IPs across {Object.keys(s.by_region).length} regions,
+              from {(s.n_points / 1e6).toFixed(1)} million readings taken every {s.step_min} minutes. Every saving below
+              passed a peak-safety check on p99, not the average.
+            </p>
+            <div className="mt-5 flex items-baseline gap-2 font-mono text-xs text-slate-500">
+              <span className="h-1.5 w-1.5 translate-y-[-1px] animate-blink rounded-full bg-red-500" />
+              wasted since you opened this page
+              <span className="text-sm text-red-600"><WasteTicker perMonth={s.potential_saving} /></span>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-2 lg:mt-auto lg:pt-6">
+              <Link href="/recommendations" className="btn-primary">Review {actionable.length} actions <ArrowRight size={14} /></Link>
+              <Link href="/resources/vm-086" className="btn-ghost">See the trap VM</Link>
+            </div>
+          </div>
+          <div className="p-5 md:p-7">
+            <div className="mb-4 flex items-center justify-between">
+              <span className="label">Fleet map · {s.n_vms} VMs · height = p99 CPU</span>
+              <span className="hidden font-mono text-[10.5px] text-slate-400 sm:block">prod → staging → dev</span>
+            </div>
+            <FleetGrid vms={data.resources.filter((r) => r.type === "vm")} recs={recs} />
+          </div>
+        </div>
+      </section>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Kpi label="Current monthly cost" value={inrShort(s.current_monthly)} icon={<IndianRupee size={16} />}
-          sub={<>Next month on current run-rate: <b>{inrShort(s.projected_next_month)}</b></>} />
-        <Kpi label="Savings found" tone="save" value={inrShort(s.potential_saving)} icon={<PiggyBank size={16} />}
+        <Kpi label="Current monthly cost" count={s.current_monthly} fmt={inrShort} icon={<IndianRupee size={14} />}
+          sub={<>Next month on current run-rate: <b className="text-slate-800">{inrShort(s.projected_next_month)}</b></>} />
+        <Kpi label="Savings found" tone="save" count={s.potential_saving} fmt={inrShort} icon={<PiggyBank size={14} />}
           sub={`${((s.potential_saving / s.current_monthly) * 100).toFixed(1)}% of the bill · ${actionable.length} safe actions`} />
-        <Kpi label="Accepted so far" tone="save" value={inrShort(t.saving)} icon={<Server size={16} />}
+        <Kpi label="Accepted so far" tone="save" count={t.saving} fmt={inrShort} icon={<Server size={14} />}
           sub={`${t.count} actions · net of ${inrShort(-(t.byAction.upsize ?? 0))} for upsizes · new bill ${inrShort(t.after)}/mo`} />
-        <Kpi label="Open alerts" tone={alerts.some((a) => a.severity === "critical") ? "bad" : "warn"} value={alerts.length}
-          icon={<AlertTriangle size={16} />} sub={`${alerts.filter((a) => a.severity === "critical").length} critical`} />
+        <Kpi label="Open alerts" tone={alerts.some((a) => a.severity === "critical") ? "bad" : "warn"} count={alerts.length} fmt={(n) => Math.round(n).toString()}
+          icon={<AlertTriangle size={14} />} sub={`${alerts.filter((a) => a.severity === "critical").length} critical · ${alerts.length - alerts.filter((a) => a.severity === "critical").length} warnings`} />
       </div>
 
       <div className="grid gap-5 lg:grid-cols-5">
@@ -57,12 +87,12 @@ export default function Overview() {
           <div className="mt-3 h-44">
             <ResponsiveContainer>
               <BarChart data={s.bill_history} margin={{ left: 0, right: 8, top: 4 }}>
-                <CartesianGrid vertical={false} stroke="#eef2f7" />
-                <XAxis dataKey="month" tick={{ fontSize: 11 }} stroke="#94a3b8" />
-                <YAxis tickFormatter={(v) => inrShort(v)} tick={{ fontSize: 11 }} stroke="#94a3b8" width={60} />
+                <CartesianGrid vertical={false} stroke="#1c1c20" />
+                <XAxis dataKey="month" tick={{ fontSize: 11 }} stroke="#4a4a52" />
+                <YAxis tickFormatter={(v) => inrShort(v)} tick={{ fontSize: 11 }} stroke="#4a4a52" width={70} />
                 <Tooltip formatter={(v: number) => inr(v)} />
                 <Bar isAnimationActive={false} dataKey="inr" name="Monthly bill" radius={[4, 4, 0, 0]}>
-                  {s.bill_history.map((_, i) => <Cell key={i} fill={i === s.bill_history.length - 1 ? "#ef4444" : "#94a3b8"} />)}
+                  {s.bill_history.map((_, i) => <Cell key={i} fill={i === s.bill_history.length - 1 ? "#ff5a4e" : "#4a4a52"} />)}
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
@@ -136,10 +166,10 @@ export default function Overview() {
               <div className="mt-2 h-48">
                 <ResponsiveContainer>
                   <BarChart data={team} layout="vertical" margin={{ left: 10 }}>
-                    <XAxis type="number" tickFormatter={(v) => inrShort(v)} tick={{ fontSize: 11 }} stroke="#94a3b8" />
-                    <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} width={80} stroke="#94a3b8" />
+                    <XAxis type="number" tickFormatter={(v) => inrShort(v)} tick={{ fontSize: 11 }} stroke="#4a4a52" />
+                    <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} width={80} stroke="#4a4a52" />
                     <Tooltip formatter={(v: number) => inr(v)} />
-                    <Bar isAnimationActive={false} dataKey="value" name="Monthly cost" fill="#2457d6" radius={[0, 4, 4, 0]} />
+                    <Bar isAnimationActive={false} dataKey="value" name="Monthly cost" fill="#c6f432" radius={[0, 4, 4, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

@@ -90,13 +90,13 @@ export function RecCard({ r, compact = false }: { r: Recommendation; compact?: b
           </div>
 
           {maths && (
-            <div className="mt-3 rounded-lg bg-slate-900 p-3 text-xs leading-relaxed text-slate-100">
+            <div className="code mt-3">
               {r.maths.map((m, i) => <div key={i} className="mono">{m}</div>)}
-              <div className="mt-2 text-slate-400">Confidence: {r.confidence_notes.join(" · ")}</div>
+              <div className="mt-2 text-slate-500">Confidence: {r.confidence_notes.join(" · ")}</div>
             </div>
           )}
           {explain && (
-            <div className="mt-3 rounded-lg border border-brand-100 bg-brand-50 p-3 text-sm text-slate-700">
+            <div className="mt-3 rounded-md border border-brand-100 bg-brand-50 p-3 text-sm leading-relaxed text-slate-800">
               {explain.text}
               <div className="mt-1 text-[11px] text-slate-400">{explain.source} · view: {role}</div>
             </div>
@@ -112,11 +112,11 @@ export function RecCard({ r, compact = false }: { r: Recommendation; compact?: b
             {!informational && (
               <div className="ml-auto flex gap-1.5">
                 <button onClick={() => setDecision(r.id, true)}
-                  className={cls("btn", on ? "bg-save-600 text-white" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50")}>
+                  className={cls("btn", on ? "bg-save-600 text-ink" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50")}>
                   <Check size={14} /> {on ? "Accepted" : "Accept"}
                 </button>
                 <button onClick={() => setDecision(r.id, false)}
-                  className={cls("btn", !on ? "bg-slate-700 text-white" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50")}>
+                  className={cls("btn", !on ? "border border-slate-300 bg-slate-100 text-slate-900" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50")}>
                   <X size={14} /> {!on ? "Rejected" : "Reject"}
                 </button>
               </div>

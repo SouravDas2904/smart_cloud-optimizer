@@ -20,7 +20,7 @@ export default function Savings() {
     water.push({ name: ACTION_LABEL[a], base: v >= 0 ? running : running + v, value: Math.abs(v), kind: v >= 0 ? "save" : "add" });
   }
   water.push({ name: "After", base: 0, value: t.after, kind: "total" });
-  const color = { total: "#2457d6", save: "#10b981", add: "#f59e0b" } as Record<string, string>;
+  const color = { total: "#c6f432", save: "#c6f432", add: "#ff9f1c" } as Record<string, string>;
 
   const accRecs = data.recs.filter((r) => accepted[r.id] && r.saving !== 0).sort((a, b) => b.saving - a.saving);
 
@@ -40,9 +40,9 @@ export default function Savings() {
         <div className="mt-3 h-72">
           <ResponsiveContainer>
             <BarChart data={water} margin={{ left: 10, right: 10 }}>
-              <CartesianGrid vertical={false} stroke="#eef2f7" />
-              <XAxis dataKey="name" tick={{ fontSize: 11 }} stroke="#94a3b8" interval={0} />
-              <YAxis tickFormatter={(v) => inrShort(v)} tick={{ fontSize: 11 }} stroke="#94a3b8" width={64} allowDataOverflow
+              <CartesianGrid vertical={false} stroke="#1c1c20" />
+              <XAxis dataKey="name" tick={{ fontSize: 11 }} stroke="#4a4a52" interval={0} />
+              <YAxis tickFormatter={(v) => inrShort(v)} tick={{ fontSize: 11 }} stroke="#4a4a52" width={70} allowDataOverflow
                 domain={[Math.floor((t.after * 0.85) / 50000) * 50000, Math.ceil((t.before * 1.02) / 50000) * 50000]} />
               <Tooltip formatter={(v: number, n) => (n === "base" ? null : inr(v))} />
               <Bar isAnimationActive={false} dataKey="base" stackId="a" fill="transparent" />

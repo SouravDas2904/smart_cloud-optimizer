@@ -23,11 +23,11 @@ function MetricMini({ a }: { a: Alert }) {
       <ResponsiveContainer>
         <AreaChart data={rows} margin={{ left: -20, right: 4, top: 4 }}>
           <XAxis dataKey="t" type="number" scale="time" domain={["dataMin", "dataMax"]} hide />
-          <YAxis domain={[0, 100]} tick={{ fontSize: 9 }} stroke="#cbd5e1" unit="%" />
+          <YAxis domain={[0, 100]} tick={{ fontSize: 9 }} stroke="#3a3a40" unit="%" />
           <Tooltip labelFormatter={(t: number) => new Date(t).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} formatter={(v: number) => v?.toFixed(1)} />
-          {a.start && <ReferenceArea ifOverflow="hidden" x1={new Date(a.start).getTime()} x2={new Date(a.end!).getTime()} fill="#fecaca" fillOpacity={0.7} />}
-          {a.metric === "disk" && <ReferenceLine y={90} stroke="#ef4444" strokeDasharray="3 3" />}
-          <Area dataKey="v" stroke={a.kind === "anomaly" ? "#dc2626" : "#2457d6"} fill={a.kind === "anomaly" ? "#fee2e2" : "#dbe6ff"} isAnimationActive={false} dot={false} name={key} />
+          {a.start && <ReferenceArea ifOverflow="hidden" x1={new Date(a.start).getTime()} x2={new Date(a.end!).getTime()} fill="#5a1d18" fillOpacity={0.7} />}
+          {a.metric === "disk" && <ReferenceLine y={90} stroke="#ff5a4e" strokeDasharray="3 3" />}
+          <Area dataKey="v" stroke={a.kind === "anomaly" ? "#ff5a4e" : "#c6f432"} fill={a.kind === "anomaly" ? "#3a1512" : "#232a12"} isAnimationActive={false} dot={false} name={key} />
         </AreaChart>
       </ResponsiveContainer>
     </div>
@@ -40,9 +40,9 @@ function CostMini({ days, date }: { days: DayCost[]; date: string }) {
       <ResponsiveContainer>
         <BarChart data={days} margin={{ left: -10, right: 4, top: 4 }}>
           <XAxis dataKey="date" hide />
-          <YAxis tickFormatter={(v) => inrShort(v)} tick={{ fontSize: 9 }} stroke="#cbd5e1" width={50} />
+          <YAxis tickFormatter={(v) => inrShort(v)} tick={{ fontSize: 9 }} stroke="#3a3a40" width={58} />
           <Tooltip formatter={(v: number) => inr(v)} />
-          <Bar isAnimationActive={false} dataKey="inr" name="daily cost">{days.map((d) => <Cell key={d.date} fill={d.date >= date ? "#f59e0b" : "#cbd5e1"} />)}</Bar>
+          <Bar isAnimationActive={false} dataKey="inr" name="daily cost">{days.map((d) => <Cell key={d.date} fill={d.date >= date ? "#ff9f1c" : "#3a3a40"} />)}</Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>

@@ -24,7 +24,7 @@ export const ACTION_LABEL: Record<string, string> = {
   investigate: "Investigate",
 };
 
-export const ENV_COLOR: Record<string, string> = { prod: "#2457d6", staging: "#8b5cf6", dev: "#14b8a6" };
-export const CHART = ["#2457d6", "#14b8a6", "#8b5cf6", "#f59e0b", "#ef4444", "#64748b", "#0ea5e9"];
+export const ENV_COLOR: Record<string, string> = { prod: "#e8e8ea", staging: "#8b9cff", dev: "#4fd1c5" };
+export const CHART = ["#c6f432", "#4fd1c5", "#b48cff", "#ff9f1c", "#ff5a4e", "#6b6b73", "#5cc8ff"];
 
 export const cls = (...xs: (string | false | null | undefined)[]) => xs.filter(Boolean).join(" ");

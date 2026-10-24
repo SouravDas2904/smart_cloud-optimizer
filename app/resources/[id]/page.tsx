@@ -59,11 +59,11 @@ export default function ResourceDetail() {
       <div className="h-48">
         <ResponsiveContainer>
           <ComposedChart data={rows} margin={{ left: -10, right: 8, top: 4 }}>
-            <CartesianGrid vertical={false} stroke="#eef2f7" />
-            <XAxis dataKey="t" type="number" domain={["dataMin", "dataMax"]} scale="time" tickFormatter={fmtT} tick={{ fontSize: 10 }} stroke="#94a3b8" />
-            <YAxis domain={domain ?? ["auto", "auto"]} tick={{ fontSize: 10 }} stroke="#94a3b8" unit={unit} />
+            <CartesianGrid vertical={false} stroke="#1c1c20" />
+            <XAxis dataKey="t" type="number" domain={["dataMin", "dataMax"]} scale="time" tickFormatter={fmtT} tick={{ fontSize: 10 }} stroke="#4a4a52" />
+            <YAxis domain={domain ?? ["auto", "auto"]} tick={{ fontSize: 10 }} stroke="#4a4a52" unit={unit} />
             <Tooltip labelFormatter={(t: number) => fmtFull(t)} formatter={(v: number) => (v == null ? "—" : v.toFixed(1))} />
-            {alert?.start && <ReferenceArea ifOverflow="hidden" x1={new Date(alert.start).getTime()} x2={new Date(alert.end!).getTime()} fill="#fee2e2" fillOpacity={0.6} />}
+            {alert?.start && <ReferenceArea ifOverflow="hidden" x1={new Date(alert.start).getTime()} x2={new Date(alert.end!).getTime()} fill="#3a1512" fillOpacity={0.6} />}
             {series}
           </ComposedChart>
         </ResponsiveContainer>
@@ -104,19 +104,19 @@ export default function ResourceDetail() {
         <>
           <div className="grid gap-5 lg:grid-cols-2">
             {chart("CPU (30-min average, with 30-min peak)", <>
-              <Area dataKey="cpu_max" stroke="none" fill="#bfd0ff" fillOpacity={0.6} name="peak" isAnimationActive={false} />
-              <Line dataKey="cpu" stroke="#2457d6" dot={false} strokeWidth={1.4} name="avg" isAnimationActive={false} />
-              <ReferenceLine y={st.cpu_p95} stroke="#f59e0b" strokeDasharray="4 3" label={{ value: `p95 ${st.cpu_p95.toFixed(0)}%`, fontSize: 10, position: "insideTopLeft", fill: "#b45309" }} />
-              <ReferenceLine y={st.cpu_p99} stroke="#ef4444" strokeDasharray="4 3" label={{ value: `p99 ${st.cpu_p99.toFixed(0)}%`, fontSize: 10, position: "insideTopRight", fill: "#b91c1c" }} />
+              <Area dataKey="cpu_max" stroke="none" fill="#4a5a1c" fillOpacity={0.6} name="peak" isAnimationActive={false} />
+              <Line dataKey="cpu" stroke="#c6f432" dot={false} strokeWidth={1.4} name="avg" isAnimationActive={false} />
+              <ReferenceLine y={st.cpu_p95} stroke="#ff9f1c" strokeDasharray="4 3" label={{ value: `p95 ${st.cpu_p95.toFixed(0)}%`, fontSize: 10, position: "insideTopLeft", fill: "#ffb44d" }} />
+              <ReferenceLine y={st.cpu_p99} stroke="#ff5a4e" strokeDasharray="4 3" label={{ value: `p99 ${st.cpu_p99.toFixed(0)}%`, fontSize: 10, position: "insideTopRight", fill: "#ff8a80" }} />
             </>, [0, 100])}
             {chart("Memory", <>
-              <Line dataKey="mem" stroke="#8b5cf6" dot={false} strokeWidth={1.4} name="mem" isAnimationActive={false} />
-              <ReferenceLine y={st.mem_p99} stroke="#ef4444" strokeDasharray="4 3" label={{ value: `p99 ${st.mem_p99.toFixed(0)}%`, fontSize: 10, position: "insideTopRight", fill: "#b91c1c" }} />
+              <Line dataKey="mem" stroke="#b48cff" dot={false} strokeWidth={1.4} name="mem" isAnimationActive={false} />
+              <ReferenceLine y={st.mem_p99} stroke="#ff5a4e" strokeDasharray="4 3" label={{ value: `p99 ${st.mem_p99.toFixed(0)}%`, fontSize: 10, position: "insideTopRight", fill: "#ff8a80" }} />
             </>, [0, 100])}
-            {chart("Disk used", <Line dataKey="disk" stroke="#0ea5e9" dot={false} strokeWidth={1.4} name="disk" isAnimationActive={false} />, [0, 100])}
+            {chart("Disk used", <Line dataKey="disk" stroke="#5cc8ff" dot={false} strokeWidth={1.4} name="disk" isAnimationActive={false} />, [0, 100])}
             {chart("Network (MB/s)", <>
-              <Line dataKey="net_in" stroke="#14b8a6" dot={false} strokeWidth={1.2} name="in" isAnimationActive={false} />
-              <Line dataKey="net_out" stroke="#f97316" dot={false} strokeWidth={1.2} name="out" isAnimationActive={false} />
+              <Line dataKey="net_in" stroke="#4fd1c5" dot={false} strokeWidth={1.2} name="in" isAnimationActive={false} />
+              <Line dataKey="net_out" stroke="#ff7a1a" dot={false} strokeWidth={1.2} name="out" isAnimationActive={false} />
             </>, undefined, "")}
           </div>
 

@@ -35,17 +35,17 @@ export default function Sustainability() {
           <div className="mt-3 h-64">
             <ResponsiveContainer>
               <BarChart data={rows} layout="vertical" margin={{ left: 10 }}>
-                <XAxis type="number" tick={{ fontSize: 11 }} stroke="#94a3b8" />
-                <YAxis type="category" dataKey="team" width={84} tick={{ fontSize: 11 }} stroke="#94a3b8" />
+                <XAxis type="number" tick={{ fontSize: 11 }} stroke="#4a4a52" />
+                <YAxis type="category" dataKey="team" width={84} tick={{ fontSize: 11 }} stroke="#4a4a52" />
                 <Tooltip />
-                <Bar isAnimationActive={false} dataKey="kg" fill="#10b981" radius={[0, 4, 4, 0]} name="kg CO₂ / month" />
+                <Bar isAnimationActive={false} dataKey="kg" fill="#c6f432" radius={[0, 4, 4, 0]} name="kg CO₂ / month" />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
         <div className="card card-pad text-sm">
           <h2 className="font-semibold text-slate-900">How it is calculated</h2>
-          <div className="mono mt-3 space-y-1 rounded-lg bg-slate-900 p-3 text-xs text-slate-100">
+          <div className="code mt-3 space-y-1">
             <div>kWh/month = vCPU × {a.WATTS_PER_VCPU} W × {a.HOURS_PER_MONTH} h × PUE {a.PUE} ÷ 1000</div>
             <div>         = {vcpu.toFixed(1)} × {a.WATTS_PER_VCPU} × {a.HOURS_PER_MONTH} × {a.PUE} ÷ 1000 = {c.kwh.toFixed(1)} kWh</div>
             <div>kg CO₂   = kWh × {a.GRID_KG_CO2_PER_KWH} (India grid, CEA) = {c.kg.toFixed(1)} kg</div>
