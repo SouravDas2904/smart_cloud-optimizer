@@ -8,3 +8,4 @@ engine/data/
 .env
 .env.local
 .vercel
+*.tsbuildinfo

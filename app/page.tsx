@@ -43,7 +43,7 @@ export default function Overview() {
         <Kpi label="Savings found" tone="save" value={inrShort(s.potential_saving)} icon={<PiggyBank size={16} />}
           sub={`${((s.potential_saving / s.current_monthly) * 100).toFixed(1)}% of the bill · ${actionable.length} safe actions`} />
         <Kpi label="Accepted so far" tone="save" value={inrShort(t.saving)} icon={<Server size={16} />}
-          sub={`${t.count} actions · new bill ${inrShort(t.after)}/mo`} />
+          sub={`${t.count} actions · net of ${inrShort(-(t.byAction.upsize ?? 0))} for upsizes · new bill ${inrShort(t.after)}/mo`} />
         <Kpi label="Open alerts" tone={alerts.some((a) => a.severity === "critical") ? "bad" : "warn"} value={alerts.length}
           icon={<AlertTriangle size={16} />} sub={`${alerts.filter((a) => a.severity === "critical").length} critical`} />
       </div>

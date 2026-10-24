@@ -63,7 +63,7 @@ export default function ResourceDetail() {
             <XAxis dataKey="t" type="number" domain={["dataMin", "dataMax"]} scale="time" tickFormatter={fmtT} tick={{ fontSize: 10 }} stroke="#94a3b8" />
             <YAxis domain={domain ?? ["auto", "auto"]} tick={{ fontSize: 10 }} stroke="#94a3b8" unit={unit} />
             <Tooltip labelFormatter={(t: number) => fmtFull(t)} formatter={(v: number) => (v == null ? "—" : v.toFixed(1))} />
-            {alert?.start && <ReferenceArea x1={new Date(alert.start).getTime()} x2={new Date(alert.end!).getTime()} fill="#fee2e2" fillOpacity={0.6} />}
+            {alert?.start && <ReferenceArea ifOverflow="hidden" x1={new Date(alert.start).getTime()} x2={new Date(alert.end!).getTime()} fill="#fee2e2" fillOpacity={0.6} />}
             {series}
           </ComposedChart>
         </ResponsiveContainer>

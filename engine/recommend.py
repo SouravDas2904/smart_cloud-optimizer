@@ -13,7 +13,7 @@ import config as C
 INR = lambda x: f"₹{x:,.0f}"
 
 
-def monthly_cost(r: dict, st: dict | None, ip_attached: bool) -> dict:
+def monthly_cost(r: dict, st: dict | None) -> dict:
     compute = C.PLANS[r["plan"]][2] if r["type"] == "vm" else 0.0
     storage = r["disk_gb"] * C.BLOCK_INR_PER_GB_MONTH
     network = (st["egress_gb_30d"] * C.EGRESS_INR_PER_GB) if st else 0.0
@@ -160,15 +160,17 @@ def recommend_vm(r: dict, st: dict, cost: dict) -> list[dict]:
     # 4. off-hours schedule for non-prod
     if env != "prod" and st["offhours_cpu_avg"] < C.OFFHOURS_CPU_MAX:
         frac = C.off_hours_fraction()
+        nightly = (24 - C.OFF_START_HOUR + C.OFF_END_HOUR) % 24
         saving = effective_price * frac
+        kept_vcpu = C.PLANS[recs[0]["target_plan"]][0] if recs and recs[0]["action"] == "resize" else vcpu
         recs.append({**base, "action": "schedule", "title": "Auto-stop nights & weekends",
                      "reason": f"Average CPU outside office hours is {st['offhours_cpu_avg']:.1f}% versus {st['work_cpu_avg']:.0f}% "
                                f"during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
                      "target_plan": None, "saving": round(saving), "risk": "LOW" if env == "dev" else "MEDIUM",
-                     "maths": [f"off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = {frac:.1%}",
+                     "maths": [f"off window = {nightly} h × 5 weekdays + 48 weekend h = {nightly * 5 + 48} of 168 weekly hours = {frac:.1%}",
                                f"Saving = {INR(effective_price)} {'(after resize) ' if effective_price != price else ''}× {frac:.1%} = {INR(saving)}/month",
                                "Storage keeps billing while stopped (not counted as saving)"],
-                     "vcpu_removed": round(C.PLANS[recs[0]['target_plan']][0] if recs and recs[0]['action'] == 'resize' else vcpu) * frac,
+                     "vcpu_removed": kept_vcpu * frac,   # on top of any vCPUs the resize already removed
                      "peak_check": None})
     return recs
 

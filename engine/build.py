@@ -83,7 +83,7 @@ def main():
     resources = []
     for r in inv:
         st = stats.get(r["id"])
-        cost = monthly_cost(r, st, False)
+        cost = monthly_cost(r, st)
         if st and st["days_of_data"] > 0:
             cost["network"] = round(st["egress_gb_30d"] * C.EGRESS_INR_PER_GB * C.DAYS / st["days_of_data"] * DAYS_PER_MONTH / C.DAYS)
             cost["total"] = cost["compute"] + cost["storage"] + cost["network"] + cost["ip"]

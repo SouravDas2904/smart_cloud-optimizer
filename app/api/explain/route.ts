@@ -15,7 +15,8 @@ Write at most 3 short sentences of plain text, no markdown, no lists. Use ₹ fo
 
 export async function POST(req: Request) {
   if (!process.env.ANTHROPIC_API_KEY) {
-    return NextResponse.json({ error: "no API key configured" }, { status: 503 });
+    // not an error for the demo: the client falls back to the rule-based explanation
+    return NextResponse.json({ text: null, fallback: "no API key configured" });
   }
   let body: { rec?: Record<string, unknown>; role?: string };
   try {

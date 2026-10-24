@@ -25,7 +25,7 @@ function MetricMini({ a }: { a: Alert }) {
           <XAxis dataKey="t" type="number" scale="time" domain={["dataMin", "dataMax"]} hide />
           <YAxis domain={[0, 100]} tick={{ fontSize: 9 }} stroke="#cbd5e1" unit="%" />
           <Tooltip labelFormatter={(t: number) => new Date(t).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} formatter={(v: number) => v?.toFixed(1)} />
-          {a.start && <ReferenceArea x1={new Date(a.start).getTime()} x2={new Date(a.end!).getTime()} fill="#fecaca" fillOpacity={0.7} />}
+          {a.start && <ReferenceArea ifOverflow="hidden" x1={new Date(a.start).getTime()} x2={new Date(a.end!).getTime()} fill="#fecaca" fillOpacity={0.7} />}
           {a.metric === "disk" && <ReferenceLine y={90} stroke="#ef4444" strokeDasharray="3 3" />}
           <Area dataKey="v" stroke={a.kind === "anomaly" ? "#dc2626" : "#2457d6"} fill={a.kind === "anomaly" ? "#fee2e2" : "#dbe6ff"} isAnimationActive={false} dot={false} name={key} />
         </AreaChart>
