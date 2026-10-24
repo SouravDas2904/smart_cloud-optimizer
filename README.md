@@ -13,7 +13,7 @@
 | Before vs after cost, accept/reject with live totals | `/savings`, sticky footer |
 | Alerts that explain why: anomaly, cost jump, capacity, budget overrun | `/alerts`, `engine/alerts.py` |
 
-Bonus: 30/60/90-day forecast (Holt-Winters), what-if simulator (shutdown windows + headroom policy), AI plain-language explanations (Claude, with rule-based fallback), CSV / Terraform / shell / PDF export, sustainability (kWh, CO₂), Engineer / Finance / Leadership views.
+Bonus: **Hit my target** (`/target`: type "cut 15%", get the least risky plan that reaches it, or an honest "cannot be done safely"; `engine/target.py`), 30/60/90-day forecast (Holt-Winters), what-if simulator (shutdown windows + headroom policy), AI plain-language explanations (Claude, with rule-based fallback), CSV / Terraform / shell / PDF export, sustainability (kWh, CO₂), Engineer / Finance / Leadership views.
 
 **The safety showcase:** `prod-reports-01` averages ~10% CPU but hits ~80% every day at 10:00. An average-based tool would shrink it to 2 vCPU (peak → 322%). Our engine refuses and explains why. Similarly, `prod-pay-api-07` has an active anomaly, so sizing is paused instead of "learning" the incident.
 
@@ -23,7 +23,8 @@ Bonus: 30/60/90-day forecast (Holt-Winters), what-if simulator (shutdown windows
 engine/generate.py  → simulated estate: 96 VMs, 10 volumes, 36 IPs, 30 days × 5-min metrics (seeded)
 engine/build.py     → stats (p50/p95/p99, profiles) → recommendations → alerts → forecast → fleet roll-up → public/data/*.json
 engine/export_csv.py → every number above as CSV files (raw 5-min metrics included)
-app/ (Next.js)      → dashboard reads the JSON; accept/reject, what-if and headroom recomputed live in lib/engine.ts
+engine/target.py    → Hit my target planner (exact, least-risk plan for a % cut); tiers written to summary.json
+app/ (Next.js)      → dashboard reads the JSON; accept/reject, what-if, headroom and Hit my target recomputed live in lib/engine.ts
 app/api/explain     → optional Claude explanation, grounded only on the card's numbers
 ```
 

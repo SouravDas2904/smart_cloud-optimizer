@@ -37,7 +37,13 @@ export interface Recommendation {
   current_plan: string | null; target_plan: string | null; saving: number; risk: Risk;
   confidence: number; confidence_notes: string[]; maths: string[]; vcpu_removed: number;
   peak_check: PeakCheck | null; keep_hours?: number[]; carbon: { kwh: number; kg_co2: number }; default_accepted: boolean;
+  /** 0-1: the risk label picks the third, measured headroom / env / confidence the spot inside it */
+  risk_score: number;
+  /** schedules only: saving on the current size, used when a plan skips the resize */
+  saving_alone?: number;
 }
+
+export interface TargetTier { risk: Risk; saving: number; pct: number }
 
 export interface Alert {
   id: string; kind: "anomaly" | "capacity" | "cost_jump" | "budget"; severity: "critical" | "warning" | "info";
@@ -63,6 +69,7 @@ export interface Summary {
   potential_saving: number; by_env: Record<string, number>; by_region: Record<string, number>;
   by_team: Record<string, number>; by_type: Record<string, number>; by_component: Record<string, number>;
   bill_history: { month: string; inr: number }[]; counts: Record<string, number>;
+  target_tiers: TargetTier[];
 }
 
 export interface Series {

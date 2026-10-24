@@ -250,6 +250,7 @@ function ExecBrief() {
             <li>The cloud bill is <b>{inrShort(s.current_monthly)}/month</b>, up <b>{(growth * 100).toFixed(0)}%</b> in six months, and next month overshoots the {inrShort(s.budget_monthly)} budget by <b className="text-red-600">{inrShort(s.projected_next_month - s.budget_monthly)}</b>.</li>
             <li>We found <b className="text-save-700">{inrShort(s.potential_saving)}/month ({inrShort(s.potential_saving * 12)}/year)</b> of safe savings; <b>{inrShort(lowRisk)}/month</b> of it is low-risk and can be approved today.</li>
             <li>With the actions accepted now, the bill drops to <b>{inrShort(t.after)}/month</b>, back under budget.</li>
+            <li>Need a specific cut? <Link href="/target" className="font-medium text-brand-600 underline">Hit my target</Link> builds the least risky plan for any percent: low-risk changes alone reach <b>{s.target_tiers[0].pct.toFixed(1)}%</b>, everything safe <b>{s.target_tiers[2].pct.toFixed(1)}%</b>.</li>
             <li>{alerts.filter((a) => a.severity === "critical").length} critical issues need attention, including a possible security incident.</li>
           </ul>
         </div>

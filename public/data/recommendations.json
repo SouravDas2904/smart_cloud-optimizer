@@ -23,7 +23,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 12.2 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 14.1% × 8 ÷ 2 = 56% CPU; memory p99 after = 57%",
    "Spike check: busiest 5-min reading after = 16.3% × 8 ÷ 2 = 65% (ceiling 95%)",
-   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
+   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.81 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 1.00)) = 0.568"
   ],
   "vcpu_removed": 6,
   "peak_check": {
@@ -42,7 +43,8 @@
    "kwh": 24.5,
    "kg_co2": 17.6
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.568
  },
  {
   "resource_id": "vm-002",
@@ -68,7 +70,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 12.3 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 14.6% × 8 ÷ 2 = 58% CPU; memory p99 after = 58%",
    "Spike check: busiest 5-min reading after = 16.5% × 8 ÷ 2 = 66% (ceiling 95%)",
-   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
+   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.83 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 1.00)) = 0.572"
   ],
   "vcpu_removed": 6,
   "peak_check": {
@@ -87,7 +90,8 @@
    "kwh": 24.5,
    "kg_co2": 17.6
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.572
  },
  {
   "resource_id": "vm-003",
@@ -113,7 +117,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 11.9 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 13.3% × 8 ÷ 2 = 53% CPU; memory p99 after = 56%",
    "Spike check: busiest 5-min reading after = 16.0% × 8 ÷ 2 = 64% (ceiling 95%)",
-   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
+   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.76 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 1.00)) = 0.560"
   ],
   "vcpu_removed": 6,
   "peak_check": {
@@ -132,7 +137,8 @@
    "kwh": 24.5,
    "kg_co2": 17.6
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.56
  },
  {
   "resource_id": "vm-004",
@@ -158,7 +164,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 11.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 13.8% × 8 ÷ 2 = 55% CPU; memory p99 after = 52%",
    "Spike check: busiest 5-min reading after = 16.9% × 8 ÷ 2 = 68% (ceiling 95%)",
-   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
+   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.79 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 1.00)) = 0.565"
   ],
   "vcpu_removed": 6,
   "peak_check": {
@@ -177,7 +184,8 @@
    "kwh": 24.5,
    "kg_co2": 17.6
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.565
  },
  {
   "resource_id": "vm-005",
@@ -203,7 +211,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 11.5 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 14.9% × 8 ÷ 2 = 60% CPU; memory p99 after = 54%",
    "Spike check: busiest 5-min reading after = 17.5% × 8 ÷ 2 = 70% (ceiling 95%)",
-   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
+   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.85 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.84)) = 0.586"
   ],
   "vcpu_removed": 6,
   "peak_check": {
@@ -222,7 +231,8 @@
    "kwh": 24.5,
    "kg_co2": 17.6
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.586
  },
  {
   "resource_id": "vm-006",
@@ -248,7 +258,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 13.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 11.8% × 8 ÷ 2 = 47% CPU; memory p99 after = 61%",
    "Spike check: busiest 5-min reading after = 14.5% × 8 ÷ 2 = 58% (ceiling 95%)",
-   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
+   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.82 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 1.00)) = 0.570"
   ],
   "vcpu_removed": 6,
   "peak_check": {
@@ -267,7 +278,8 @@
    "kwh": 24.5,
    "kg_co2": 17.6
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.57
  },
  {
   "resource_id": "vm-007",
@@ -293,7 +305,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 6.8 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 14.5% × 8 ÷ 2 = 58% CPU; memory p99 after = 64%",
    "Spike check: busiest 5-min reading after = 16.8% × 8 ÷ 2 = 67% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹2,000 = ₹4,000/month"
+   "Saving = ₹6,000 − ₹2,000 = ₹4,000/month",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.85 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 1.00)) = 0.524"
   ],
   "vcpu_removed": 6,
   "peak_check": {
@@ -312,7 +325,8 @@
    "kwh": 24.5,
    "kg_co2": 17.6
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.524
  },
  {
   "resource_id": "vm-008",
@@ -338,7 +352,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 6.7 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 12.8% × 8 ÷ 2 = 51% CPU; memory p99 after = 62%",
    "Spike check: busiest 5-min reading after = 14.9% × 8 ÷ 2 = 59% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹2,000 = ₹4,000/month"
+   "Saving = ₹6,000 − ₹2,000 = ₹4,000/month",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.83 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 1.00)) = 0.522"
   ],
   "vcpu_removed": 6,
   "peak_check": {
@@ -357,7 +372,8 @@
    "kwh": 24.5,
    "kg_co2": 17.6
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.522
  },
  {
   "resource_id": "vm-009",
@@ -383,7 +399,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 6.6 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 13.1% × 8 ÷ 2 = 52% CPU; memory p99 after = 62%",
    "Spike check: busiest 5-min reading after = 15.5% × 8 ÷ 2 = 62% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹2,000 = ₹4,000/month"
+   "Saving = ₹6,000 − ₹2,000 = ₹4,000/month",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.83 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 1.00)) = 0.522"
   ],
   "vcpu_removed": 6,
   "peak_check": {
@@ -402,7 +419,8 @@
    "kwh": 24.5,
    "kg_co2": 17.6
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.522
  },
  {
   "resource_id": "vm-010",
@@ -428,7 +446,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 5.4 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 11.8% × 8 ÷ 2 = 47% CPU; memory p99 after = 51%",
    "Spike check: busiest 5-min reading after = 14.4% × 8 ÷ 2 = 58% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹2,000 = ₹4,000/month"
+   "Saving = ₹6,000 − ₹2,000 = ₹4,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.68 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 1.00)) = 0.164"
   ],
   "vcpu_removed": 6,
   "peak_check": {
@@ -447,7 +466,8 @@
    "kwh": 24.5,
    "kg_co2": 17.6
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.164
  },
  {
   "resource_id": "vm-011",
@@ -473,7 +493,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 5.9 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 12.3% × 8 ÷ 2 = 49% CPU; memory p99 after = 56%",
    "Spike check: busiest 5-min reading after = 14.6% × 8 ÷ 2 = 58% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹2,000 = ₹4,000/month"
+   "Saving = ₹6,000 − ₹2,000 = ₹4,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.74 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 1.00)) = 0.174"
   ],
   "vcpu_removed": 6,
   "peak_check": {
@@ -492,7 +513,8 @@
    "kwh": 24.5,
    "kg_co2": 17.6
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.174
  },
  {
   "resource_id": "vm-012",
@@ -518,7 +540,8 @@
    "cheapest plan with ≥ 1 vCPU and ≥ 6.9 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 14.8% × 4 ÷ 2 = 30% CPU; memory p99 after = 65%",
    "Spike check: busiest 5-min reading after = 17.3% × 4 ÷ 2 = 35% (ceiling 95%)",
-   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
+   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.86 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 1.00)) = 0.477"
   ],
   "vcpu_removed": 2,
   "peak_check": {
@@ -537,7 +560,8 @@
    "kwh": 8.2,
    "kg_co2": 5.9
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.477
  },
  {
   "resource_id": "vm-013",
@@ -563,7 +587,8 @@
    "cheapest plan with ≥ 1 vCPU and ≥ 5.7 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 14.0% × 4 ÷ 2 = 28% CPU; memory p99 after = 53%",
    "Spike check: busiest 5-min reading after = 16.2% × 4 ÷ 2 = 32% (ceiling 95%)",
-   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
+   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.71 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 1.00)) = 0.119"
   ],
   "vcpu_removed": 2,
   "peak_check": {
@@ -582,7 +607,8 @@
    "kwh": 8.2,
    "kg_co2": 5.9
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.119
  },
  {
   "resource_id": "vm-014",
@@ -608,7 +634,8 @@
    "cheapest plan with ≥ 1 vCPU and ≥ 6.8 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 14.4% × 4 ÷ 2 = 29% CPU; memory p99 after = 64%",
    "Spike check: busiest 5-min reading after = 16.5% × 4 ÷ 2 = 33% (ceiling 95%)",
-   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
+   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.85 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 1.00)) = 0.475"
   ],
   "vcpu_removed": 2,
   "peak_check": {
@@ -627,7 +654,8 @@
    "kwh": 8.2,
    "kg_co2": 5.9
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.475
  },
  {
   "resource_id": "vm-015",
@@ -653,7 +681,8 @@
    "cheapest plan with ≥ 1 vCPU and ≥ 6.3 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 12.3% × 4 ÷ 2 = 25% CPU; memory p99 after = 59%",
    "Spike check: busiest 5-min reading after = 14.6% × 4 ÷ 2 = 29% (ceiling 95%)",
-   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
+   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.79 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 1.00)) = 0.131"
   ],
   "vcpu_removed": 2,
   "peak_check": {
@@ -672,7 +701,8 @@
    "kwh": 8.2,
    "kg_co2": 5.9
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.131
  },
  {
   "resource_id": "vm-016",
@@ -698,7 +728,8 @@
    "cheapest plan with ≥ 1 vCPU and ≥ 5.6 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 14.1% × 4 ÷ 2 = 28% CPU; memory p99 after = 52%",
    "Spike check: busiest 5-min reading after = 16.6% × 4 ÷ 2 = 33% (ceiling 95%)",
-   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
+   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.70 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 1.00)) = 0.117"
   ],
   "vcpu_removed": 2,
   "peak_check": {
@@ -717,7 +748,8 @@
    "kwh": 8.2,
    "kg_co2": 5.9
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.117
  },
  {
   "resource_id": "vm-017",
@@ -743,7 +775,8 @@
    "cheapest plan with ≥ 1 vCPU and ≥ 6.8 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 11.7% × 4 ÷ 2 = 23% CPU; memory p99 after = 64%",
    "Spike check: busiest 5-min reading after = 14.4% × 4 ÷ 2 = 29% (ceiling 95%)",
-   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
+   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.85 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 1.00)) = 0.475"
   ],
   "vcpu_removed": 2,
   "peak_check": {
@@ -762,7 +795,8 @@
    "kwh": 8.2,
    "kg_co2": 5.9
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.475
  },
  {
   "resource_id": "vm-018",
@@ -788,7 +822,8 @@
    "cheapest plan with ≥ 1 vCPU and ≥ 6.0 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 12.9% × 4 ÷ 2 = 26% CPU; memory p99 after = 56%",
    "Spike check: busiest 5-min reading after = 15.2% × 4 ÷ 2 = 30% (ceiling 95%)",
-   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
+   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.75 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 1.00)) = 0.125"
   ],
   "vcpu_removed": 2,
   "peak_check": {
@@ -807,7 +842,8 @@
    "kwh": 8.2,
    "kg_co2": 5.9
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.125
  },
  {
   "resource_id": "vm-035",
@@ -831,7 +867,8 @@
    "average-based: 8 × 10.5% ÷ 70% → s-2-8 (2 vCPU)",
    "peak on s-2-8 = p99 80.7% × 8 ÷ 2 = 323% → overload",
    "required vCPU = max(8 × p99 CPU 80.7% ÷ 70% target, 8 × max CPU 85.6% ÷ 95% ceiling) = 9.22",
-   "required ≥ current size → no safe downsize"
+   "required ≥ current size → no safe downsize",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.90)) = 0.107"
   ],
   "vcpu_removed": 0,
   "peak_check": {
@@ -851,7 +888,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": false
+  "default_accepted": false,
+  "risk_score": 0.107
  },
  {
   "resource_id": "vm-036",
@@ -876,7 +914,8 @@
    "average-based: 8 × 10.6% ÷ 70% → s-2-8 (2 vCPU)",
    "peak on s-2-8 = p99 83.9% × 8 ÷ 2 = 335% → overload",
    "required vCPU = max(8 × p99 CPU 83.9% ÷ 70% target, 8 × max CPU 88.3% ÷ 95% ceiling) = 9.58",
-   "required ≥ current size → no safe downsize"
+   "required ≥ current size → no safe downsize",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.75)) = 0.117"
   ],
   "vcpu_removed": 0,
   "peak_check": {
@@ -896,7 +935,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": false
+  "default_accepted": false,
+  "risk_score": 0.117
  },
  {
   "resource_id": "vm-037",
@@ -921,7 +961,8 @@
    "average-based: 8 × 10.6% ÷ 70% → s-2-8 (2 vCPU)",
    "peak on s-2-8 = p99 85.2% × 8 ÷ 2 = 341% → overload",
    "required vCPU = max(8 × p99 CPU 85.2% ÷ 70% target, 8 × max CPU 90.1% ÷ 95% ceiling) = 9.74",
-   "required ≥ current size → no safe downsize"
+   "required ≥ current size → no safe downsize",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.75)) = 0.117"
   ],
   "vcpu_removed": 0,
   "peak_check": {
@@ -941,7 +982,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": false
+  "default_accepted": false,
+  "risk_score": 0.117
  },
  {
   "resource_id": "vm-038",
@@ -966,7 +1008,8 @@
    "average-based: 8 × 10.5% ÷ 70% → s-2-8 (2 vCPU)",
    "peak on s-2-8 = p99 81.9% × 8 ÷ 2 = 328% → overload",
    "required vCPU = max(8 × p99 CPU 81.9% ÷ 70% target, 8 × max CPU 86.5% ÷ 95% ceiling) = 9.36",
-   "required ≥ current size → no safe downsize"
+   "required ≥ current size → no safe downsize",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.75)) = 0.117"
   ],
   "vcpu_removed": 0,
   "peak_check": {
@@ -986,7 +1029,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": false
+  "default_accepted": false,
+  "risk_score": 0.117
  },
  {
   "resource_id": "vm-039",
@@ -1011,7 +1055,8 @@
    "average-based: 8 × 10.5% ÷ 70% → s-2-8 (2 vCPU)",
    "peak on s-2-8 = p99 81.8% × 8 ÷ 2 = 327% → overload",
    "required vCPU = max(8 × p99 CPU 81.8% ÷ 70% target, 8 × max CPU 87.9% ÷ 95% ceiling) = 9.35",
-   "required ≥ current size → no safe downsize"
+   "required ≥ current size → no safe downsize",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.75)) = 0.117"
   ],
   "vcpu_removed": 0,
   "peak_check": {
@@ -1031,7 +1076,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": false
+  "default_accepted": false,
+  "risk_score": 0.117
  },
  {
   "resource_id": "vm-040",
@@ -1055,7 +1101,8 @@
    "average-based: 8 × 8.3% ÷ 70% → m-2-16 (2 vCPU)",
    "peak on m-2-16 = p99 78.7% × 8 ÷ 2 = 315% → overload",
    "required vCPU = max(8 × p99 CPU 78.7% ÷ 70% target, 8 × max CPU 79.8% ÷ 95% ceiling) = 8.99",
-   "required ≥ current size → no safe downsize"
+   "required ≥ current size → no safe downsize",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.85)) = 0.110"
   ],
   "vcpu_removed": 0,
   "peak_check": {
@@ -1075,7 +1122,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": false
+  "default_accepted": false,
+  "risk_score": 0.11
  },
  {
   "resource_id": "vm-041",
@@ -1099,7 +1147,8 @@
    "average-based: 8 × 8.3% ÷ 70% → m-2-16 (2 vCPU)",
    "peak on m-2-16 = p99 78.8% × 8 ÷ 2 = 315% → overload",
    "required vCPU = max(8 × p99 CPU 78.8% ÷ 70% target, 8 × max CPU 79.7% ÷ 95% ceiling) = 9.01",
-   "required ≥ current size → no safe downsize"
+   "required ≥ current size → no safe downsize",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.85)) = 0.110"
   ],
   "vcpu_removed": 0,
   "peak_check": {
@@ -1119,7 +1168,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": false
+  "default_accepted": false,
+  "risk_score": 0.11
  },
  {
   "resource_id": "vm-042",
@@ -1144,7 +1194,8 @@
    "average-based: 8 × 8.4% ÷ 70% → m-2-16 (2 vCPU)",
    "peak on m-2-16 = p99 79.8% × 8 ÷ 2 = 319% → overload",
    "required vCPU = max(8 × p99 CPU 79.8% ÷ 70% target, 8 × max CPU 80.7% ÷ 95% ceiling) = 9.11",
-   "required ≥ current size → no safe downsize"
+   "required ≥ current size → no safe downsize",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.75)) = 0.117"
   ],
   "vcpu_removed": 0,
   "peak_check": {
@@ -1164,7 +1215,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": false
+  "default_accepted": false,
+  "risk_score": 0.117
  },
  {
   "resource_id": "vm-043",
@@ -1188,7 +1240,8 @@
    "average-based: 8 × 8.2% ÷ 70% → m-2-16 (2 vCPU)",
    "peak on m-2-16 = p99 76.7% × 8 ÷ 2 = 307% → overload",
    "required vCPU = max(8 × p99 CPU 76.7% ÷ 70% target, 8 × max CPU 77.8% ÷ 95% ceiling) = 8.77",
-   "required ≥ current size → no safe downsize"
+   "required ≥ current size → no safe downsize",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.85)) = 0.110"
   ],
   "vcpu_removed": 0,
   "peak_check": {
@@ -1208,7 +1261,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": false
+  "default_accepted": false,
+  "risk_score": 0.11
  },
  {
   "resource_id": "vm-044",
@@ -1232,7 +1286,8 @@
    "average-based: 4 × 8.6% ÷ 70% → s-2-8 (2 vCPU)",
    "peak on s-2-8 = p99 81.6% × 4 ÷ 2 = 163% → overload",
    "required vCPU = max(4 × p99 CPU 81.6% ÷ 70% target, 4 × max CPU 83.0% ÷ 95% ceiling) = 4.66",
-   "required ≥ current size → no safe downsize"
+   "required ≥ current size → no safe downsize",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.85)) = 0.060"
   ],
   "vcpu_removed": 0,
   "peak_check": {
@@ -1252,7 +1307,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": false
+  "default_accepted": false,
+  "risk_score": 0.06
  },
  {
   "resource_id": "vm-044",
@@ -1277,12 +1333,14 @@
    3,
    4
   ],
+  "saving_alone": 2071,
   "maths": [
    "busy night hours (p95 CPU > 15%): 03:00–05:00 → keep on 02:00–05:00 (1 h warm-up)",
    "rest of the night: average CPU 2.0% < 5% → safe to stop",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours; minus 21 h kept on = 87 h = 51.8%",
    "Saving = ₹4,000 × 51.8% = ₹2,071/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.40 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.85)) = 0.460"
   ],
   "vcpu_removed": 2.0714285714285716,
   "peak_check": null,
@@ -1291,7 +1349,8 @@
    "kwh": 8.5,
    "kg_co2": 6.1
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.46
  },
  {
   "resource_id": "vm-045",
@@ -1316,7 +1375,8 @@
    "average-based: 4 × 8.4% ÷ 70% → s-2-8 (2 vCPU)",
    "peak on s-2-8 = p99 79.9% × 4 ÷ 2 = 160% → overload",
    "required vCPU = max(4 × p99 CPU 79.9% ÷ 70% target, 4 × max CPU 81.2% ÷ 95% ceiling) = 4.57",
-   "required ≥ current size → no safe downsize"
+   "required ≥ current size → no safe downsize",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.75)) = 0.067"
   ],
   "vcpu_removed": 0,
   "peak_check": {
@@ -1336,7 +1396,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": false
+  "default_accepted": false,
+  "risk_score": 0.067
  },
  {
   "resource_id": "vm-045",
@@ -1362,12 +1423,14 @@
    1,
    2
   ],
+  "saving_alone": 2071,
   "maths": [
    "busy night hours (p95 CPU > 15%): 01:00–03:00 → keep on 00:00–03:00 (1 h warm-up)",
    "rest of the night: average CPU 2.0% < 5% → safe to stop",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours; minus 21 h kept on = 87 h = 51.8%",
    "Saving = ₹4,000 × 51.8% = ₹2,071/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.40 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.75)) = 0.466"
   ],
   "vcpu_removed": 2.0714285714285716,
   "peak_check": null,
@@ -1376,7 +1439,8 @@
    "kwh": 8.5,
    "kg_co2": 6.1
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.466
  },
  {
   "resource_id": "vm-046",
@@ -1402,7 +1466,8 @@
    "cheapest plan with ≥ 3 vCPU and ≥ 18.3 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 24.4% × 8 ÷ 4 = 49% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 26.6% × 8 ÷ 4 = 53% (ceiling 95%)",
-   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.70 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.126"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -1421,7 +1486,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.126
  },
  {
   "resource_id": "vm-046",
@@ -1442,11 +1508,13 @@
   "saving": 3214,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 5143,
   "maths": [
    "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.051"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
@@ -1455,7 +1523,8 @@
    "kwh": 10.5,
    "kg_co2": 7.5
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.051
  },
  {
   "resource_id": "vm-047",
@@ -1481,7 +1550,8 @@
    "cheapest plan with ≥ 3 vCPU and ≥ 18.3 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 25.6% × 8 ÷ 4 = 51% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 27.1% × 8 ÷ 4 = 54% (ceiling 95%)",
-   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.73 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.132"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -1500,7 +1570,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.132
  },
  {
   "resource_id": "vm-047",
@@ -1521,11 +1592,13 @@
   "saving": 3214,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 5143,
   "maths": [
    "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.051"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
@@ -1534,7 +1607,8 @@
    "kwh": 10.5,
    "kg_co2": 7.5
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.051
  },
  {
   "resource_id": "vm-048",
@@ -1560,7 +1634,8 @@
    "cheapest plan with ≥ 3 vCPU and ≥ 18.3 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 26.1% × 8 ÷ 4 = 52% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 28.4% × 8 ÷ 4 = 57% (ceiling 95%)",
-   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.75 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.134"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -1579,7 +1654,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.134
  },
  {
   "resource_id": "vm-048",
@@ -1600,11 +1676,13 @@
   "saving": 3214,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 5143,
   "maths": [
    "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.052"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
@@ -1613,7 +1691,8 @@
    "kwh": 10.5,
    "kg_co2": 7.5
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.052
  },
  {
   "resource_id": "vm-049",
@@ -1639,7 +1718,8 @@
    "cheapest plan with ≥ 3 vCPU and ≥ 18.2 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 23.0% × 8 ÷ 4 = 46% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 24.7% × 8 ÷ 4 = 49% (ceiling 95%)",
-   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.66 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.120"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -1658,7 +1738,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.12
  },
  {
   "resource_id": "vm-049",
@@ -1679,11 +1760,13 @@
   "saving": 3214,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 5143,
   "maths": [
    "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.052"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
@@ -1692,7 +1775,8 @@
    "kwh": 10.5,
    "kg_co2": 7.5
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.052
  },
  {
   "resource_id": "vm-050",
@@ -1718,7 +1802,8 @@
    "cheapest plan with ≥ 4 vCPU and ≥ 18.2 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 26.8% × 8 ÷ 4 = 54% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 28.9% × 8 ÷ 4 = 58% (ceiling 95%)",
-   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.77 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.138"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -1737,7 +1822,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.138
  },
  {
   "resource_id": "vm-050",
@@ -1758,11 +1844,13 @@
   "saving": 3214,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 5143,
   "maths": [
    "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.052"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
@@ -1771,7 +1859,8 @@
    "kwh": 10.5,
    "kg_co2": 7.5
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.052
  },
  {
   "resource_id": "vm-051",
@@ -1797,7 +1886,8 @@
    "cheapest plan with ≥ 3 vCPU and ≥ 18.2 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 21.1% × 8 ÷ 4 = 42% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 22.9% × 8 ÷ 4 = 46% (ceiling 95%)",
-   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.60 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.110"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -1816,7 +1906,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.11
  },
  {
   "resource_id": "vm-051",
@@ -1837,11 +1928,13 @@
   "saving": 3214,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 5143,
   "maths": [
    "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.052"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
@@ -1850,7 +1943,8 @@
    "kwh": 10.5,
    "kg_co2": 7.5
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.052
  },
  {
   "resource_id": "vm-052",
@@ -1876,7 +1970,8 @@
    "cheapest plan with ≥ 3 vCPU and ≥ 18.3 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 24.4% × 8 ÷ 4 = 49% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 26.4% × 8 ÷ 4 = 53% (ceiling 95%)",
-   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.70 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.126"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -1895,7 +1990,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.126
  },
  {
   "resource_id": "vm-052",
@@ -1916,11 +2012,13 @@
   "saving": 3214,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 5143,
   "maths": [
    "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.26 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.053"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
@@ -1929,7 +2027,8 @@
    "kwh": 10.5,
    "kg_co2": 7.5
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.053
  },
  {
   "resource_id": "vm-053",
@@ -1955,7 +2054,8 @@
    "cheapest plan with ≥ 4 vCPU and ≥ 18.3 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 30.0% × 8 ÷ 4 = 60% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 31.8% × 8 ÷ 4 = 64% (ceiling 95%)",
-   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.86 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.153"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -1974,7 +2074,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.153
  },
  {
   "resource_id": "vm-053",
@@ -1995,11 +2096,13 @@
   "saving": 3214,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 5143,
   "maths": [
    "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.052"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
@@ -2008,7 +2111,8 @@
    "kwh": 10.5,
    "kg_co2": 7.5
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.052
  },
  {
   "resource_id": "vm-054",
@@ -2034,7 +2138,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 29.5% × 4 ÷ 2 = 59% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 31.9% × 4 ÷ 2 = 64% (ceiling 95%)",
-   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
+   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.84 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.151"
   ],
   "vcpu_removed": 2,
   "peak_check": {
@@ -2053,7 +2158,8 @@
    "kwh": 8.2,
    "kg_co2": 5.9
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.151
  },
  {
   "resource_id": "vm-054",
@@ -2074,11 +2180,13 @@
   "saving": 1671,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 2571,
   "maths": [
    "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.052"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
@@ -2087,7 +2195,8 @@
    "kwh": 5.3,
    "kg_co2": 3.8
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.052
  },
  {
   "resource_id": "vm-055",
@@ -2113,7 +2222,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 21.6% × 4 ÷ 2 = 43% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 23.7% × 4 ÷ 2 = 47% (ceiling 95%)",
-   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
+   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.62 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.113"
   ],
   "vcpu_removed": 2,
   "peak_check": {
@@ -2132,7 +2242,8 @@
    "kwh": 8.2,
    "kg_co2": 5.9
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.113
  },
  {
   "resource_id": "vm-055",
@@ -2153,11 +2264,13 @@
   "saving": 1671,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 2571,
   "maths": [
    "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.052"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
@@ -2166,7 +2279,8 @@
    "kwh": 5.3,
    "kg_co2": 3.8
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.052
  },
  {
   "resource_id": "vm-056",
@@ -2192,7 +2306,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 21.7% × 4 ÷ 2 = 43% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 23.4% × 4 ÷ 2 = 47% (ceiling 95%)",
-   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
+   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.62 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.113"
   ],
   "vcpu_removed": 2,
   "peak_check": {
@@ -2211,7 +2326,8 @@
    "kwh": 8.2,
    "kg_co2": 5.9
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.113
  },
  {
   "resource_id": "vm-056",
@@ -2232,11 +2348,13 @@
   "saving": 1671,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 2571,
   "maths": [
    "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.052"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
@@ -2245,7 +2363,8 @@
    "kwh": 5.3,
    "kg_co2": 3.8
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.052
  },
  {
   "resource_id": "vm-057",
@@ -2271,7 +2390,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 21.8% × 4 ÷ 2 = 44% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 24.0% × 4 ÷ 2 = 48% (ceiling 95%)",
-   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
+   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.62 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.114"
   ],
   "vcpu_removed": 2,
   "peak_check": {
@@ -2290,7 +2410,8 @@
    "kwh": 8.2,
    "kg_co2": 5.9
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.114
  },
  {
   "resource_id": "vm-057",
@@ -2311,11 +2432,13 @@
   "saving": 1671,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 2571,
   "maths": [
    "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.052"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
@@ -2324,7 +2447,8 @@
    "kwh": 5.3,
    "kg_co2": 3.8
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.052
  },
  {
   "resource_id": "vm-058",
@@ -2351,7 +2475,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 26.0% × 4 ÷ 2 = 52% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 28.3% × 4 ÷ 2 = 57% (ceiling 95%)",
-   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
+   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.74 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.68)) = 0.145"
   ],
   "vcpu_removed": 2,
   "peak_check": {
@@ -2370,7 +2495,8 @@
    "kwh": 8.2,
    "kg_co2": 5.9
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.145
  },
  {
   "resource_id": "vm-058",
@@ -2392,11 +2518,13 @@
   "saving": 1671,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 2571,
   "maths": [
    "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.68)) = 0.064"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
@@ -2405,7 +2533,8 @@
    "kwh": 5.3,
    "kg_co2": 3.8
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.064
  },
  {
   "resource_id": "vm-059",
@@ -2431,7 +2560,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 23.0% × 4 ÷ 2 = 46% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 25.2% × 4 ÷ 2 = 50% (ceiling 95%)",
-   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
+   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.66 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.120"
   ],
   "vcpu_removed": 2,
   "peak_check": {
@@ -2450,7 +2580,8 @@
    "kwh": 8.2,
    "kg_co2": 5.9
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.12
  },
  {
   "resource_id": "vm-059",
@@ -2471,11 +2602,13 @@
   "saving": 1671,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 2571,
   "maths": [
    "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.052"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
@@ -2484,7 +2617,8 @@
    "kwh": 5.3,
    "kg_co2": 3.8
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.052
  },
  {
   "resource_id": "vm-060",
@@ -2510,7 +2644,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 30.2% × 4 ÷ 2 = 60% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 32.5% × 4 ÷ 2 = 65% (ceiling 95%)",
-   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
+   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.86 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.487"
   ],
   "vcpu_removed": 2,
   "peak_check": {
@@ -2529,7 +2664,8 @@
    "kwh": 8.2,
    "kg_co2": 5.9
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.487
  },
  {
   "resource_id": "vm-060",
@@ -2550,11 +2686,13 @@
   "saving": 1671,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 2571,
   "maths": [
    "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.85)) = 0.052"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
@@ -2563,7 +2701,8 @@
    "kwh": 5.3,
    "kg_co2": 3.8
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.052
  },
  {
   "resource_id": "vm-061",
@@ -2589,7 +2728,8 @@
    "cheapest plan with ≥ 3 vCPU and ≥ 9.1 GB = s-4-16 (4 vCPU / 16 GB, ₹4,000/month)",
    "Peak Safety Check: p99 after = 24.2% × 8 ÷ 4 = 48% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 26.6% × 8 ÷ 4 = 53% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹4,000 = ₹2,000/month"
+   "Saving = ₹6,000 − ₹4,000 = ₹2,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.69 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.85)) = 0.175"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -2608,7 +2748,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.175
  },
  {
   "resource_id": "vm-061",
@@ -2629,11 +2770,13 @@
   "saving": 2571,
   "risk": "MEDIUM",
   "keep_hours": [],
+  "saving_alone": 3857,
   "maths": [
    "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹4,000 (after resize) × 64.3% = ₹2,571/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.85)) = 0.436"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
@@ -2642,7 +2785,8 @@
    "kwh": 10.5,
    "kg_co2": 7.5
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.436
  },
  {
   "resource_id": "vm-062",
@@ -2668,7 +2812,8 @@
    "cheapest plan with ≥ 4 vCPU and ≥ 9.1 GB = s-4-16 (4 vCPU / 16 GB, ₹4,000/month)",
    "Peak Safety Check: p99 after = 28.0% × 8 ÷ 4 = 56% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 30.0% × 8 ÷ 4 = 60% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹4,000 = ₹2,000/month"
+   "Saving = ₹6,000 − ₹4,000 = ₹2,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.80 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.85)) = 0.193"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -2687,7 +2832,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.193
  },
  {
   "resource_id": "vm-062",
@@ -2708,11 +2854,13 @@
   "saving": 2571,
   "risk": "MEDIUM",
   "keep_hours": [],
+  "saving_alone": 3857,
   "maths": [
    "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹4,000 (after resize) × 64.3% = ₹2,571/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.85)) = 0.435"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
@@ -2721,7 +2869,8 @@
    "kwh": 10.5,
    "kg_co2": 7.5
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.435
  },
  {
   "resource_id": "vm-063",
@@ -2747,7 +2896,8 @@
    "cheapest plan with ≥ 3 vCPU and ≥ 9.1 GB = s-4-16 (4 vCPU / 16 GB, ₹4,000/month)",
    "Peak Safety Check: p99 after = 23.0% × 8 ÷ 4 = 46% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 25.3% × 8 ÷ 4 = 51% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹4,000 = ₹2,000/month"
+   "Saving = ₹6,000 − ₹4,000 = ₹2,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.66 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.85)) = 0.170"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -2766,7 +2916,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.17
  },
  {
   "resource_id": "vm-063",
@@ -2787,11 +2938,13 @@
   "saving": 2571,
   "risk": "MEDIUM",
   "keep_hours": [],
+  "saving_alone": 3857,
   "maths": [
    "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹4,000 (after resize) × 64.3% = ₹2,571/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.85)) = 0.435"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
@@ -2800,7 +2953,8 @@
    "kwh": 10.5,
    "kg_co2": 7.5
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.435
  },
  {
   "resource_id": "vm-064",
@@ -2826,7 +2980,8 @@
    "cheapest plan with ≥ 3 vCPU and ≥ 9.1 GB = s-4-16 (4 vCPU / 16 GB, ₹4,000/month)",
    "Peak Safety Check: p99 after = 21.9% × 8 ÷ 4 = 44% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 24.3% × 8 ÷ 4 = 49% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹4,000 = ₹2,000/month"
+   "Saving = ₹6,000 − ₹4,000 = ₹2,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.63 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.85)) = 0.164"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -2845,7 +3000,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.164
  },
  {
   "resource_id": "vm-064",
@@ -2866,11 +3022,13 @@
   "saving": 2571,
   "risk": "MEDIUM",
   "keep_hours": [],
+  "saving_alone": 3857,
   "maths": [
    "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹4,000 (after resize) × 64.3% = ₹2,571/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.85)) = 0.435"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
@@ -2879,7 +3037,8 @@
    "kwh": 10.5,
    "kg_co2": 7.5
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.435
  },
  {
   "resource_id": "vm-065",
@@ -2905,7 +3064,8 @@
    "cheapest plan with ≥ 3 vCPU and ≥ 9.1 GB = s-4-16 (4 vCPU / 16 GB, ₹4,000/month)",
    "Peak Safety Check: p99 after = 22.0% × 8 ÷ 4 = 44% CPU; memory p99 after = 43%",
    "Spike check: busiest 5-min reading after = 24.9% × 8 ÷ 4 = 50% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹4,000 = ₹2,000/month"
+   "Saving = ₹6,000 − ₹4,000 = ₹2,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.63 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.85)) = 0.165"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -2924,7 +3084,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.165
  },
  {
   "resource_id": "vm-065",
@@ -2945,11 +3106,13 @@
   "saving": 2571,
   "risk": "MEDIUM",
   "keep_hours": [],
+  "saving_alone": 3857,
   "maths": [
    "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹4,000 (after resize) × 64.3% = ₹2,571/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.25 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.85)) = 0.436"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
@@ -2958,7 +3121,8 @@
    "kwh": 10.5,
    "kg_co2": 7.5
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.436
  },
  {
   "resource_id": "vm-066",
@@ -2981,7 +3145,8 @@
   "maths": [
    "p95 CPU 1.7% < 5%, p95 network 0.08 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
    "Saving = plan price = ₹3,000/month (compute only)",
-   "Disk (500 GB × ₹6 = ₹3,000) is still billed while stopped"
+   "Disk (500 GB × ₹6 = ₹3,000) is still billed while stopped",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.35 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 1.00)) = 0.058"
   ],
   "vcpu_removed": 4,
   "peak_check": null,
@@ -2990,7 +3155,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.058
  },
  {
   "resource_id": "vm-067",
@@ -3013,7 +3179,8 @@
   "maths": [
    "p95 CPU 2.1% < 5%, p95 network 0.09 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
    "Saving = plan price = ₹3,000/month (compute only)",
-   "Disk (100 GB × ₹6 = ₹600) is still billed while stopped"
+   "Disk (100 GB × ₹6 = ₹600) is still billed while stopped",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.43 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 1.00)) = 0.071"
   ],
   "vcpu_removed": 4,
   "peak_check": null,
@@ -3022,7 +3189,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.071
  },
  {
   "resource_id": "vm-068",
@@ -3045,7 +3213,8 @@
   "maths": [
    "p95 CPU 1.8% < 5%, p95 network 0.08 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
    "Saving = plan price = ₹3,000/month (compute only)",
-   "Disk (100 GB × ₹6 = ₹600) is still billed while stopped"
+   "Disk (100 GB × ₹6 = ₹600) is still billed while stopped",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.37 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 1.00)) = 0.061"
   ],
   "vcpu_removed": 4,
   "peak_check": null,
@@ -3054,7 +3223,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.061
  },
  {
   "resource_id": "vm-069",
@@ -3077,7 +3247,8 @@
   "maths": [
    "p95 CPU 1.9% < 5%, p95 network 0.09 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
    "Saving = plan price = ₹3,000/month (compute only)",
-   "Disk (50 GB × ₹6 = ₹300) is still billed while stopped"
+   "Disk (50 GB × ₹6 = ₹300) is still billed while stopped",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.38 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 1.00)) = 0.063"
   ],
   "vcpu_removed": 4,
   "peak_check": null,
@@ -3086,7 +3257,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.063
  },
  {
   "resource_id": "vm-070",
@@ -3109,7 +3281,8 @@
   "maths": [
    "p95 CPU 2.1% < 5%, p95 network 0.09 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
    "Saving = plan price = ₹6,000/month (compute only)",
-   "Disk (50 GB × ₹6 = ₹300) is still billed while stopped"
+   "Disk (50 GB × ₹6 = ₹300) is still billed while stopped",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.42 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 1.00)) = 0.119"
   ],
   "vcpu_removed": 8,
   "peak_check": null,
@@ -3118,7 +3291,8 @@
    "kwh": 32.7,
    "kg_co2": 23.4
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.119
  },
  {
   "resource_id": "vm-071",
@@ -3141,7 +3315,8 @@
   "maths": [
    "p95 CPU 2.0% < 5%, p95 network 0.09 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
    "Saving = plan price = ₹6,000/month (compute only)",
-   "Disk (100 GB × ₹6 = ₹600) is still billed while stopped"
+   "Disk (100 GB × ₹6 = ₹600) is still billed while stopped",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.39 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 1.00)) = 0.116"
   ],
   "vcpu_removed": 8,
   "peak_check": null,
@@ -3150,7 +3325,8 @@
    "kwh": 32.7,
    "kg_co2": 23.4
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.116
  },
  {
   "resource_id": "vm-072",
@@ -3173,7 +3349,8 @@
   "maths": [
    "p95 CPU 1.6% < 5%, p95 network 0.09 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
    "Saving = plan price = ₹4,000/month (compute only)",
-   "Disk (500 GB × ₹6 = ₹3,000) is still billed while stopped"
+   "Disk (500 GB × ₹6 = ₹3,000) is still billed while stopped",
+   "Risk score = HIGH band 0.67 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 1.00)) = 0.767"
   ],
   "vcpu_removed": 4,
   "peak_check": null,
@@ -3182,7 +3359,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": false
+  "default_accepted": false,
+  "risk_score": 0.767
  },
  {
   "resource_id": "vm-073",
@@ -3205,7 +3383,8 @@
   "maths": [
    "p95 CPU 2.1% < 5%, p95 network 0.09 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
    "Saving = plan price = ₹4,000/month (compute only)",
-   "Disk (200 GB × ₹6 = ₹1,200) is still billed while stopped"
+   "Disk (200 GB × ₹6 = ₹1,200) is still billed while stopped",
+   "Risk score = HIGH band 0.67 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 1.00)) = 0.767"
   ],
   "vcpu_removed": 4,
   "peak_check": null,
@@ -3214,7 +3393,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": false
+  "default_accepted": false,
+  "risk_score": 0.767
  },
  {
   "resource_id": "vm-074",
@@ -3240,7 +3420,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 17.1 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 16.0% × 8 ÷ 4 = 32% CPU; memory p99 after = 40%",
    "Spike check: busiest 5-min reading after = 18.5% × 8 ÷ 4 = 37% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
+   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month",
+   "Risk score = HIGH band 0.67 + ⅓ × (0.5 × limit pressure 0.53 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 1.00)) = 0.856"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -3259,7 +3440,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.856
  },
  {
   "resource_id": "vm-075",
@@ -3285,7 +3467,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 18.1 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 16.0% × 8 ÷ 4 = 32% CPU; memory p99 after = 42%",
    "Spike check: busiest 5-min reading after = 18.9% × 8 ÷ 4 = 38% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
+   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month",
+   "Risk score = HIGH band 0.67 + ⅓ × (0.5 × limit pressure 0.57 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 1.00)) = 0.861"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -3304,7 +3487,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.861
  },
  {
   "resource_id": "vm-076",
@@ -3330,7 +3514,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 17.2 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 16.2% × 8 ÷ 4 = 32% CPU; memory p99 after = 40%",
    "Spike check: busiest 5-min reading after = 19.9% × 8 ÷ 4 = 40% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
+   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month",
+   "Risk score = HIGH band 0.67 + ⅓ × (0.5 × limit pressure 0.54 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 1.00)) = 0.856"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -3349,7 +3534,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.856
  },
  {
   "resource_id": "vm-077",
@@ -3375,7 +3561,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 17.6 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 16.2% × 8 ÷ 4 = 32% CPU; memory p99 after = 41%",
    "Spike check: busiest 5-min reading after = 19.5% × 8 ÷ 4 = 39% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
+   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month",
+   "Risk score = HIGH band 0.67 + ⅓ × (0.5 × limit pressure 0.55 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 1.00)) = 0.858"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -3394,7 +3581,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.858
  },
  {
   "resource_id": "vm-078",
@@ -3420,7 +3608,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 17.5 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 16.1% × 8 ÷ 4 = 32% CPU; memory p99 after = 41%",
    "Spike check: busiest 5-min reading after = 20.2% × 8 ÷ 4 = 40% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
+   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month",
+   "Risk score = HIGH band 0.67 + ⅓ × (0.5 × limit pressure 0.55 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 1.00)) = 0.808"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -3439,7 +3628,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.808
  },
  {
   "resource_id": "vm-079",
@@ -3465,7 +3655,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 18.0 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 16.1% × 8 ÷ 4 = 32% CPU; memory p99 after = 42%",
    "Spike check: busiest 5-min reading after = 20.9% × 8 ÷ 4 = 42% (ceiling 95%)",
-   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
+   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month",
+   "Risk score = HIGH band 0.67 + ⅓ × (0.5 × limit pressure 0.56 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 1.00)) = 0.810"
   ],
   "vcpu_removed": 4,
   "peak_check": {
@@ -3484,7 +3675,8 @@
    "kwh": 16.4,
    "kg_co2": 11.7
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.81
  },
  {
   "resource_id": "vm-080",
@@ -3510,7 +3702,8 @@
    "cheapest plan with ≥ 6 vCPU and ≥ 8.2 GB = s-8-16 (8 vCPU / 16 GB, ₹6,000/month)",
    "Peak Safety Check: p99 after = 99.5% × 4 ÷ 8 = 50% CPU; memory p99 after = 39%",
    "Spike check: busiest 5-min reading after = 100.0% × 4 ÷ 8 = 50% (ceiling 95%)",
-   "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)"
+   "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 1.00)) = 0.100"
   ],
   "vcpu_removed": -4,
   "peak_check": {
@@ -3529,7 +3722,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.1
  },
  {
   "resource_id": "vm-081",
@@ -3555,7 +3749,8 @@
    "cheapest plan with ≥ 6 vCPU and ≥ 8.2 GB = s-8-16 (8 vCPU / 16 GB, ₹6,000/month)",
    "Peak Safety Check: p99 after = 99.5% × 4 ÷ 8 = 50% CPU; memory p99 after = 38%",
    "Spike check: busiest 5-min reading after = 100.0% × 4 ÷ 8 = 50% (ceiling 95%)",
-   "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)"
+   "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 1.00)) = 0.100"
   ],
   "vcpu_removed": -4,
   "peak_check": {
@@ -3574,7 +3769,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.1
  },
  {
   "resource_id": "vm-082",
@@ -3600,7 +3796,8 @@
    "cheapest plan with ≥ 6 vCPU and ≥ 8.2 GB = s-8-16 (8 vCPU / 16 GB, ₹6,000/month)",
    "Peak Safety Check: p99 after = 99.4% × 4 ÷ 8 = 50% CPU; memory p99 after = 39%",
    "Spike check: busiest 5-min reading after = 100.0% × 4 ÷ 8 = 50% (ceiling 95%)",
-   "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)"
+   "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 1.00)) = 0.100"
   ],
   "vcpu_removed": -4,
   "peak_check": {
@@ -3619,7 +3816,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.1
  },
  {
   "resource_id": "vm-083",
@@ -3645,7 +3843,8 @@
    "cheapest plan with ≥ 6 vCPU and ≥ 8.2 GB = s-8-16 (8 vCPU / 16 GB, ₹6,000/month)",
    "Peak Safety Check: p99 after = 99.8% × 4 ÷ 8 = 50% CPU; memory p99 after = 38%",
    "Spike check: busiest 5-min reading after = 100.0% × 4 ÷ 8 = 50% (ceiling 95%)",
-   "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)"
+   "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 1.00)) = 0.100"
   ],
   "vcpu_removed": -4,
   "peak_check": {
@@ -3664,7 +3863,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.1
  },
  {
   "resource_id": "vm-086",
@@ -3688,7 +3888,8 @@
    "average-based: 8 × 10.5% ÷ 70% → s-2-8 (2 vCPU)",
    "peak on s-2-8 = p99 80.5% × 8 ÷ 2 = 322% → overload",
    "required vCPU = max(8 × p99 CPU 80.5% ÷ 70% target, 8 × max CPU 85.7% ÷ 95% ceiling) = 9.19",
-   "required ≥ current size → no safe downsize"
+   "required ≥ current size → no safe downsize",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.90)) = 0.107"
   ],
   "vcpu_removed": 0,
   "peak_check": {
@@ -3708,7 +3909,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": false
+  "default_accepted": false,
+  "risk_score": 0.107
  },
  {
   "resource_id": "vm-087",
@@ -3734,7 +3936,8 @@
    "cheapest plan with ≥ 2 vCPU and ≥ 12.6 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 15.4% × 8 ÷ 2 = 62% CPU; memory p99 after = 59%",
    "Spike check: busiest 5-min reading after = 18.2% × 8 ÷ 2 = 73% (ceiling 95%)",
-   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
+   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month",
+   "Risk score = MEDIUM band 0.33 + ⅓ × (0.5 × limit pressure 0.88 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 1.00)) = 0.480"
   ],
   "vcpu_removed": 6,
   "peak_check": {
@@ -3753,7 +3956,8 @@
    "kwh": 24.5,
    "kg_co2": 17.6
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.48
  },
  {
   "resource_id": "vm-087",
@@ -3774,11 +3978,13 @@
   "saving": 1671,
   "risk": "LOW",
   "keep_hours": [],
+  "saving_alone": 5143,
   "maths": [
    "off-window CPU: average 1.4% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
-   "Storage keeps billing while stopped (not counted as saving)"
+   "Storage keeps billing while stopped (not counted as saving)",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.28 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 1.00)) = 0.047"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
@@ -3787,7 +3993,8 @@
    "kwh": 5.3,
    "kg_co2": 3.8
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.047
  },
  {
   "resource_id": "vm-088",
@@ -3809,7 +4016,8 @@
   ],
   "maths": [
    "p99 CPU including the incident = 99% → would trigger the upsize rule (> 90%)",
-   "Rule: VMs with an open anomaly alert are excluded from rightsizing"
+   "Rule: VMs with an open anomaly alert are excluded from rightsizing",
+   "Risk score = HIGH band 0.67 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.30)) = 0.813"
   ],
   "vcpu_removed": 0,
   "peak_check": null,
@@ -3818,7 +4026,8 @@
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": false
+  "default_accepted": false,
+  "risk_score": 0.813
  },
  {
   "resource_id": "vol-001",
@@ -3843,14 +4052,16 @@
   "maths": [
    "250 GB × ₹6 = ₹1,500/month today",
    "snapshot 250 GB × ₹2 = ₹500/month",
-   "Saving = ₹1,500 − ₹500 = ₹1,000/month"
+   "Saving = ₹1,500 − ₹500 = ₹1,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.95)) = 0.053"
   ],
   "id": "rec-094",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.053
  },
  {
   "resource_id": "vol-002",
@@ -3875,14 +4086,16 @@
   "maths": [
    "200 GB × ₹6 = ₹1,200/month today",
    "snapshot 200 GB × ₹2 = ₹400/month",
-   "Saving = ₹1,200 − ₹400 = ₹800/month"
+   "Saving = ₹1,200 − ₹400 = ₹800/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.95)) = 0.103"
   ],
   "id": "rec-095",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.103
  },
  {
   "resource_id": "vol-003",
@@ -3907,14 +4120,16 @@
   "maths": [
    "250 GB × ₹6 = ₹1,500/month today",
    "snapshot 250 GB × ₹2 = ₹500/month",
-   "Saving = ₹1,500 − ₹500 = ₹1,000/month"
+   "Saving = ₹1,500 − ₹500 = ₹1,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.95)) = 0.003"
   ],
   "id": "rec-096",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.003
  },
  {
   "resource_id": "vol-004",
@@ -3939,14 +4154,16 @@
   "maths": [
    "100 GB × ₹6 = ₹600/month today",
    "snapshot 100 GB × ₹2 = ₹200/month",
-   "Saving = ₹600 − ₹200 = ₹400/month"
+   "Saving = ₹600 − ₹200 = ₹400/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.95)) = 0.103"
   ],
   "id": "rec-097",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.103
  },
  {
   "resource_id": "vol-005",
@@ -3971,14 +4188,16 @@
   "maths": [
    "100 GB × ₹6 = ₹600/month today",
    "snapshot 100 GB × ₹2 = ₹200/month",
-   "Saving = ₹600 − ₹200 = ₹400/month"
+   "Saving = ₹600 − ₹200 = ₹400/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.95)) = 0.053"
   ],
   "id": "rec-098",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.053
  },
  {
   "resource_id": "vol-006",
@@ -4003,14 +4222,16 @@
   "maths": [
    "100 GB × ₹6 = ₹600/month today",
    "snapshot 100 GB × ₹2 = ₹200/month",
-   "Saving = ₹600 − ₹200 = ₹400/month"
+   "Saving = ₹600 − ₹200 = ₹400/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.95)) = 0.103"
   ],
   "id": "rec-099",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.103
  },
  {
   "resource_id": "vol-007",
@@ -4035,14 +4256,16 @@
   "maths": [
    "500 GB × ₹6 = ₹3,000/month today",
    "snapshot 500 GB × ₹2 = ₹1,000/month",
-   "Saving = ₹3,000 − ₹1,000 = ₹2,000/month"
+   "Saving = ₹3,000 − ₹1,000 = ₹2,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.95)) = 0.003"
   ],
   "id": "rec-100",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.003
  },
  {
   "resource_id": "vol-008",
@@ -4067,14 +4290,16 @@
   "maths": [
    "500 GB × ₹6 = ₹3,000/month today",
    "snapshot 500 GB × ₹2 = ₹1,000/month",
-   "Saving = ₹3,000 − ₹1,000 = ₹2,000/month"
+   "Saving = ₹3,000 − ₹1,000 = ₹2,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.95)) = 0.103"
   ],
   "id": "rec-101",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.103
  },
  {
   "resource_id": "vol-009",
@@ -4099,14 +4324,16 @@
   "maths": [
    "100 GB × ₹6 = ₹600/month today",
    "snapshot 100 GB × ₹2 = ₹200/month",
-   "Saving = ₹600 − ₹200 = ₹400/month"
+   "Saving = ₹600 − ₹200 = ₹400/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × staging 0.5 + 0.2 × (1 − confidence 0.95)) = 0.053"
   ],
   "id": "rec-102",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.053
  },
  {
   "resource_id": "vol-010",
@@ -4131,14 +4358,16 @@
   "maths": [
    "250 GB × ₹6 = ₹1,500/month today",
    "snapshot 250 GB × ₹2 = ₹500/month",
-   "Saving = ₹1,500 − ₹500 = ₹1,000/month"
+   "Saving = ₹1,500 − ₹500 = ₹1,000/month",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.95)) = 0.003"
   ],
   "id": "rec-103",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.003
  },
  {
   "resource_id": "ip-031",
@@ -4161,14 +4390,16 @@
   "saving": 300,
   "risk": "LOW",
   "maths": [
-   "Saving = ₹300/month per idle IP"
+   "Saving = ₹300/month per idle IP",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.95)) = 0.103"
   ],
   "id": "rec-104",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.103
  },
  {
   "resource_id": "ip-032",
@@ -4191,14 +4422,16 @@
   "saving": 300,
   "risk": "LOW",
   "maths": [
-   "Saving = ₹300/month per idle IP"
+   "Saving = ₹300/month per idle IP",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.95)) = 0.003"
   ],
   "id": "rec-105",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.003
  },
  {
   "resource_id": "ip-033",
@@ -4221,14 +4454,16 @@
   "saving": 300,
   "risk": "LOW",
   "maths": [
-   "Saving = ₹300/month per idle IP"
+   "Saving = ₹300/month per idle IP",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.95)) = 0.103"
   ],
   "id": "rec-106",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.103
  },
  {
   "resource_id": "ip-034",
@@ -4251,14 +4486,16 @@
   "saving": 300,
   "risk": "LOW",
   "maths": [
-   "Saving = ₹300/month per idle IP"
+   "Saving = ₹300/month per idle IP",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.95)) = 0.003"
   ],
   "id": "rec-107",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.003
  },
  {
   "resource_id": "ip-035",
@@ -4281,14 +4518,16 @@
   "saving": 300,
   "risk": "LOW",
   "maths": [
-   "Saving = ₹300/month per idle IP"
+   "Saving = ₹300/month per idle IP",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × dev 0.0 + 0.2 × (1 − confidence 0.95)) = 0.003"
   ],
   "id": "rec-108",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.003
  },
  {
   "resource_id": "ip-036",
@@ -4311,13 +4550,15 @@
   "saving": 300,
   "risk": "LOW",
   "maths": [
-   "Saving = ₹300/month per idle IP"
+   "Saving = ₹300/month per idle IP",
+   "Risk score = LOW band 0.00 + ⅓ × (0.5 × limit pressure 0.00 + 0.3 × prod 1.0 + 0.2 × (1 − confidence 0.95)) = 0.103"
   ],
   "id": "rec-109",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
-  "default_accepted": true
+  "default_accepted": true,
+  "risk_score": 0.103
  }
 ]
