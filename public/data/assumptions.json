@@ -1,0 +1,120 @@
+{
+ "ANOMALY_MIN_POINTS": 6,
+ "ANOMALY_Z": 4.0,
+ "BLOCK_INR_PER_GB_MONTH": 6.0,
+ "CAPACITY_HORIZON_DAYS": 21,
+ "CAPACITY_WARN_PCT": 90.0,
+ "COST_JUMP_PCT": 15.0,
+ "DAYS": 30,
+ "EGRESS_INR_PER_GB": 0.8,
+ "GRID_KG_CO2_PER_KWH": 0.716,
+ "HOURS_PER_MONTH": 730,
+ "IDLE_CPU_P95": 5.0,
+ "IDLE_IOPS_P95": 10.0,
+ "IDLE_MIN_DAYS": 14,
+ "IDLE_NET_P95_MBPS": 0.5,
+ "KG_CO2_PER_TREE_YEAR": 21.0,
+ "MIN_MEM_MARGIN_GB": 1.0,
+ "MONTHLY_BUDGET_INR": 850000,
+ "N_POINTS": 8640,
+ "OFFHOURS_CPU_MAX": 5.0,
+ "OFF_END_HOUR": 8,
+ "OFF_START_HOUR": 20,
+ "OFF_WEEKENDS": true,
+ "ORPHAN_GRACE_DAYS": 7,
+ "PLANS": {
+  "s-2-4": [
+   2,
+   4,
+   1500
+  ],
+  "s-2-8": [
+   2,
+   8,
+   2000
+  ],
+  "m-2-16": [
+   2,
+   16,
+   2600
+  ],
+  "s-4-8": [
+   4,
+   8,
+   3000
+  ],
+  "s-4-16": [
+   4,
+   16,
+   4000
+  ],
+  "m-4-32": [
+   4,
+   32,
+   5000
+  ],
+  "s-8-16": [
+   8,
+   16,
+   6000
+  ],
+  "s-8-32": [
+   8,
+   32,
+   8000
+  ],
+  "m-8-64": [
+   8,
+   64,
+   9500
+  ],
+  "s-16-32": [
+   16,
+   32,
+   12000
+  ],
+  "s-16-64": [
+   16,
+   64,
+   16000
+  ]
+ },
+ "PLAN_ORDER": [
+  "s-2-4",
+  "s-2-8",
+  "m-2-16",
+  "s-4-8",
+  "s-4-16",
+  "m-4-32",
+  "s-8-16",
+  "s-8-32",
+  "m-8-64",
+  "s-16-32",
+  "s-16-64"
+ ],
+ "POINTS_PER_DAY": 288,
+ "PUBLIC_IP_INR_PER_MONTH": 300.0,
+ "PUE": 1.4,
+ "REGIONS": [
+  "Noida",
+  "Bangalore",
+  "Mumbai"
+ ],
+ "SEED": 42,
+ "SNAPSHOT_INR_PER_GB_MONTH": 2.0,
+ "START": "2026-09-24T00:00:00+05:30",
+ "STEP_MIN": 5,
+ "TARGET_CPU_UTIL": 0.7,
+ "TARGET_MEM_UTIL": 0.75,
+ "TEAMS": [
+  "Payments",
+  "Search",
+  "Platform",
+  "Data",
+  "Mobile-API",
+  "Growth"
+ ],
+ "UNDER_P99": 90.0,
+ "WATTS_PER_VCPU": 4.0,
+ "OFF_HOURS_FRACTION": 0.6429
+}

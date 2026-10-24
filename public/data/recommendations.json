@@ -1,0 +1,3909 @@
+[
+ {
+  "resource_id": "vm-001",
+  "resource_name": "prod-ledger-01",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Mumbai",
+  "team": "Payments",
+  "current_plan": "s-8-32",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-32 → m-2-16 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 14% CPU and 29% memory. On m-2-16 its peak would run at about 56% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-2-16",
+  "saving": 5400,
+  "risk": "MEDIUM",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 14.1% ÷ 70% target = 1.61",
+   "required RAM = max(32 GB × p99 mem 28.6% ÷ 75%, used + 1 GB) = 12.2 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 12.2 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
+   "Peak Safety Check: p99 after = 14.1% × 8 ÷ 2 = 56% CPU; memory p99 after = 57%",
+   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
+  ],
+  "vcpu_removed": 6,
+  "peak_check": {
+   "cpu_p99_before": 14.11,
+   "cpu_p99_after": 56.4,
+   "mem_p99_before": 28.63,
+   "mem_p99_after": 57.3,
+   "safe": true
+  },
+  "id": "rec-001",
+  "carbon": {
+   "kwh": 24.5,
+   "kg_co2": 17.6
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-002",
+  "resource_name": "prod-mailer-01",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Bangalore",
+  "team": "Growth",
+  "current_plan": "s-8-32",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-32 → m-2-16 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 15% CPU and 29% memory. On m-2-16 its peak would run at about 58% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-2-16",
+  "saving": 5400,
+  "risk": "MEDIUM",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 14.6% ÷ 70% target = 1.67",
+   "required RAM = max(32 GB × p99 mem 28.8% ÷ 75%, used + 1 GB) = 12.3 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 12.3 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
+   "Peak Safety Check: p99 after = 14.6% × 8 ÷ 2 = 58% CPU; memory p99 after = 58%",
+   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
+  ],
+  "vcpu_removed": 6,
+  "peak_check": {
+   "cpu_p99_before": 14.6,
+   "cpu_p99_after": 58.4,
+   "mem_p99_before": 28.79,
+   "mem_p99_after": 57.6,
+   "safe": true
+  },
+  "id": "rec-002",
+  "carbon": {
+   "kwh": 24.5,
+   "kg_co2": 17.6
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-003",
+  "resource_name": "prod-auth-01",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Bangalore",
+  "team": "Platform",
+  "current_plan": "s-8-32",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-32 → m-2-16 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 13% CPU and 28% memory. On m-2-16 its peak would run at about 53% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-2-16",
+  "saving": 5400,
+  "risk": "MEDIUM",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 13.3% ÷ 70% target = 1.52",
+   "required RAM = max(32 GB × p99 mem 27.8% ÷ 75%, used + 1 GB) = 11.9 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 11.9 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
+   "Peak Safety Check: p99 after = 13.3% × 8 ÷ 2 = 53% CPU; memory p99 after = 56%",
+   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
+  ],
+  "vcpu_removed": 6,
+  "peak_check": {
+   "cpu_p99_before": 13.26,
+   "cpu_p99_after": 53.0,
+   "mem_p99_before": 27.84,
+   "mem_p99_after": 55.7,
+   "safe": true
+  },
+  "id": "rec-003",
+  "carbon": {
+   "kwh": 24.5,
+   "kg_co2": 17.6
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-004",
+  "resource_name": "prod-crm-01",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Bangalore",
+  "team": "Growth",
+  "current_plan": "s-8-32",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-32 → m-2-16 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 14% CPU and 26% memory. On m-2-16 its peak would run at about 55% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-2-16",
+  "saving": 5400,
+  "risk": "MEDIUM",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 13.8% ÷ 70% target = 1.57",
+   "required RAM = max(32 GB × p99 mem 26.1% ÷ 75%, used + 1 GB) = 11.1 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 11.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
+   "Peak Safety Check: p99 after = 13.8% × 8 ÷ 2 = 55% CPU; memory p99 after = 52%",
+   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
+  ],
+  "vcpu_removed": 6,
+  "peak_check": {
+   "cpu_p99_before": 13.78,
+   "cpu_p99_after": 55.1,
+   "mem_p99_before": 26.13,
+   "mem_p99_after": 52.3,
+   "safe": true
+  },
+  "id": "rec-004",
+  "carbon": {
+   "kwh": 24.5,
+   "kg_co2": 17.6
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-005",
+  "resource_name": "prod-gateway-01",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Bangalore",
+  "team": "Platform",
+  "current_plan": "s-8-32",
+  "confidence": 84,
+  "confidence_notes": [
+   "6% of readings missing (−16)"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-32 → m-2-16 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 15% CPU and 27% memory. On m-2-16 its peak would run at about 60% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-2-16",
+  "saving": 5400,
+  "risk": "MEDIUM",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 14.9% ÷ 70% target = 1.71",
+   "required RAM = max(32 GB × p99 mem 27.1% ÷ 75%, used + 1 GB) = 11.5 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 11.5 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
+   "Peak Safety Check: p99 after = 14.9% × 8 ÷ 2 = 60% CPU; memory p99 after = 54%",
+   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
+  ],
+  "vcpu_removed": 6,
+  "peak_check": {
+   "cpu_p99_before": 14.93,
+   "cpu_p99_after": 59.7,
+   "mem_p99_before": 27.07,
+   "mem_p99_after": 54.1,
+   "safe": true
+  },
+  "id": "rec-005",
+  "carbon": {
+   "kwh": 24.5,
+   "kg_co2": 17.6
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-006",
+  "resource_name": "prod-cdn-origin-01",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Mumbai",
+  "team": "Mobile-API",
+  "current_plan": "s-8-32",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-32 → m-2-16 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 12% CPU and 31% memory. On m-2-16 its peak would run at about 47% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-2-16",
+  "saving": 5400,
+  "risk": "MEDIUM",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 11.8% ÷ 70% target = 1.34",
+   "required RAM = max(32 GB × p99 mem 30.6% ÷ 75%, used + 1 GB) = 13.1 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 13.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
+   "Peak Safety Check: p99 after = 11.8% × 8 ÷ 2 = 47% CPU; memory p99 after = 61%",
+   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
+  ],
+  "vcpu_removed": 6,
+  "peak_check": {
+   "cpu_p99_before": 11.75,
+   "cpu_p99_after": 47.0,
+   "mem_p99_before": 30.64,
+   "mem_p99_after": 61.3,
+   "safe": true
+  },
+  "id": "rec-006",
+  "carbon": {
+   "kwh": 24.5,
+   "kg_co2": 17.6
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-007",
+  "resource_name": "stg-push-01",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Bangalore",
+  "team": "Mobile-API",
+  "current_plan": "s-8-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → s-2-8",
+  "reason": "Even at its busiest 1% of the time this VM uses only 14% CPU and 32% memory. On s-2-8 its peak would run at about 58% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-2-8",
+  "saving": 4000,
+  "risk": "MEDIUM",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 14.5% ÷ 70% target = 1.65",
+   "required RAM = max(16 GB × p99 mem 31.8% ÷ 75%, used + 1 GB) = 6.8 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 6.8 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
+   "Peak Safety Check: p99 after = 14.5% × 8 ÷ 2 = 58% CPU; memory p99 after = 64%",
+   "Saving = ₹6,000 − ₹2,000 = ₹4,000/month"
+  ],
+  "vcpu_removed": 6,
+  "peak_check": {
+   "cpu_p99_before": 14.47,
+   "cpu_p99_after": 57.9,
+   "mem_p99_before": 31.75,
+   "mem_p99_after": 63.5,
+   "safe": true
+  },
+  "id": "rec-007",
+  "carbon": {
+   "kwh": 24.5,
+   "kg_co2": 17.6
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-008",
+  "resource_name": "stg-indexer-01",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Mumbai",
+  "team": "Search",
+  "current_plan": "s-8-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → s-2-8",
+  "reason": "Even at its busiest 1% of the time this VM uses only 13% CPU and 31% memory. On s-2-8 its peak would run at about 51% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-2-8",
+  "saving": 4000,
+  "risk": "MEDIUM",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 12.8% ÷ 70% target = 1.47",
+   "required RAM = max(16 GB × p99 mem 31.2% ÷ 75%, used + 1 GB) = 6.7 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 6.7 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
+   "Peak Safety Check: p99 after = 12.8% × 8 ÷ 2 = 51% CPU; memory p99 after = 62%",
+   "Saving = ₹6,000 − ₹2,000 = ₹4,000/month"
+  ],
+  "vcpu_removed": 6,
+  "peak_check": {
+   "cpu_p99_before": 12.82,
+   "cpu_p99_after": 51.3,
+   "mem_p99_before": 31.21,
+   "mem_p99_after": 62.4,
+   "safe": true
+  },
+  "id": "rec-008",
+  "carbon": {
+   "kwh": 24.5,
+   "kg_co2": 17.6
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-009",
+  "resource_name": "stg-upi-gw-01",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Noida",
+  "team": "Payments",
+  "current_plan": "s-8-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → s-2-8",
+  "reason": "Even at its busiest 1% of the time this VM uses only 13% CPU and 31% memory. On s-2-8 its peak would run at about 52% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-2-8",
+  "saving": 4000,
+  "risk": "MEDIUM",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 13.1% ÷ 70% target = 1.50",
+   "required RAM = max(16 GB × p99 mem 31.1% ÷ 75%, used + 1 GB) = 6.6 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 6.6 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
+   "Peak Safety Check: p99 after = 13.1% × 8 ÷ 2 = 52% CPU; memory p99 after = 62%",
+   "Saving = ₹6,000 − ₹2,000 = ₹4,000/month"
+  ],
+  "vcpu_removed": 6,
+  "peak_check": {
+   "cpu_p99_before": 13.09,
+   "cpu_p99_after": 52.4,
+   "mem_p99_before": 31.14,
+   "mem_p99_after": 62.3,
+   "safe": true
+  },
+  "id": "rec-009",
+  "carbon": {
+   "kwh": 24.5,
+   "kg_co2": 17.6
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-010",
+  "resource_name": "stg-cdn-origin-01",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Bangalore",
+  "team": "Mobile-API",
+  "current_plan": "s-8-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → s-2-8",
+  "reason": "Even at its busiest 1% of the time this VM uses only 12% CPU and 26% memory. On s-2-8 its peak would run at about 47% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-2-8",
+  "saving": 4000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 11.8% ÷ 70% target = 1.34",
+   "required RAM = max(16 GB × p99 mem 25.5% ÷ 75%, used + 1 GB) = 5.4 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 5.4 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
+   "Peak Safety Check: p99 after = 11.8% × 8 ÷ 2 = 47% CPU; memory p99 after = 51%",
+   "Saving = ₹6,000 − ₹2,000 = ₹4,000/month"
+  ],
+  "vcpu_removed": 6,
+  "peak_check": {
+   "cpu_p99_before": 11.76,
+   "cpu_p99_after": 47.0,
+   "mem_p99_before": 25.54,
+   "mem_p99_after": 51.1,
+   "safe": true
+  },
+  "id": "rec-010",
+  "carbon": {
+   "kwh": 24.5,
+   "kg_co2": 17.6
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-011",
+  "resource_name": "stg-auth-01",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Mumbai",
+  "team": "Platform",
+  "current_plan": "s-8-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → s-2-8",
+  "reason": "Even at its busiest 1% of the time this VM uses only 12% CPU and 28% memory. On s-2-8 its peak would run at about 49% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-2-8",
+  "saving": 4000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 12.3% ÷ 70% target = 1.41",
+   "required RAM = max(16 GB × p99 mem 27.8% ÷ 75%, used + 1 GB) = 5.9 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 5.9 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
+   "Peak Safety Check: p99 after = 12.3% × 8 ÷ 2 = 49% CPU; memory p99 after = 56%",
+   "Saving = ₹6,000 − ₹2,000 = ₹4,000/month"
+  ],
+  "vcpu_removed": 6,
+  "peak_check": {
+   "cpu_p99_before": 12.34,
+   "cpu_p99_after": 49.4,
+   "mem_p99_before": 27.84,
+   "mem_p99_after": 55.7,
+   "safe": true
+  },
+  "id": "rec-011",
+  "carbon": {
+   "kwh": 24.5,
+   "kg_co2": 17.6
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-012",
+  "resource_name": "dev-kafka-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Noida",
+  "team": "Platform",
+  "current_plan": "s-4-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-4-16 → s-2-8",
+  "reason": "Even at its busiest 1% of the time this VM uses only 15% CPU and 32% memory. On s-2-8 its peak would run at about 30% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-2-8",
+  "saving": 2000,
+  "risk": "MEDIUM",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 14.8% ÷ 70% target = 0.85",
+   "required RAM = max(16 GB × p99 mem 32.3% ÷ 75%, used + 1 GB) = 6.9 GB",
+   "cheapest plan with ≥ 1 vCPU and ≥ 6.9 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
+   "Peak Safety Check: p99 after = 14.8% × 4 ÷ 2 = 30% CPU; memory p99 after = 65%",
+   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
+  ],
+  "vcpu_removed": 2,
+  "peak_check": {
+   "cpu_p99_before": 14.84,
+   "cpu_p99_after": 29.7,
+   "mem_p99_before": 32.31,
+   "mem_p99_after": 64.6,
+   "safe": true
+  },
+  "id": "rec-012",
+  "carbon": {
+   "kwh": 8.2,
+   "kg_co2": 5.9
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-013",
+  "resource_name": "dev-reports-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Growth",
+  "current_plan": "s-4-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-4-16 → s-2-8",
+  "reason": "Even at its busiest 1% of the time this VM uses only 14% CPU and 27% memory. On s-2-8 its peak would run at about 28% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-2-8",
+  "saving": 2000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 14.0% ÷ 70% target = 0.80",
+   "required RAM = max(16 GB × p99 mem 26.7% ÷ 75%, used + 1 GB) = 5.7 GB",
+   "cheapest plan with ≥ 1 vCPU and ≥ 5.7 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
+   "Peak Safety Check: p99 after = 14.0% × 4 ÷ 2 = 28% CPU; memory p99 after = 53%",
+   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
+  ],
+  "vcpu_removed": 2,
+  "peak_check": {
+   "cpu_p99_before": 14.0,
+   "cpu_p99_after": 28.0,
+   "mem_p99_before": 26.7,
+   "mem_p99_after": 53.4,
+   "safe": true
+  },
+  "id": "rec-013",
+  "carbon": {
+   "kwh": 8.2,
+   "kg_co2": 5.9
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-014",
+  "resource_name": "dev-mailer-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Noida",
+  "team": "Growth",
+  "current_plan": "s-4-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-4-16 → s-2-8",
+  "reason": "Even at its busiest 1% of the time this VM uses only 14% CPU and 32% memory. On s-2-8 its peak would run at about 29% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-2-8",
+  "saving": 2000,
+  "risk": "MEDIUM",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 14.4% ÷ 70% target = 0.83",
+   "required RAM = max(16 GB × p99 mem 31.9% ÷ 75%, used + 1 GB) = 6.8 GB",
+   "cheapest plan with ≥ 1 vCPU and ≥ 6.8 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
+   "Peak Safety Check: p99 after = 14.4% × 4 ÷ 2 = 29% CPU; memory p99 after = 64%",
+   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
+  ],
+  "vcpu_removed": 2,
+  "peak_check": {
+   "cpu_p99_before": 14.44,
+   "cpu_p99_after": 28.9,
+   "mem_p99_before": 31.9,
+   "mem_p99_after": 63.8,
+   "safe": true
+  },
+  "id": "rec-014",
+  "carbon": {
+   "kwh": 8.2,
+   "kg_co2": 5.9
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-015",
+  "resource_name": "dev-kafka-02",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Noida",
+  "team": "Platform",
+  "current_plan": "s-4-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-4-16 → s-2-8",
+  "reason": "Even at its busiest 1% of the time this VM uses only 12% CPU and 30% memory. On s-2-8 its peak would run at about 25% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-2-8",
+  "saving": 2000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 12.3% ÷ 70% target = 0.70",
+   "required RAM = max(16 GB × p99 mem 29.5% ÷ 75%, used + 1 GB) = 6.3 GB",
+   "cheapest plan with ≥ 1 vCPU and ≥ 6.3 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
+   "Peak Safety Check: p99 after = 12.3% × 4 ÷ 2 = 25% CPU; memory p99 after = 59%",
+   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
+  ],
+  "vcpu_removed": 2,
+  "peak_check": {
+   "cpu_p99_before": 12.31,
+   "cpu_p99_after": 24.6,
+   "mem_p99_before": 29.54,
+   "mem_p99_after": 59.1,
+   "safe": true
+  },
+  "id": "rec-015",
+  "carbon": {
+   "kwh": 8.2,
+   "kg_co2": 5.9
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-016",
+  "resource_name": "dev-ledger-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Payments",
+  "current_plan": "s-4-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-4-16 → s-2-8",
+  "reason": "Even at its busiest 1% of the time this VM uses only 14% CPU and 26% memory. On s-2-8 its peak would run at about 28% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-2-8",
+  "saving": 2000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 14.1% ÷ 70% target = 0.80",
+   "required RAM = max(16 GB × p99 mem 26.2% ÷ 75%, used + 1 GB) = 5.6 GB",
+   "cheapest plan with ≥ 1 vCPU and ≥ 5.6 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
+   "Peak Safety Check: p99 after = 14.1% × 4 ÷ 2 = 28% CPU; memory p99 after = 52%",
+   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
+  ],
+  "vcpu_removed": 2,
+  "peak_check": {
+   "cpu_p99_before": 14.05,
+   "cpu_p99_after": 28.1,
+   "mem_p99_before": 26.23,
+   "mem_p99_after": 52.5,
+   "safe": true
+  },
+  "id": "rec-016",
+  "carbon": {
+   "kwh": 8.2,
+   "kg_co2": 5.9
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-017",
+  "resource_name": "dev-ab-test-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Growth",
+  "current_plan": "s-4-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-4-16 → s-2-8",
+  "reason": "Even at its busiest 1% of the time this VM uses only 12% CPU and 32% memory. On s-2-8 its peak would run at about 23% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-2-8",
+  "saving": 2000,
+  "risk": "MEDIUM",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 11.7% ÷ 70% target = 0.67",
+   "required RAM = max(16 GB × p99 mem 31.8% ÷ 75%, used + 1 GB) = 6.8 GB",
+   "cheapest plan with ≥ 1 vCPU and ≥ 6.8 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
+   "Peak Safety Check: p99 after = 11.7% × 4 ÷ 2 = 23% CPU; memory p99 after = 64%",
+   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
+  ],
+  "vcpu_removed": 2,
+  "peak_check": {
+   "cpu_p99_before": 11.7,
+   "cpu_p99_after": 23.4,
+   "mem_p99_before": 31.82,
+   "mem_p99_after": 63.6,
+   "safe": true
+  },
+  "id": "rec-017",
+  "carbon": {
+   "kwh": 8.2,
+   "kg_co2": 5.9
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-018",
+  "resource_name": "dev-ranker-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Search",
+  "current_plan": "s-4-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-4-16 → s-2-8",
+  "reason": "Even at its busiest 1% of the time this VM uses only 13% CPU and 28% memory. On s-2-8 its peak would run at about 26% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-2-8",
+  "saving": 2000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 12.9% ÷ 70% target = 0.74",
+   "required RAM = max(16 GB × p99 mem 28.2% ÷ 75%, used + 1 GB) = 6.0 GB",
+   "cheapest plan with ≥ 1 vCPU and ≥ 6.0 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
+   "Peak Safety Check: p99 after = 12.9% × 4 ÷ 2 = 26% CPU; memory p99 after = 56%",
+   "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
+  ],
+  "vcpu_removed": 2,
+  "peak_check": {
+   "cpu_p99_before": 12.93,
+   "cpu_p99_after": 25.9,
+   "mem_p99_before": 28.22,
+   "mem_p99_after": 56.4,
+   "safe": true
+  },
+  "id": "rec-018",
+  "carbon": {
+   "kwh": 8.2,
+   "kg_co2": 5.9
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-035",
+  "resource_name": "prod-ab-test-01",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Bangalore",
+  "team": "Growth",
+  "current_plan": "s-8-16",
+  "confidence": 90,
+  "confidence_notes": [
+   "short peaks seen: a monthly job could be outside the 30-day window (−10)"
+  ],
+  "action": "keep",
+  "title": "Keep size: daily peak protected",
+  "reason": "Average CPU is only 10%, so an average-based tool would shrink it to s-2-8. But every day around 18:00 it reaches 81% (p99). On s-2-8 that peak would need 323% CPU and the VM would fall over. We do not downsize it.",
+  "target_plan": "s-8-16",
+  "saving": 0,
+  "risk": "LOW",
+  "maths": [
+   "average-based: 8 × 10.5% ÷ 70% → s-2-8 (2 vCPU)",
+   "peak on s-2-8 = 80.7% × 8 ÷ 2 = 323% → overload",
+   "required vCPU = 8 × p99 CPU 80.7% ÷ 70% target = 9.22",
+   "required ≥ current size → no safe downsize"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": {
+   "cpu_p99_before": 80.68,
+   "cpu_p99_after": 322.7,
+   "mem_p99_before": 54.89,
+   "mem_p99_after": 27.4,
+   "safe": false,
+   "avg_based_plan": "s-2-8"
+  },
+  "id": "rec-019",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": false
+ },
+ {
+  "resource_id": "vm-036",
+  "resource_name": "prod-auth-04",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Mumbai",
+  "team": "Platform",
+  "current_plan": "s-8-16",
+  "confidence": 75,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.0 (−15)",
+   "short peaks seen: a monthly job could be outside the 30-day window (−10)"
+  ],
+  "action": "keep",
+  "title": "Keep size: daily peak protected",
+  "reason": "Average CPU is only 11%, so an average-based tool would shrink it to s-2-8. But every day around 11:00 it reaches 84% (p99). On s-2-8 that peak would need 335% CPU and the VM would fall over. We do not downsize it.",
+  "target_plan": "s-8-16",
+  "saving": 0,
+  "risk": "LOW",
+  "maths": [
+   "average-based: 8 × 10.6% ÷ 70% → s-2-8 (2 vCPU)",
+   "peak on s-2-8 = 83.9% × 8 ÷ 2 = 335% → overload",
+   "required vCPU = 8 × p99 CPU 83.9% ÷ 70% target = 9.58",
+   "required ≥ current size → no safe downsize"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": {
+   "cpu_p99_before": 83.86,
+   "cpu_p99_after": 335.4,
+   "mem_p99_before": 55.18,
+   "mem_p99_after": 27.6,
+   "safe": false,
+   "avg_based_plan": "s-2-8"
+  },
+  "id": "rec-020",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": false
+ },
+ {
+  "resource_id": "vm-037",
+  "resource_name": "prod-upi-gw-02",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Bangalore",
+  "team": "Payments",
+  "current_plan": "s-8-16",
+  "confidence": 75,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.0 (−15)",
+   "short peaks seen: a monthly job could be outside the 30-day window (−10)"
+  ],
+  "action": "keep",
+  "title": "Keep size: daily peak protected",
+  "reason": "Average CPU is only 11%, so an average-based tool would shrink it to s-2-8. But every day around 11:00 it reaches 85% (p99). On s-2-8 that peak would need 341% CPU and the VM would fall over. We do not downsize it.",
+  "target_plan": "s-8-16",
+  "saving": 0,
+  "risk": "LOW",
+  "maths": [
+   "average-based: 8 × 10.6% ÷ 70% → s-2-8 (2 vCPU)",
+   "peak on s-2-8 = 85.2% × 8 ÷ 2 = 341% → overload",
+   "required vCPU = 8 × p99 CPU 85.2% ÷ 70% target = 9.74",
+   "required ≥ current size → no safe downsize"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": {
+   "cpu_p99_before": 85.21,
+   "cpu_p99_after": 340.8,
+   "mem_p99_before": 55.36,
+   "mem_p99_after": 27.7,
+   "safe": false,
+   "avg_based_plan": "s-2-8"
+  },
+  "id": "rec-021",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": false
+ },
+ {
+  "resource_id": "vm-038",
+  "resource_name": "prod-ranker-01",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Mumbai",
+  "team": "Search",
+  "current_plan": "s-8-16",
+  "confidence": 75,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.0 (−15)",
+   "short peaks seen: a monthly job could be outside the 30-day window (−10)"
+  ],
+  "action": "keep",
+  "title": "Keep size: daily peak protected",
+  "reason": "Average CPU is only 11%, so an average-based tool would shrink it to s-2-8. But every day around 10:00 it reaches 82% (p99). On s-2-8 that peak would need 328% CPU and the VM would fall over. We do not downsize it.",
+  "target_plan": "s-8-16",
+  "saving": 0,
+  "risk": "LOW",
+  "maths": [
+   "average-based: 8 × 10.5% ÷ 70% → s-2-8 (2 vCPU)",
+   "peak on s-2-8 = 81.9% × 8 ÷ 2 = 328% → overload",
+   "required vCPU = 8 × p99 CPU 81.9% ÷ 70% target = 9.36",
+   "required ≥ current size → no safe downsize"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": {
+   "cpu_p99_before": 81.89,
+   "cpu_p99_after": 327.6,
+   "mem_p99_before": 55.12,
+   "mem_p99_after": 27.6,
+   "safe": false,
+   "avg_based_plan": "s-2-8"
+  },
+  "id": "rec-022",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": false
+ },
+ {
+  "resource_id": "vm-039",
+  "resource_name": "prod-billing-01",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Noida",
+  "team": "Payments",
+  "current_plan": "s-8-16",
+  "confidence": 75,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.0 (−15)",
+   "short peaks seen: a monthly job could be outside the 30-day window (−10)"
+  ],
+  "action": "keep",
+  "title": "Keep size: daily peak protected",
+  "reason": "Average CPU is only 11%, so an average-based tool would shrink it to s-2-8. But every day around 18:00 it reaches 82% (p99). On s-2-8 that peak would need 327% CPU and the VM would fall over. We do not downsize it.",
+  "target_plan": "s-8-16",
+  "saving": 0,
+  "risk": "LOW",
+  "maths": [
+   "average-based: 8 × 10.5% ÷ 70% → s-2-8 (2 vCPU)",
+   "peak on s-2-8 = 81.8% × 8 ÷ 2 = 327% → overload",
+   "required vCPU = 8 × p99 CPU 81.8% ÷ 70% target = 9.35",
+   "required ≥ current size → no safe downsize"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": {
+   "cpu_p99_before": 81.82,
+   "cpu_p99_after": 327.3,
+   "mem_p99_before": 54.97,
+   "mem_p99_after": 27.5,
+   "safe": false,
+   "avg_based_plan": "s-2-8"
+  },
+  "id": "rec-023",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": false
+ },
+ {
+  "resource_id": "vm-040",
+  "resource_name": "prod-gateway-02",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Noida",
+  "team": "Platform",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 2.5 (−15)"
+  ],
+  "action": "keep",
+  "title": "Keep size: daily peak protected",
+  "reason": "Average CPU is only 8%, so an average-based tool would shrink it to m-2-16. But every day around 03:00 it reaches 79% (p99). On m-2-16 that peak would need 315% CPU and the VM would fall over. We do not downsize it.",
+  "target_plan": "s-8-32",
+  "saving": 0,
+  "risk": "LOW",
+  "maths": [
+   "average-based: 8 × 8.3% ÷ 70% → m-2-16 (2 vCPU)",
+   "peak on m-2-16 = 78.7% × 8 ÷ 2 = 315% → overload",
+   "required vCPU = 8 × p99 CPU 78.7% ÷ 70% target = 8.99",
+   "required ≥ current size → no safe downsize"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": {
+   "cpu_p99_before": 78.66,
+   "cpu_p99_after": 314.6,
+   "mem_p99_before": 66.17,
+   "mem_p99_after": 66.2,
+   "safe": false,
+   "avg_based_plan": "m-2-16"
+  },
+  "id": "rec-024",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": false
+ },
+ {
+  "resource_id": "vm-041",
+  "resource_name": "prod-kafka-04",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Noida",
+  "team": "Platform",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 2.5 (−15)"
+  ],
+  "action": "keep",
+  "title": "Keep size: daily peak protected",
+  "reason": "Average CPU is only 8%, so an average-based tool would shrink it to m-2-16. But every day around 02:00 it reaches 79% (p99). On m-2-16 that peak would need 315% CPU and the VM would fall over. We do not downsize it.",
+  "target_plan": "s-8-32",
+  "saving": 0,
+  "risk": "LOW",
+  "maths": [
+   "average-based: 8 × 8.3% ÷ 70% → m-2-16 (2 vCPU)",
+   "peak on m-2-16 = 78.8% × 8 ÷ 2 = 315% → overload",
+   "required vCPU = 8 × p99 CPU 78.8% ÷ 70% target = 9.01",
+   "required ≥ current size → no safe downsize"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": {
+   "cpu_p99_before": 78.81,
+   "cpu_p99_after": 315.2,
+   "mem_p99_before": 66.15,
+   "mem_p99_after": 66.2,
+   "safe": false,
+   "avg_based_plan": "m-2-16"
+  },
+  "id": "rec-025",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": false
+ },
+ {
+  "resource_id": "vm-042",
+  "resource_name": "prod-ledger-03",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Mumbai",
+  "team": "Payments",
+  "current_plan": "s-8-32",
+  "confidence": 75,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 2.5 (−15)",
+   "short peaks seen: a monthly job could be outside the 30-day window (−10)"
+  ],
+  "action": "keep",
+  "title": "Keep size: daily peak protected",
+  "reason": "Average CPU is only 8%, so an average-based tool would shrink it to m-2-16. But every day around 01:00 it reaches 80% (p99). On m-2-16 that peak would need 319% CPU and the VM would fall over. We do not downsize it.",
+  "target_plan": "s-8-32",
+  "saving": 0,
+  "risk": "LOW",
+  "maths": [
+   "average-based: 8 × 8.4% ÷ 70% → m-2-16 (2 vCPU)",
+   "peak on m-2-16 = 79.8% × 8 ÷ 2 = 319% → overload",
+   "required vCPU = 8 × p99 CPU 79.8% ÷ 70% target = 9.11",
+   "required ≥ current size → no safe downsize"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": {
+   "cpu_p99_before": 79.75,
+   "cpu_p99_after": 319.0,
+   "mem_p99_before": 66.22,
+   "mem_p99_after": 66.2,
+   "safe": false,
+   "avg_based_plan": "m-2-16"
+  },
+  "id": "rec-026",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": false
+ },
+ {
+  "resource_id": "vm-043",
+  "resource_name": "prod-redis-01",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Bangalore",
+  "team": "Platform",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 2.5 (−15)"
+  ],
+  "action": "keep",
+  "title": "Keep size: daily peak protected",
+  "reason": "Average CPU is only 8%, so an average-based tool would shrink it to m-2-16. But every day around 01:00 it reaches 77% (p99). On m-2-16 that peak would need 307% CPU and the VM would fall over. We do not downsize it.",
+  "target_plan": "s-8-32",
+  "saving": 0,
+  "risk": "LOW",
+  "maths": [
+   "average-based: 8 × 8.2% ÷ 70% → m-2-16 (2 vCPU)",
+   "peak on m-2-16 = 76.7% × 8 ÷ 2 = 307% → overload",
+   "required vCPU = 8 × p99 CPU 76.7% ÷ 70% target = 8.77",
+   "required ≥ current size → no safe downsize"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": {
+   "cpu_p99_before": 76.73,
+   "cpu_p99_after": 306.9,
+   "mem_p99_before": 66.27,
+   "mem_p99_after": 66.3,
+   "safe": false,
+   "avg_based_plan": "m-2-16"
+  },
+  "id": "rec-027",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": false
+ },
+ {
+  "resource_id": "vm-044",
+  "resource_name": "stg-ab-test-01",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Bangalore",
+  "team": "Growth",
+  "current_plan": "s-4-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 2.5 (−15)"
+  ],
+  "action": "keep",
+  "title": "Keep size: daily peak protected",
+  "reason": "Average CPU is only 9%, so an average-based tool would shrink it to s-2-8. But every day around 04:00 it reaches 82% (p99). On s-2-8 that peak would need 163% CPU and the VM would fall over. We do not downsize it.",
+  "target_plan": "s-4-16",
+  "saving": 0,
+  "risk": "LOW",
+  "maths": [
+   "average-based: 4 × 8.6% ÷ 70% → s-2-8 (2 vCPU)",
+   "peak on s-2-8 = 81.6% × 4 ÷ 2 = 163% → overload",
+   "required vCPU = 4 × p99 CPU 81.6% ÷ 70% target = 4.66",
+   "required ≥ current size → no safe downsize"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": {
+   "cpu_p99_before": 81.62,
+   "cpu_p99_after": 163.2,
+   "mem_p99_before": 66.19,
+   "mem_p99_after": 66.2,
+   "safe": false,
+   "avg_based_plan": "s-2-8"
+  },
+  "id": "rec-028",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": false
+ },
+ {
+  "resource_id": "vm-045",
+  "resource_name": "stg-media-01",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Mumbai",
+  "team": "Mobile-API",
+  "current_plan": "s-4-16",
+  "confidence": 75,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 2.5 (−15)",
+   "short peaks seen: a monthly job could be outside the 30-day window (−10)"
+  ],
+  "action": "keep",
+  "title": "Keep size: daily peak protected",
+  "reason": "Average CPU is only 8%, so an average-based tool would shrink it to s-2-8. But every day around 01:00 it reaches 80% (p99). On s-2-8 that peak would need 160% CPU and the VM would fall over. We do not downsize it.",
+  "target_plan": "s-4-16",
+  "saving": 0,
+  "risk": "LOW",
+  "maths": [
+   "average-based: 4 × 8.4% ÷ 70% → s-2-8 (2 vCPU)",
+   "peak on s-2-8 = 79.9% × 4 ÷ 2 = 160% → overload",
+   "required vCPU = 4 × p99 CPU 79.9% ÷ 70% target = 4.57",
+   "required ≥ current size → no safe downsize"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": {
+   "cpu_p99_before": 79.94,
+   "cpu_p99_after": 159.9,
+   "mem_p99_before": 66.09,
+   "mem_p99_after": 66.1,
+   "safe": false,
+   "avg_based_plan": "s-2-8"
+  },
+  "id": "rec-029",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": false
+ },
+ {
+  "resource_id": "vm-046",
+  "resource_name": "dev-redis-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Platform",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-32 → m-4-32 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 24% CPU and 43% memory. On m-4-32 its peak would run at about 49% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-4-32",
+  "saving": 3000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 24.4% ÷ 70% target = 2.79",
+   "required RAM = max(32 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 18.3 GB",
+   "cheapest plan with ≥ 3 vCPU and ≥ 18.3 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
+   "Peak Safety Check: p99 after = 24.4% × 8 ÷ 4 = 49% CPU; memory p99 after = 43%",
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 24.45,
+   "cpu_p99_after": 48.9,
+   "mem_p99_before": 42.78,
+   "mem_p99_after": 42.8,
+   "safe": true
+  },
+  "id": "rec-030",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-046",
+  "resource_name": "dev-redis-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Platform",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.2% versus 20% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 3214,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 2.5714285714285716,
+  "peak_check": null,
+  "id": "rec-031",
+  "carbon": {
+   "kwh": 10.5,
+   "kg_co2": 7.5
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-047",
+  "resource_name": "dev-ranker-02",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Search",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-32 → m-4-32 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 26% CPU and 43% memory. On m-4-32 its peak would run at about 51% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-4-32",
+  "saving": 3000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 25.6% ÷ 70% target = 2.93",
+   "required RAM = max(32 GB × p99 mem 42.9% ÷ 75%, used + 1 GB) = 18.3 GB",
+   "cheapest plan with ≥ 3 vCPU and ≥ 18.3 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
+   "Peak Safety Check: p99 after = 25.6% × 8 ÷ 4 = 51% CPU; memory p99 after = 43%",
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 25.6,
+   "cpu_p99_after": 51.2,
+   "mem_p99_before": 42.85,
+   "mem_p99_after": 42.9,
+   "safe": true
+  },
+  "id": "rec-032",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-047",
+  "resource_name": "dev-ranker-02",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Search",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.2% versus 21% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 3214,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 2.5714285714285716,
+  "peak_check": null,
+  "id": "rec-033",
+  "carbon": {
+   "kwh": 10.5,
+   "kg_co2": 7.5
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-048",
+  "resource_name": "dev-indexer-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Search",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-32 → m-4-32 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 26% CPU and 43% memory. On m-4-32 its peak would run at about 52% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-4-32",
+  "saving": 3000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 26.1% ÷ 70% target = 2.98",
+   "required RAM = max(32 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 18.3 GB",
+   "cheapest plan with ≥ 3 vCPU and ≥ 18.3 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
+   "Peak Safety Check: p99 after = 26.1% × 8 ÷ 4 = 52% CPU; memory p99 after = 43%",
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 26.09,
+   "cpu_p99_after": 52.2,
+   "mem_p99_before": 42.84,
+   "mem_p99_after": 42.8,
+   "safe": true
+  },
+  "id": "rec-034",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-048",
+  "resource_name": "dev-indexer-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Search",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.3% versus 22% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 3214,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 2.5714285714285716,
+  "peak_check": null,
+  "id": "rec-035",
+  "carbon": {
+   "kwh": 10.5,
+   "kg_co2": 7.5
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-049",
+  "resource_name": "dev-airflow-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Data",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-32 → m-4-32 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 23% CPU and 43% memory. On m-4-32 its peak would run at about 46% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-4-32",
+  "saving": 3000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 23.0% ÷ 70% target = 2.63",
+   "required RAM = max(32 GB × p99 mem 42.7% ÷ 75%, used + 1 GB) = 18.2 GB",
+   "cheapest plan with ≥ 3 vCPU and ≥ 18.2 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
+   "Peak Safety Check: p99 after = 23.0% × 8 ÷ 4 = 46% CPU; memory p99 after = 43%",
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 22.98,
+   "cpu_p99_after": 46.0,
+   "mem_p99_before": 42.71,
+   "mem_p99_after": 42.7,
+   "safe": true
+  },
+  "id": "rec-036",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-049",
+  "resource_name": "dev-airflow-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Data",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.2% versus 19% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 3214,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 2.5714285714285716,
+  "peak_check": null,
+  "id": "rec-037",
+  "carbon": {
+   "kwh": 10.5,
+   "kg_co2": 7.5
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-050",
+  "resource_name": "dev-spark-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Noida",
+  "team": "Data",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-32 → m-4-32 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 27% CPU and 43% memory. On m-4-32 its peak would run at about 54% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-4-32",
+  "saving": 3000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 26.8% ÷ 70% target = 3.07",
+   "required RAM = max(32 GB × p99 mem 42.7% ÷ 75%, used + 1 GB) = 18.2 GB",
+   "cheapest plan with ≥ 4 vCPU and ≥ 18.2 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
+   "Peak Safety Check: p99 after = 26.8% × 8 ÷ 4 = 54% CPU; memory p99 after = 43%",
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 26.83,
+   "cpu_p99_after": 53.7,
+   "mem_p99_before": 42.71,
+   "mem_p99_after": 42.7,
+   "safe": true
+  },
+  "id": "rec-038",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-050",
+  "resource_name": "dev-spark-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Noida",
+  "team": "Data",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.3% versus 23% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 3214,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 2.5714285714285716,
+  "peak_check": null,
+  "id": "rec-039",
+  "carbon": {
+   "kwh": 10.5,
+   "kg_co2": 7.5
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-051",
+  "resource_name": "dev-mailer-02",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Growth",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-32 → m-4-32 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 21% CPU and 43% memory. On m-4-32 its peak would run at about 42% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-4-32",
+  "saving": 3000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 21.1% ÷ 70% target = 2.41",
+   "required RAM = max(32 GB × p99 mem 42.7% ÷ 75%, used + 1 GB) = 18.2 GB",
+   "cheapest plan with ≥ 3 vCPU and ≥ 18.2 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
+   "Peak Safety Check: p99 after = 21.1% × 8 ÷ 4 = 42% CPU; memory p99 after = 43%",
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 21.09,
+   "cpu_p99_after": 42.2,
+   "mem_p99_before": 42.69,
+   "mem_p99_after": 42.7,
+   "safe": true
+  },
+  "id": "rec-040",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-051",
+  "resource_name": "dev-mailer-02",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Growth",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.3% versus 17% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 3214,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 2.5714285714285716,
+  "peak_check": null,
+  "id": "rec-041",
+  "carbon": {
+   "kwh": 10.5,
+   "kg_co2": 7.5
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-052",
+  "resource_name": "dev-spark-02",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Data",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-32 → m-4-32 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 24% CPU and 43% memory. On m-4-32 its peak would run at about 49% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-4-32",
+  "saving": 3000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 24.4% ÷ 70% target = 2.79",
+   "required RAM = max(32 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 18.3 GB",
+   "cheapest plan with ≥ 3 vCPU and ≥ 18.3 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
+   "Peak Safety Check: p99 after = 24.4% × 8 ÷ 4 = 49% CPU; memory p99 after = 43%",
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 24.43,
+   "cpu_p99_after": 48.9,
+   "mem_p99_before": 42.83,
+   "mem_p99_after": 42.8,
+   "safe": true
+  },
+  "id": "rec-042",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-052",
+  "resource_name": "dev-spark-02",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Data",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.3% versus 20% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 3214,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 2.5714285714285716,
+  "peak_check": null,
+  "id": "rec-043",
+  "carbon": {
+   "kwh": 10.5,
+   "kg_co2": 7.5
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-053",
+  "resource_name": "dev-auth-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Platform",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-32 → m-4-32 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 30% CPU and 43% memory. On m-4-32 its peak would run at about 60% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-4-32",
+  "saving": 3000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 30.0% ÷ 70% target = 3.42",
+   "required RAM = max(32 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 18.3 GB",
+   "cheapest plan with ≥ 4 vCPU and ≥ 18.3 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
+   "Peak Safety Check: p99 after = 30.0% × 8 ÷ 4 = 60% CPU; memory p99 after = 43%",
+   "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 29.96,
+   "cpu_p99_after": 59.9,
+   "mem_p99_before": 42.78,
+   "mem_p99_after": 42.8,
+   "safe": true
+  },
+  "id": "rec-044",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-053",
+  "resource_name": "dev-auth-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Platform",
+  "current_plan": "s-8-32",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.2% versus 26% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 3214,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 2.5714285714285716,
+  "peak_check": null,
+  "id": "rec-045",
+  "carbon": {
+   "kwh": 10.5,
+   "kg_co2": 7.5
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-054",
+  "resource_name": "dev-ab-test-02",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Noida",
+  "team": "Growth",
+  "current_plan": "s-4-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-4-16 → m-2-16 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 30% CPU and 43% memory. On m-2-16 its peak would run at about 59% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-2-16",
+  "saving": 1400,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 29.5% ÷ 70% target = 1.69",
+   "required RAM = max(16 GB × p99 mem 42.7% ÷ 75%, used + 1 GB) = 9.1 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
+   "Peak Safety Check: p99 after = 29.5% × 4 ÷ 2 = 59% CPU; memory p99 after = 43%",
+   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
+  ],
+  "vcpu_removed": 2,
+  "peak_check": {
+   "cpu_p99_before": 29.54,
+   "cpu_p99_after": 59.1,
+   "mem_p99_before": 42.7,
+   "mem_p99_after": 42.7,
+   "safe": true
+  },
+  "id": "rec-046",
+  "carbon": {
+   "kwh": 8.2,
+   "kg_co2": 5.9
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-054",
+  "resource_name": "dev-ab-test-02",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Noida",
+  "team": "Growth",
+  "current_plan": "s-4-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.2% versus 25% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 1671,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 1.2857142857142858,
+  "peak_check": null,
+  "id": "rec-047",
+  "carbon": {
+   "kwh": 5.3,
+   "kg_co2": 3.8
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-055",
+  "resource_name": "dev-airflow-02",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Data",
+  "current_plan": "s-4-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-4-16 → m-2-16 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 22% CPU and 43% memory. On m-2-16 its peak would run at about 43% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-2-16",
+  "saving": 1400,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 21.6% ÷ 70% target = 1.24",
+   "required RAM = max(16 GB × p99 mem 42.9% ÷ 75%, used + 1 GB) = 9.1 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
+   "Peak Safety Check: p99 after = 21.6% × 4 ÷ 2 = 43% CPU; memory p99 after = 43%",
+   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
+  ],
+  "vcpu_removed": 2,
+  "peak_check": {
+   "cpu_p99_before": 21.65,
+   "cpu_p99_after": 43.3,
+   "mem_p99_before": 42.87,
+   "mem_p99_after": 42.9,
+   "safe": true
+  },
+  "id": "rec-048",
+  "carbon": {
+   "kwh": 8.2,
+   "kg_co2": 5.9
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-055",
+  "resource_name": "dev-airflow-02",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Data",
+  "current_plan": "s-4-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.2% versus 18% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 1671,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 1.2857142857142858,
+  "peak_check": null,
+  "id": "rec-049",
+  "carbon": {
+   "kwh": 5.3,
+   "kg_co2": 3.8
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-056",
+  "resource_name": "dev-ledger-02",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Payments",
+  "current_plan": "s-4-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-4-16 → m-2-16 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 22% CPU and 43% memory. On m-2-16 its peak would run at about 43% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-2-16",
+  "saving": 1400,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 21.7% ÷ 70% target = 1.24",
+   "required RAM = max(16 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 9.1 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
+   "Peak Safety Check: p99 after = 21.7% × 4 ÷ 2 = 43% CPU; memory p99 after = 43%",
+   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
+  ],
+  "vcpu_removed": 2,
+  "peak_check": {
+   "cpu_p99_before": 21.68,
+   "cpu_p99_after": 43.4,
+   "mem_p99_before": 42.77,
+   "mem_p99_after": 42.8,
+   "safe": true
+  },
+  "id": "rec-050",
+  "carbon": {
+   "kwh": 8.2,
+   "kg_co2": 5.9
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-056",
+  "resource_name": "dev-ledger-02",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Payments",
+  "current_plan": "s-4-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.2% versus 17% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 1671,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 1.2857142857142858,
+  "peak_check": null,
+  "id": "rec-051",
+  "carbon": {
+   "kwh": 5.3,
+   "kg_co2": 3.8
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-057",
+  "resource_name": "dev-kafka-03",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Noida",
+  "team": "Platform",
+  "current_plan": "s-4-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-4-16 → m-2-16 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 22% CPU and 43% memory. On m-2-16 its peak would run at about 44% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-2-16",
+  "saving": 1400,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 21.8% ÷ 70% target = 1.25",
+   "required RAM = max(16 GB × p99 mem 42.7% ÷ 75%, used + 1 GB) = 9.1 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
+   "Peak Safety Check: p99 after = 21.8% × 4 ÷ 2 = 44% CPU; memory p99 after = 43%",
+   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
+  ],
+  "vcpu_removed": 2,
+  "peak_check": {
+   "cpu_p99_before": 21.83,
+   "cpu_p99_after": 43.7,
+   "mem_p99_before": 42.67,
+   "mem_p99_after": 42.7,
+   "safe": true
+  },
+  "id": "rec-052",
+  "carbon": {
+   "kwh": 8.2,
+   "kg_co2": 5.9
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-057",
+  "resource_name": "dev-kafka-03",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Noida",
+  "team": "Platform",
+  "current_plan": "s-4-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.3% versus 18% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 1671,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 1.2857142857142858,
+  "peak_check": null,
+  "id": "rec-053",
+  "carbon": {
+   "kwh": 5.3,
+   "kg_co2": 3.8
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-058",
+  "resource_name": "dev-search-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Search",
+  "current_plan": "s-4-16",
+  "confidence": 68,
+  "confidence_notes": [
+   "6% of readings missing (−17)",
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-4-16 → m-2-16 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 26% CPU and 43% memory. On m-2-16 its peak would run at about 52% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-2-16",
+  "saving": 1400,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 26.0% ÷ 70% target = 1.49",
+   "required RAM = max(16 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 9.1 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
+   "Peak Safety Check: p99 after = 26.0% × 4 ÷ 2 = 52% CPU; memory p99 after = 43%",
+   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
+  ],
+  "vcpu_removed": 2,
+  "peak_check": {
+   "cpu_p99_before": 26.04,
+   "cpu_p99_after": 52.1,
+   "mem_p99_before": 42.83,
+   "mem_p99_after": 42.8,
+   "safe": true
+  },
+  "id": "rec-054",
+  "carbon": {
+   "kwh": 8.2,
+   "kg_co2": 5.9
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-058",
+  "resource_name": "dev-search-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Search",
+  "current_plan": "s-4-16",
+  "confidence": 68,
+  "confidence_notes": [
+   "6% of readings missing (−17)",
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.3% versus 22% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 1671,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 1.2857142857142858,
+  "peak_check": null,
+  "id": "rec-055",
+  "carbon": {
+   "kwh": 5.3,
+   "kg_co2": 3.8
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-059",
+  "resource_name": "dev-mailer-03",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Growth",
+  "current_plan": "s-4-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-4-16 → m-2-16 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 23% CPU and 43% memory. On m-2-16 its peak would run at about 46% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-2-16",
+  "saving": 1400,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 23.0% ÷ 70% target = 1.31",
+   "required RAM = max(16 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 9.1 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
+   "Peak Safety Check: p99 after = 23.0% × 4 ÷ 2 = 46% CPU; memory p99 after = 43%",
+   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
+  ],
+  "vcpu_removed": 2,
+  "peak_check": {
+   "cpu_p99_before": 22.98,
+   "cpu_p99_after": 46.0,
+   "mem_p99_before": 42.79,
+   "mem_p99_after": 42.8,
+   "safe": true
+  },
+  "id": "rec-056",
+  "carbon": {
+   "kwh": 8.2,
+   "kg_co2": 5.9
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-059",
+  "resource_name": "dev-mailer-03",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Growth",
+  "current_plan": "s-4-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.3% versus 19% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 1671,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 1.2857142857142858,
+  "peak_check": null,
+  "id": "rec-057",
+  "carbon": {
+   "kwh": 5.3,
+   "kg_co2": 3.8
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-060",
+  "resource_name": "dev-mailer-04",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Growth",
+  "current_plan": "s-4-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-4-16 → m-2-16 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 30% CPU and 43% memory. On m-2-16 its peak would run at about 60% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-2-16",
+  "saving": 1400,
+  "risk": "MEDIUM",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 30.2% ÷ 70% target = 1.73",
+   "required RAM = max(16 GB × p99 mem 42.6% ÷ 75%, used + 1 GB) = 9.1 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
+   "Peak Safety Check: p99 after = 30.2% × 4 ÷ 2 = 60% CPU; memory p99 after = 43%",
+   "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
+  ],
+  "vcpu_removed": 2,
+  "peak_check": {
+   "cpu_p99_before": 30.22,
+   "cpu_p99_after": 60.4,
+   "mem_p99_before": 42.63,
+   "mem_p99_after": 42.6,
+   "safe": true
+  },
+  "id": "rec-058",
+  "carbon": {
+   "kwh": 8.2,
+   "kg_co2": 5.9
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-060",
+  "resource_name": "dev-mailer-04",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Growth",
+  "current_plan": "s-4-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.3% versus 26% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 1671,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 1.2857142857142858,
+  "peak_check": null,
+  "id": "rec-059",
+  "carbon": {
+   "kwh": 5.3,
+   "kg_co2": 3.8
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-061",
+  "resource_name": "stg-es-node-01",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Mumbai",
+  "team": "Search",
+  "current_plan": "s-8-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → s-4-16",
+  "reason": "Even at its busiest 1% of the time this VM uses only 24% CPU and 43% memory. On s-4-16 its peak would run at about 48% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-4-16",
+  "saving": 2000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 24.2% ÷ 70% target = 2.77",
+   "required RAM = max(16 GB × p99 mem 42.9% ÷ 75%, used + 1 GB) = 9.1 GB",
+   "cheapest plan with ≥ 3 vCPU and ≥ 9.1 GB = s-4-16 (4 vCPU / 16 GB, ₹4,000/month)",
+   "Peak Safety Check: p99 after = 24.2% × 8 ÷ 4 = 48% CPU; memory p99 after = 43%",
+   "Saving = ₹6,000 − ₹4,000 = ₹2,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 24.21,
+   "cpu_p99_after": 48.4,
+   "mem_p99_before": 42.85,
+   "mem_p99_after": 42.9,
+   "safe": true
+  },
+  "id": "rec-060",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-061",
+  "resource_name": "stg-es-node-01",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Mumbai",
+  "team": "Search",
+  "current_plan": "s-8-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.3% versus 20% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 2571,
+  "risk": "MEDIUM",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹4,000 (after resize) × 64.3% = ₹2,571/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 2.5714285714285716,
+  "peak_check": null,
+  "id": "rec-061",
+  "carbon": {
+   "kwh": 10.5,
+   "kg_co2": 7.5
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-062",
+  "resource_name": "stg-push-02",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Bangalore",
+  "team": "Mobile-API",
+  "current_plan": "s-8-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → s-4-16",
+  "reason": "Even at its busiest 1% of the time this VM uses only 28% CPU and 43% memory. On s-4-16 its peak would run at about 56% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-4-16",
+  "saving": 2000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 28.0% ÷ 70% target = 3.20",
+   "required RAM = max(16 GB × p99 mem 42.6% ÷ 75%, used + 1 GB) = 9.1 GB",
+   "cheapest plan with ≥ 4 vCPU and ≥ 9.1 GB = s-4-16 (4 vCPU / 16 GB, ₹4,000/month)",
+   "Peak Safety Check: p99 after = 28.0% × 8 ÷ 4 = 56% CPU; memory p99 after = 43%",
+   "Saving = ₹6,000 − ₹4,000 = ₹2,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 27.96,
+   "cpu_p99_after": 55.9,
+   "mem_p99_before": 42.65,
+   "mem_p99_after": 42.6,
+   "safe": true
+  },
+  "id": "rec-062",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-062",
+  "resource_name": "stg-push-02",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Bangalore",
+  "team": "Mobile-API",
+  "current_plan": "s-8-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.3 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.3% versus 24% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 2571,
+  "risk": "MEDIUM",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹4,000 (after resize) × 64.3% = ₹2,571/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 2.5714285714285716,
+  "peak_check": null,
+  "id": "rec-063",
+  "carbon": {
+   "kwh": 10.5,
+   "kg_co2": 7.5
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-063",
+  "resource_name": "stg-cdn-origin-02",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Mumbai",
+  "team": "Mobile-API",
+  "current_plan": "s-8-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → s-4-16",
+  "reason": "Even at its busiest 1% of the time this VM uses only 23% CPU and 43% memory. On s-4-16 its peak would run at about 46% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-4-16",
+  "saving": 2000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 23.0% ÷ 70% target = 2.63",
+   "required RAM = max(16 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 9.1 GB",
+   "cheapest plan with ≥ 3 vCPU and ≥ 9.1 GB = s-4-16 (4 vCPU / 16 GB, ₹4,000/month)",
+   "Peak Safety Check: p99 after = 23.0% × 8 ÷ 4 = 46% CPU; memory p99 after = 43%",
+   "Saving = ₹6,000 − ₹4,000 = ₹2,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 23.03,
+   "cpu_p99_after": 46.1,
+   "mem_p99_before": 42.8,
+   "mem_p99_after": 42.8,
+   "safe": true
+  },
+  "id": "rec-064",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-063",
+  "resource_name": "stg-cdn-origin-02",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Mumbai",
+  "team": "Mobile-API",
+  "current_plan": "s-8-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.2% versus 19% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 2571,
+  "risk": "MEDIUM",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹4,000 (after resize) × 64.3% = ₹2,571/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 2.5714285714285716,
+  "peak_check": null,
+  "id": "rec-065",
+  "carbon": {
+   "kwh": 10.5,
+   "kg_co2": 7.5
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-064",
+  "resource_name": "stg-auth-02",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Noida",
+  "team": "Platform",
+  "current_plan": "s-8-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → s-4-16",
+  "reason": "Even at its busiest 1% of the time this VM uses only 22% CPU and 43% memory. On s-4-16 its peak would run at about 44% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-4-16",
+  "saving": 2000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 21.9% ÷ 70% target = 2.50",
+   "required RAM = max(16 GB × p99 mem 42.9% ÷ 75%, used + 1 GB) = 9.1 GB",
+   "cheapest plan with ≥ 3 vCPU and ≥ 9.1 GB = s-4-16 (4 vCPU / 16 GB, ₹4,000/month)",
+   "Peak Safety Check: p99 after = 21.9% × 8 ÷ 4 = 44% CPU; memory p99 after = 43%",
+   "Saving = ₹6,000 − ₹4,000 = ₹2,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 21.9,
+   "cpu_p99_after": 43.8,
+   "mem_p99_before": 42.86,
+   "mem_p99_after": 42.9,
+   "safe": true
+  },
+  "id": "rec-066",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-064",
+  "resource_name": "stg-auth-02",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Noida",
+  "team": "Platform",
+  "current_plan": "s-8-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.2% versus 18% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 2571,
+  "risk": "MEDIUM",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹4,000 (after resize) × 64.3% = ₹2,571/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 2.5714285714285716,
+  "peak_check": null,
+  "id": "rec-067",
+  "carbon": {
+   "kwh": 10.5,
+   "kg_co2": 7.5
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-065",
+  "resource_name": "stg-pay-api-01",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Mumbai",
+  "team": "Payments",
+  "current_plan": "s-8-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → s-4-16",
+  "reason": "Even at its busiest 1% of the time this VM uses only 22% CPU and 43% memory. On s-4-16 its peak would run at about 44% CPU, inside the 30% headroom rule.",
+  "target_plan": "s-4-16",
+  "saving": 2000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 22.0% ÷ 70% target = 2.52",
+   "required RAM = max(16 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 9.1 GB",
+   "cheapest plan with ≥ 3 vCPU and ≥ 9.1 GB = s-4-16 (4 vCPU / 16 GB, ₹4,000/month)",
+   "Peak Safety Check: p99 after = 22.0% × 8 ÷ 4 = 44% CPU; memory p99 after = 43%",
+   "Saving = ₹6,000 − ₹4,000 = ₹2,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 22.04,
+   "cpu_p99_after": 44.1,
+   "mem_p99_before": 42.81,
+   "mem_p99_after": 42.8,
+   "safe": true
+  },
+  "id": "rec-068",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-065",
+  "resource_name": "stg-pay-api-01",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Mumbai",
+  "team": "Payments",
+  "current_plan": "s-8-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 1.2 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.3% versus 18% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 2571,
+  "risk": "MEDIUM",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹4,000 (after resize) × 64.3% = ₹2,571/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 2.5714285714285716,
+  "peak_check": null,
+  "id": "rec-069",
+  "carbon": {
+   "kwh": 10.5,
+   "kg_co2": 7.5
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-066",
+  "resource_name": "dev-media-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Noida",
+  "team": "Mobile-API",
+  "current_plan": "s-4-8",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "stop",
+  "title": "Stop idle VM",
+  "reason": "Near-zero activity for 30 days in dev. Stop it now, and delete it after a snapshot if nobody objects within 7 days.",
+  "target_plan": null,
+  "saving": 3000,
+  "risk": "LOW",
+  "maths": [
+   "p95 CPU 1.7% < 5%, p95 network 0.08 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
+   "Saving = plan price = ₹3,000/month (compute only)",
+   "Disk (500 GB × ₹6 = ₹3,000) is still billed while stopped"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": null,
+  "id": "rec-070",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-067",
+  "resource_name": "dev-es-node-01",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Noida",
+  "team": "Search",
+  "current_plan": "s-4-8",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "stop",
+  "title": "Stop idle VM",
+  "reason": "Near-zero activity for 30 days in dev. Stop it now, and delete it after a snapshot if nobody objects within 7 days.",
+  "target_plan": null,
+  "saving": 3000,
+  "risk": "LOW",
+  "maths": [
+   "p95 CPU 2.1% < 5%, p95 network 0.09 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
+   "Saving = plan price = ₹3,000/month (compute only)",
+   "Disk (100 GB × ₹6 = ₹600) is still billed while stopped"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": null,
+  "id": "rec-071",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-068",
+  "resource_name": "dev-auth-02",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Platform",
+  "current_plan": "s-4-8",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "stop",
+  "title": "Stop idle VM",
+  "reason": "Near-zero activity for 30 days in dev. Stop it now, and delete it after a snapshot if nobody objects within 7 days.",
+  "target_plan": null,
+  "saving": 3000,
+  "risk": "LOW",
+  "maths": [
+   "p95 CPU 1.8% < 5%, p95 network 0.08 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
+   "Saving = plan price = ₹3,000/month (compute only)",
+   "Disk (100 GB × ₹6 = ₹600) is still billed while stopped"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": null,
+  "id": "rec-072",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-069",
+  "resource_name": "dev-media-02",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Mobile-API",
+  "current_plan": "s-4-8",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "stop",
+  "title": "Stop idle VM",
+  "reason": "Near-zero activity for 30 days in dev. Stop it now, and delete it after a snapshot if nobody objects within 7 days.",
+  "target_plan": null,
+  "saving": 3000,
+  "risk": "LOW",
+  "maths": [
+   "p95 CPU 1.9% < 5%, p95 network 0.09 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
+   "Saving = plan price = ₹3,000/month (compute only)",
+   "Disk (50 GB × ₹6 = ₹300) is still billed while stopped"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": null,
+  "id": "rec-073",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-070",
+  "resource_name": "stg-kafka-01",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Noida",
+  "team": "Platform",
+  "current_plan": "s-8-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "stop",
+  "title": "Stop idle VM",
+  "reason": "Near-zero activity for 30 days in staging. Stop it now, and delete it after a snapshot if nobody objects within 7 days.",
+  "target_plan": null,
+  "saving": 6000,
+  "risk": "LOW",
+  "maths": [
+   "p95 CPU 2.1% < 5%, p95 network 0.09 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
+   "Saving = plan price = ₹6,000/month (compute only)",
+   "Disk (50 GB × ₹6 = ₹300) is still billed while stopped"
+  ],
+  "vcpu_removed": 8,
+  "peak_check": null,
+  "id": "rec-074",
+  "carbon": {
+   "kwh": 32.7,
+   "kg_co2": 23.4
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-071",
+  "resource_name": "stg-es-node-02",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Bangalore",
+  "team": "Search",
+  "current_plan": "s-8-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "stop",
+  "title": "Stop idle VM",
+  "reason": "Near-zero activity for 30 days in staging. Stop it now, and delete it after a snapshot if nobody objects within 7 days.",
+  "target_plan": null,
+  "saving": 6000,
+  "risk": "LOW",
+  "maths": [
+   "p95 CPU 2.0% < 5%, p95 network 0.09 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
+   "Saving = plan price = ₹6,000/month (compute only)",
+   "Disk (100 GB × ₹6 = ₹600) is still billed while stopped"
+  ],
+  "vcpu_removed": 8,
+  "peak_check": null,
+  "id": "rec-075",
+  "carbon": {
+   "kwh": 32.7,
+   "kg_co2": 23.4
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-072",
+  "resource_name": "prod-airflow-01",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Bangalore",
+  "team": "Data",
+  "current_plan": "s-4-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "review",
+  "title": "Idle production VM: ask the owner",
+  "reason": "Near-zero CPU, network and disk activity for 30 days. It is production, so we never stop it automatically: the Data team should confirm it is unused.",
+  "target_plan": null,
+  "saving": 4000,
+  "risk": "HIGH",
+  "maths": [
+   "p95 CPU 1.6% < 5%, p95 network 0.09 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
+   "Saving = plan price = ₹4,000/month (compute only)",
+   "Disk (500 GB × ₹6 = ₹3,000) is still billed while stopped"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": null,
+  "id": "rec-076",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": false
+ },
+ {
+  "resource_id": "vm-073",
+  "resource_name": "prod-spark-01",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Mumbai",
+  "team": "Data",
+  "current_plan": "s-4-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "review",
+  "title": "Idle production VM: ask the owner",
+  "reason": "Near-zero CPU, network and disk activity for 30 days. It is production, so we never stop it automatically: the Data team should confirm it is unused.",
+  "target_plan": null,
+  "saving": 4000,
+  "risk": "HIGH",
+  "maths": [
+   "p95 CPU 2.1% < 5%, p95 network 0.09 MB/s < 0.5 MB/s, p95 IOPS 9 < 10 for 30 days → idle",
+   "Saving = plan price = ₹4,000/month (compute only)",
+   "Disk (200 GB × ₹6 = ₹1,200) is still billed while stopped"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": null,
+  "id": "rec-077",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": false
+ },
+ {
+  "resource_id": "vm-074",
+  "resource_name": "prod-airflow-02",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Bangalore",
+  "team": "Data",
+  "current_plan": "s-8-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → m-4-32 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 16% CPU and 80% memory. On m-4-32 its peak would run at about 32% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-4-32",
+  "saving": 1000,
+  "risk": "HIGH",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 16.0% ÷ 70% target = 1.83",
+   "required RAM = max(16 GB × p99 mem 80.0% ÷ 75%, used + 1 GB) = 17.1 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 17.1 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
+   "Peak Safety Check: p99 after = 16.0% × 8 ÷ 4 = 32% CPU; memory p99 after = 40%",
+   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 16.01,
+   "cpu_p99_after": 32.0,
+   "mem_p99_before": 80.03,
+   "mem_p99_after": 40.0,
+   "safe": true
+  },
+  "id": "rec-078",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-075",
+  "resource_name": "prod-push-01",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Mumbai",
+  "team": "Mobile-API",
+  "current_plan": "s-8-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → m-4-32 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 16% CPU and 85% memory. On m-4-32 its peak would run at about 32% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-4-32",
+  "saving": 1000,
+  "risk": "HIGH",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 16.0% ÷ 70% target = 1.83",
+   "required RAM = max(16 GB × p99 mem 84.9% ÷ 75%, used + 1 GB) = 18.1 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 18.1 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
+   "Peak Safety Check: p99 after = 16.0% × 8 ÷ 4 = 32% CPU; memory p99 after = 42%",
+   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 16.01,
+   "cpu_p99_after": 32.0,
+   "mem_p99_before": 84.94,
+   "mem_p99_after": 42.5,
+   "safe": true
+  },
+  "id": "rec-079",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-076",
+  "resource_name": "prod-ranker-02",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Noida",
+  "team": "Search",
+  "current_plan": "s-8-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → m-4-32 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 16% CPU and 81% memory. On m-4-32 its peak would run at about 32% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-4-32",
+  "saving": 1000,
+  "risk": "HIGH",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 16.2% ÷ 70% target = 1.85",
+   "required RAM = max(16 GB × p99 mem 80.8% ÷ 75%, used + 1 GB) = 17.2 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 17.2 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
+   "Peak Safety Check: p99 after = 16.2% × 8 ÷ 4 = 32% CPU; memory p99 after = 40%",
+   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 16.21,
+   "cpu_p99_after": 32.4,
+   "mem_p99_before": 80.76,
+   "mem_p99_after": 40.4,
+   "safe": true
+  },
+  "id": "rec-080",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-077",
+  "resource_name": "prod-auth-05",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Noida",
+  "team": "Platform",
+  "current_plan": "s-8-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → m-4-32 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 16% CPU and 82% memory. On m-4-32 its peak would run at about 32% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-4-32",
+  "saving": 1000,
+  "risk": "HIGH",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 16.2% ÷ 70% target = 1.85",
+   "required RAM = max(16 GB × p99 mem 82.3% ÷ 75%, used + 1 GB) = 17.6 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 17.6 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
+   "Peak Safety Check: p99 after = 16.2% × 8 ÷ 4 = 32% CPU; memory p99 after = 41%",
+   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 16.18,
+   "cpu_p99_after": 32.4,
+   "mem_p99_before": 82.28,
+   "mem_p99_after": 41.1,
+   "safe": true
+  },
+  "id": "rec-081",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-078",
+  "resource_name": "stg-indexer-02",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Bangalore",
+  "team": "Search",
+  "current_plan": "s-8-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → m-4-32 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 16% CPU and 82% memory. On m-4-32 its peak would run at about 32% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-4-32",
+  "saving": 1000,
+  "risk": "HIGH",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 16.1% ÷ 70% target = 1.84",
+   "required RAM = max(16 GB × p99 mem 82.1% ÷ 75%, used + 1 GB) = 17.5 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 17.5 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
+   "Peak Safety Check: p99 after = 16.1% × 8 ÷ 4 = 32% CPU; memory p99 after = 41%",
+   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 16.06,
+   "cpu_p99_after": 32.1,
+   "mem_p99_before": 82.1,
+   "mem_p99_after": 41.0,
+   "safe": true
+  },
+  "id": "rec-082",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-079",
+  "resource_name": "stg-mob-bff-01",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Noida",
+  "team": "Mobile-API",
+  "current_plan": "s-8-16",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-16 → m-4-32 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 16% CPU and 84% memory. On m-4-32 its peak would run at about 32% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-4-32",
+  "saving": 1000,
+  "risk": "HIGH",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 16.1% ÷ 70% target = 1.85",
+   "required RAM = max(16 GB × p99 mem 84.2% ÷ 75%, used + 1 GB) = 18.0 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 18.0 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
+   "Peak Safety Check: p99 after = 16.1% × 8 ÷ 4 = 32% CPU; memory p99 after = 42%",
+   "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
+  ],
+  "vcpu_removed": 4,
+  "peak_check": {
+   "cpu_p99_before": 16.15,
+   "cpu_p99_after": 32.3,
+   "mem_p99_before": 84.16,
+   "mem_p99_after": 42.1,
+   "safe": true
+  },
+  "id": "rec-083",
+  "carbon": {
+   "kwh": 16.4,
+   "kg_co2": 11.7
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-080",
+  "resource_name": "prod-ab-test-02",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Noida",
+  "team": "Growth",
+  "current_plan": "s-4-8",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "upsize",
+  "title": "Upsize: running out of headroom",
+  "reason": "p99 CPU is 100% and it spends 49% of the time above 80%. Users will feel slowdowns at peak. Moving to s-8-16 brings the peak to about 50%.",
+  "target_plan": "s-8-16",
+  "saving": -3000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 99.5% ÷ 70% target = 5.69",
+   "required RAM = max(8 GB × p99 mem 77.0% ÷ 75%, used + 1 GB) = 8.2 GB",
+   "cheapest plan with ≥ 6 vCPU and ≥ 8.2 GB = s-8-16 (8 vCPU / 16 GB, ₹6,000/month)",
+   "Peak Safety Check: p99 after = 99.5% × 4 ÷ 8 = 50% CPU; memory p99 after = 39%",
+   "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)"
+  ],
+  "vcpu_removed": -4,
+  "peak_check": {
+   "cpu_p99_before": 99.52,
+   "cpu_p99_after": 49.8,
+   "mem_p99_before": 77.05,
+   "mem_p99_after": 38.5,
+   "safe": true
+  },
+  "id": "rec-084",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-081",
+  "resource_name": "prod-upi-gw-03",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Noida",
+  "team": "Payments",
+  "current_plan": "s-4-8",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "upsize",
+  "title": "Upsize: running out of headroom",
+  "reason": "p99 CPU is 100% and it spends 50% of the time above 80%. Users will feel slowdowns at peak. Moving to s-8-16 brings the peak to about 50%.",
+  "target_plan": "s-8-16",
+  "saving": -3000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 99.5% ÷ 70% target = 5.69",
+   "required RAM = max(8 GB × p99 mem 76.9% ÷ 75%, used + 1 GB) = 8.2 GB",
+   "cheapest plan with ≥ 6 vCPU and ≥ 8.2 GB = s-8-16 (8 vCPU / 16 GB, ₹6,000/month)",
+   "Peak Safety Check: p99 after = 99.5% × 4 ÷ 8 = 50% CPU; memory p99 after = 38%",
+   "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)"
+  ],
+  "vcpu_removed": -4,
+  "peak_check": {
+   "cpu_p99_before": 99.51,
+   "cpu_p99_after": 49.8,
+   "mem_p99_before": 76.88,
+   "mem_p99_after": 38.4,
+   "safe": true
+  },
+  "id": "rec-085",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-082",
+  "resource_name": "prod-es-node-02",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Noida",
+  "team": "Search",
+  "current_plan": "s-4-8",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "upsize",
+  "title": "Upsize: running out of headroom",
+  "reason": "p99 CPU is 99% and it spends 49% of the time above 80%. Users will feel slowdowns at peak. Moving to s-8-16 brings the peak to about 50%.",
+  "target_plan": "s-8-16",
+  "saving": -3000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 99.4% ÷ 70% target = 5.68",
+   "required RAM = max(8 GB × p99 mem 77.0% ÷ 75%, used + 1 GB) = 8.2 GB",
+   "cheapest plan with ≥ 6 vCPU and ≥ 8.2 GB = s-8-16 (8 vCPU / 16 GB, ₹6,000/month)",
+   "Peak Safety Check: p99 after = 99.4% × 4 ÷ 8 = 50% CPU; memory p99 after = 39%",
+   "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)"
+  ],
+  "vcpu_removed": -4,
+  "peak_check": {
+   "cpu_p99_before": 99.42,
+   "cpu_p99_after": 49.7,
+   "mem_p99_before": 77.02,
+   "mem_p99_after": 38.5,
+   "safe": true
+  },
+  "id": "rec-086",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-083",
+  "resource_name": "prod-kafka-05",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Noida",
+  "team": "Platform",
+  "current_plan": "s-4-8",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "upsize",
+  "title": "Upsize: running out of headroom",
+  "reason": "p99 CPU is 100% and it spends 49% of the time above 80%. Users will feel slowdowns at peak. Moving to s-8-16 brings the peak to about 50%.",
+  "target_plan": "s-8-16",
+  "saving": -3000,
+  "risk": "LOW",
+  "maths": [
+   "required vCPU = 4 × p99 CPU 99.8% ÷ 70% target = 5.70",
+   "required RAM = max(8 GB × p99 mem 76.8% ÷ 75%, used + 1 GB) = 8.2 GB",
+   "cheapest plan with ≥ 6 vCPU and ≥ 8.2 GB = s-8-16 (8 vCPU / 16 GB, ₹6,000/month)",
+   "Peak Safety Check: p99 after = 99.8% × 4 ÷ 8 = 50% CPU; memory p99 after = 38%",
+   "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)"
+  ],
+  "vcpu_removed": -4,
+  "peak_check": {
+   "cpu_p99_before": 99.81,
+   "cpu_p99_after": 49.9,
+   "mem_p99_before": 76.78,
+   "mem_p99_after": 38.4,
+   "safe": true
+  },
+  "id": "rec-087",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-086",
+  "resource_name": "prod-reports-01",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Mumbai",
+  "team": "Growth",
+  "current_plan": "s-8-16",
+  "confidence": 90,
+  "confidence_notes": [
+   "short peaks seen: a monthly job could be outside the 30-day window (−10)"
+  ],
+  "action": "keep",
+  "title": "Keep size: daily peak protected",
+  "reason": "Average CPU is only 10%, so an average-based tool would shrink it to s-2-8. But every day around 10:00 it reaches 80% (p99). On s-2-8 that peak would need 322% CPU and the VM would fall over. We do not downsize it.",
+  "target_plan": "s-8-16",
+  "saving": 0,
+  "risk": "LOW",
+  "maths": [
+   "average-based: 8 × 10.5% ÷ 70% → s-2-8 (2 vCPU)",
+   "peak on s-2-8 = 80.5% × 8 ÷ 2 = 322% → overload",
+   "required vCPU = 8 × p99 CPU 80.5% ÷ 70% target = 9.19",
+   "required ≥ current size → no safe downsize"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": {
+   "cpu_p99_before": 80.45,
+   "cpu_p99_after": 321.8,
+   "mem_p99_before": 55.0,
+   "mem_p99_after": 27.5,
+   "safe": false,
+   "avg_based_plan": "s-2-8"
+  },
+  "id": "rec-088",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": false
+ },
+ {
+  "resource_id": "vm-087",
+  "resource_name": "dev-search-04",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Search",
+  "current_plan": "s-8-32",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "resize",
+  "title": "Resize s-8-32 → m-2-16 (memory-optimised family)",
+  "reason": "Even at its busiest 1% of the time this VM uses only 15% CPU and 30% memory. On m-2-16 its peak would run at about 62% CPU, inside the 30% headroom rule.",
+  "target_plan": "m-2-16",
+  "saving": 5400,
+  "risk": "MEDIUM",
+  "maths": [
+   "required vCPU = 8 × p99 CPU 15.4% ÷ 70% target = 1.76",
+   "required RAM = max(32 GB × p99 mem 29.6% ÷ 75%, used + 1 GB) = 12.6 GB",
+   "cheapest plan with ≥ 2 vCPU and ≥ 12.6 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
+   "Peak Safety Check: p99 after = 15.4% × 8 ÷ 2 = 62% CPU; memory p99 after = 59%",
+   "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
+  ],
+  "vcpu_removed": 6,
+  "peak_check": {
+   "cpu_p99_before": 15.41,
+   "cpu_p99_after": 61.6,
+   "mem_p99_before": 29.61,
+   "mem_p99_after": 59.2,
+   "safe": true
+  },
+  "id": "rec-089",
+  "carbon": {
+   "kwh": 24.5,
+   "kg_co2": 17.6
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-087",
+  "resource_name": "dev-search-04",
+  "resource_type": "vm",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Search",
+  "current_plan": "s-8-32",
+  "confidence": 100,
+  "confidence_notes": [
+   "30 days of complete, stable data"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends",
+  "reason": "Average CPU outside office hours is 1.4% versus 10% during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+  "target_plan": null,
+  "saving": 1671,
+  "risk": "LOW",
+  "maths": [
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
+   "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 1.2857142857142858,
+  "peak_check": null,
+  "id": "rec-090",
+  "carbon": {
+   "kwh": 5.3,
+   "kg_co2": 3.8
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vm-088",
+  "resource_name": "prod-pay-api-07",
+  "resource_type": "vm",
+  "env": "prod",
+  "region": "Noida",
+  "team": "Payments",
+  "current_plan": "s-8-16",
+  "target_plan": null,
+  "action": "investigate",
+  "title": "Sizing paused: investigate anomaly first",
+  "reason": "The last 3.6 days look abnormal (see Alerts). Sizing on this data would wrongly recommend an upsize to absorb a probable runaway process. Fix the cause, then re-run.",
+  "saving": 0,
+  "risk": "HIGH",
+  "confidence": 30,
+  "confidence_notes": [
+   "metrics contain an active anomaly: sizing data is not representative"
+  ],
+  "maths": [
+   "p99 CPU including the incident = 99% → would trigger the upsize rule (> 90%)",
+   "Rule: VMs with an open anomaly alert are excluded from rightsizing"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "id": "rec-091",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": false
+ },
+ {
+  "resource_id": "vol-001",
+  "resource_name": "migr-upi-gw-vol-01",
+  "env": "staging",
+  "region": "Bangalore",
+  "team": "Payments",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "volume",
+  "action": "delete_volume",
+  "title": "Snapshot & delete orphaned volume",
+  "reason": "250 GB volume not attached to any VM for 52 days. Keep a cheap snapshot as a safety net, then delete.",
+  "saving": 1000,
+  "risk": "LOW",
+  "maths": [
+   "250 GB × ₹6 = ₹1,500/month today",
+   "snapshot 250 GB × ₹2 = ₹500/month",
+   "Saving = ₹1,500 − ₹500 = ₹1,000/month"
+  ],
+  "id": "rec-092",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vol-002",
+  "resource_name": "tmp-ledger-vol-02",
+  "env": "prod",
+  "region": "Bangalore",
+  "team": "Payments",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "volume",
+  "action": "delete_volume",
+  "title": "Snapshot & delete orphaned volume",
+  "reason": "200 GB volume not attached to any VM for 68 days. Keep a cheap snapshot as a safety net, then delete.",
+  "saving": 800,
+  "risk": "LOW",
+  "maths": [
+   "200 GB × ₹6 = ₹1,200/month today",
+   "snapshot 200 GB × ₹2 = ₹400/month",
+   "Saving = ₹1,200 − ₹400 = ₹800/month"
+  ],
+  "id": "rec-093",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vol-003",
+  "resource_name": "tmp-upi-gw-vol-03",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Payments",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "volume",
+  "action": "delete_volume",
+  "title": "Snapshot & delete orphaned volume",
+  "reason": "250 GB volume not attached to any VM for 126 days. Keep a cheap snapshot as a safety net, then delete.",
+  "saving": 1000,
+  "risk": "LOW",
+  "maths": [
+   "250 GB × ₹6 = ₹1,500/month today",
+   "snapshot 250 GB × ₹2 = ₹500/month",
+   "Saving = ₹1,500 − ₹500 = ₹1,000/month"
+  ],
+  "id": "rec-094",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vol-004",
+  "resource_name": "old-indexer-vol-04",
+  "env": "prod",
+  "region": "Mumbai",
+  "team": "Search",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "volume",
+  "action": "delete_volume",
+  "title": "Snapshot & delete orphaned volume",
+  "reason": "100 GB volume not attached to any VM for 104 days. Keep a cheap snapshot as a safety net, then delete.",
+  "saving": 400,
+  "risk": "LOW",
+  "maths": [
+   "100 GB × ₹6 = ₹600/month today",
+   "snapshot 100 GB × ₹2 = ₹200/month",
+   "Saving = ₹600 − ₹200 = ₹400/month"
+  ],
+  "id": "rec-095",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vol-005",
+  "resource_name": "backup-crm-vol-05",
+  "env": "staging",
+  "region": "Bangalore",
+  "team": "Growth",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "volume",
+  "action": "delete_volume",
+  "title": "Snapshot & delete orphaned volume",
+  "reason": "100 GB volume not attached to any VM for 71 days. Keep a cheap snapshot as a safety net, then delete.",
+  "saving": 400,
+  "risk": "LOW",
+  "maths": [
+   "100 GB × ₹6 = ₹600/month today",
+   "snapshot 100 GB × ₹2 = ₹200/month",
+   "Saving = ₹600 − ₹200 = ₹400/month"
+  ],
+  "id": "rec-096",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vol-006",
+  "resource_name": "migr-spark-vol-06",
+  "env": "prod",
+  "region": "Bangalore",
+  "team": "Data",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "volume",
+  "action": "delete_volume",
+  "title": "Snapshot & delete orphaned volume",
+  "reason": "100 GB volume not attached to any VM for 99 days. Keep a cheap snapshot as a safety net, then delete.",
+  "saving": 400,
+  "risk": "LOW",
+  "maths": [
+   "100 GB × ₹6 = ₹600/month today",
+   "snapshot 100 GB × ₹2 = ₹200/month",
+   "Saving = ₹600 − ₹200 = ₹400/month"
+  ],
+  "id": "rec-097",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vol-007",
+  "resource_name": "backup-media-vol-07",
+  "env": "dev",
+  "region": "Noida",
+  "team": "Mobile-API",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "volume",
+  "action": "delete_volume",
+  "title": "Snapshot & delete orphaned volume",
+  "reason": "500 GB volume not attached to any VM for 46 days. Keep a cheap snapshot as a safety net, then delete.",
+  "saving": 2000,
+  "risk": "LOW",
+  "maths": [
+   "500 GB × ₹6 = ₹3,000/month today",
+   "snapshot 500 GB × ₹2 = ₹1,000/month",
+   "Saving = ₹3,000 − ₹1,000 = ₹2,000/month"
+  ],
+  "id": "rec-098",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vol-008",
+  "resource_name": "tmp-redis-vol-08",
+  "env": "prod",
+  "region": "Bangalore",
+  "team": "Platform",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "volume",
+  "action": "delete_volume",
+  "title": "Snapshot & delete orphaned volume",
+  "reason": "500 GB volume not attached to any VM for 86 days. Keep a cheap snapshot as a safety net, then delete.",
+  "saving": 2000,
+  "risk": "LOW",
+  "maths": [
+   "500 GB × ₹6 = ₹3,000/month today",
+   "snapshot 500 GB × ₹2 = ₹1,000/month",
+   "Saving = ₹3,000 − ₹1,000 = ₹2,000/month"
+  ],
+  "id": "rec-099",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vol-009",
+  "resource_name": "backup-etl-vol-09",
+  "env": "staging",
+  "region": "Bangalore",
+  "team": "Data",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "volume",
+  "action": "delete_volume",
+  "title": "Snapshot & delete orphaned volume",
+  "reason": "100 GB volume not attached to any VM for 99 days. Keep a cheap snapshot as a safety net, then delete.",
+  "saving": 400,
+  "risk": "LOW",
+  "maths": [
+   "100 GB × ₹6 = ₹600/month today",
+   "snapshot 100 GB × ₹2 = ₹200/month",
+   "Saving = ₹600 − ₹200 = ₹400/month"
+  ],
+  "id": "rec-100",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "vol-010",
+  "resource_name": "migr-indexer-vol-10",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Search",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "volume",
+  "action": "delete_volume",
+  "title": "Snapshot & delete orphaned volume",
+  "reason": "250 GB volume not attached to any VM for 127 days. Keep a cheap snapshot as a safety net, then delete.",
+  "saving": 1000,
+  "risk": "LOW",
+  "maths": [
+   "250 GB × ₹6 = ₹1,500/month today",
+   "snapshot 250 GB × ₹2 = ₹500/month",
+   "Saving = ₹1,500 − ₹500 = ₹1,000/month"
+  ],
+  "id": "rec-101",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "ip-031",
+  "resource_name": "eip-unused-01",
+  "env": "prod",
+  "region": "Mumbai",
+  "team": "Payments",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "ip",
+  "action": "release_ip",
+  "title": "Release unused public IP",
+  "reason": "Reserved but not assigned to anything for 111 days.",
+  "saving": 300,
+  "risk": "LOW",
+  "maths": [
+   "Saving = ₹300/month per idle IP"
+  ],
+  "id": "rec-102",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "ip-032",
+  "resource_name": "eip-unused-02",
+  "env": "dev",
+  "region": "Mumbai",
+  "team": "Search",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "ip",
+  "action": "release_ip",
+  "title": "Release unused public IP",
+  "reason": "Reserved but not assigned to anything for 113 days.",
+  "saving": 300,
+  "risk": "LOW",
+  "maths": [
+   "Saving = ₹300/month per idle IP"
+  ],
+  "id": "rec-103",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "ip-033",
+  "resource_name": "eip-unused-03",
+  "env": "prod",
+  "region": "Mumbai",
+  "team": "Payments",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "ip",
+  "action": "release_ip",
+  "title": "Release unused public IP",
+  "reason": "Reserved but not assigned to anything for 93 days.",
+  "saving": 300,
+  "risk": "LOW",
+  "maths": [
+   "Saving = ₹300/month per idle IP"
+  ],
+  "id": "rec-104",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "ip-034",
+  "resource_name": "eip-unused-04",
+  "env": "dev",
+  "region": "Bangalore",
+  "team": "Payments",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "ip",
+  "action": "release_ip",
+  "title": "Release unused public IP",
+  "reason": "Reserved but not assigned to anything for 64 days.",
+  "saving": 300,
+  "risk": "LOW",
+  "maths": [
+   "Saving = ₹300/month per idle IP"
+  ],
+  "id": "rec-105",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "ip-035",
+  "resource_name": "eip-unused-05",
+  "env": "dev",
+  "region": "Noida",
+  "team": "Data",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "ip",
+  "action": "release_ip",
+  "title": "Release unused public IP",
+  "reason": "Reserved but not assigned to anything for 94 days.",
+  "saving": 300,
+  "risk": "LOW",
+  "maths": [
+   "Saving = ₹300/month per idle IP"
+  ],
+  "id": "rec-106",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ },
+ {
+  "resource_id": "ip-036",
+  "resource_name": "eip-unused-06",
+  "env": "prod",
+  "region": "Noida",
+  "team": "Payments",
+  "current_plan": null,
+  "target_plan": null,
+  "confidence": 95,
+  "confidence_notes": [
+   "inventory fact: not attached to any resource"
+  ],
+  "vcpu_removed": 0,
+  "peak_check": null,
+  "resource_type": "ip",
+  "action": "release_ip",
+  "title": "Release unused public IP",
+  "reason": "Reserved but not assigned to anything for 77 days.",
+  "saving": 300,
+  "risk": "LOW",
+  "maths": [
+   "Saving = ₹300/month per idle IP"
+  ],
+  "id": "rec-107",
+  "carbon": {
+   "kwh": 0.0,
+   "kg_co2": 0.0
+  },
+  "default_accepted": true
+ }
+]

@@ -1,0 +1,82 @@
+{
+ "generated_at": "2026-10-24T00:00:00+05:30",
+ "window_days": 30,
+ "step_min": 5,
+ "n_resources": 142,
+ "n_vms": 96,
+ "n_points": 4976640,
+ "current_monthly": 930948,
+ "projected_next_month": 966581,
+ "budget_monthly": 850000,
+ "potential_saving": 208735,
+ "by_env": {
+  "prod": 630257,
+  "dev": 186381,
+  "staging": 114310
+ },
+ "by_region": {
+  "Mumbai": 416954,
+  "Bangalore": 287789,
+  "Noida": 226205
+ },
+ "by_team": {
+  "Data": 262145,
+  "Platform": 193926,
+  "Payments": 142204,
+  "Search": 140537,
+  "Growth": 110541,
+  "Mobile-API": 81595
+ },
+ "by_type": {
+  "vm": 906048,
+  "volume": 14100,
+  "ip": 10800
+ },
+ "by_component": {
+  "compute": 620000,
+  "storage": 121200,
+  "network": 178948,
+  "ip": 10800
+ },
+ "bill_history": [
+  {
+   "month": "2026-04",
+   "inr": 690415
+  },
+  {
+   "month": "2026-05",
+   "inr": 718031
+  },
+  {
+   "month": "2026-06",
+   "inr": 752552
+  },
+  {
+   "month": "2026-07",
+   "inr": 793977
+  },
+  {
+   "month": "2026-08",
+   "inr": 835402
+  },
+  {
+   "month": "2026-09",
+   "inr": 897539
+  },
+  {
+   "month": "2026-10",
+   "inr": 966581
+  }
+ ],
+ "counts": {
+  "resize": 45,
+  "schedule": 21,
+  "stop": 6,
+  "review": 2,
+  "delete_volume": 10,
+  "release_ip": 6,
+  "upsize": 4,
+  "keep": 12,
+  "investigate": 1
+ }
+}
