@@ -118,7 +118,7 @@ export function RecCard({ r, compact = false }: { r: Recommendation; compact?: b
                   <Check size={14} /> {on ? "Accepted" : "Accept"}
                 </button>
                 <button onClick={() => setDecision(r.id, false)}
-                  className={cls("btn", !on ? "border border-slate-300 bg-slate-100 text-slate-900" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50")}>
+                  className={cls("btn", !on ? "border border-red-500/60 bg-red-50 text-red-600" : "border border-slate-200 bg-white text-slate-600 hover:border-red-500/40 hover:text-red-600")}>
                   <X size={14} /> {!on ? "Rejected" : "Reject"}
                 </button>
               </div>

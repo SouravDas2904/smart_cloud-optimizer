@@ -86,6 +86,18 @@ body::before {
 @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
 @keyframes popIn { from { opacity: 0; transform: translateY(8px) scale(.98) } to { opacity: 1; transform: none } }
 
+/* logo (components/Shell.tsx Brand): glow + sparks on hover */
+.brand-cloud, .brand-brain { transition: filter .3s ease; }
+.brand:hover .brand-cloud { filter: drop-shadow(0 0 2.5px rgb(var(--brand-500) / .9)); }
+.brand:hover .brand-brain { filter: drop-shadow(0 0 2px rgb(var(--brand-700))); animation: brainPulse 1.6s ease-in-out infinite; }
+.brand-spark { opacity: 0; transform-box: fill-box; transform-origin: center; }
+.brand:hover .brand-spark { animation: spark 1.6s ease-out infinite; }
+.brand:hover .brand-spark:nth-child(2) { animation-delay: .25s; }
+.brand:hover .brand-spark:nth-child(3) { animation-delay: .5s; }
+.brand:hover .brand-spark:nth-child(4) { animation-delay: .1s; }
+@keyframes spark { 0% { opacity: 0; transform: scale(.3) } 15% { opacity: 1; transform: scale(1.15) } 45% { opacity: 0; transform: scale(.9) } 100% { opacity: 0 } }
+@keyframes brainPulse { 0%, 100% { opacity: 1 } 50% { opacity: .75 } }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }

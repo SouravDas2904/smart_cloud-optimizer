@@ -142,16 +142,36 @@ function RoleSwitch({ role, setRole, className }: { role: Role; setRole: (r: Rol
   );
 }
 
+// Logo: a brain inside a cloud. On hover the cloud and brain glow and the brain throws a few sparks (globals.css .brand-*).
 function Brand() {
   return (
-    <Link href="/" className="flex items-center gap-2.5 px-2">
-      <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden>
-        <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" fill="none" stroke="rgb(var(--slate-300))" />
-        <path d="M8 21.5h3.2l2.6-9 3.6 13 2.8-8.5H24" fill="none" stroke="rgb(var(--brand-500))" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-      <span className="leading-tight">
-        <span className="block text-[14px] font-semibold tracking-tight text-slate-900">SmartCloud</span>
-        <span className="block font-mono text-[10.5px] uppercase tracking-[0.18em] text-slate-500">Optimizer</span>
+    <Link href="/" aria-label="SmartCloud Optimizer: go to Overview" title="Go to Overview"
+      className="brand group flex items-center gap-3 rounded-lg px-2 py-1 transition-colors hover:bg-slate-100/60">
+      <span className="relative grid h-9 w-9 shrink-0 place-items-center rounded-[10px] border border-brand-500/35 bg-gradient-to-br from-brand-100 to-ink transition-all duration-300 group-hover:border-brand-500/80 group-hover:shadow-[0_0_22px_-4px_rgb(var(--brand-500)/0.75)]">
+        <svg width="30" height="30" viewBox="0 -3 32 32" aria-hidden className="overflow-visible">
+          <path className="brand-cloud" d="M10 24H23A5 5 0 0 0 23.6 14.05A7.5 7.5 0 0 0 9.3 13.2A5.4 5.4 0 0 0 10 24Z"
+            fill="rgb(var(--brand-500) / 0.08)" stroke="rgb(var(--brand-500))" strokeWidth="1.6" strokeLinejoin="round" />
+          <g className="brand-brain" transform="translate(16.5 16.6) scale(1.55) translate(-16.5 -17.9)"
+            fill="none" stroke="rgb(var(--brand-500))" strokeWidth="0.82" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M16.4 15.4c-.8-.8-2.4-.6-2.7.5-1 .1-1.6 1.2-1.1 2.1-.6.8-.1 2 1 2.1.3.9 1.6 1.2 2.8.5Z" />
+            <path d="M16.6 15.4c.8-.8 2.4-.6 2.7.5 1 .1 1.6 1.2 1.1 2.1.6.8.1 2-1 2.1-.3.9-1.6 1.2-2.8.5Z" />
+            <path d="M14.1 17.3c.7-.1 1.2.4 1.2 1M18.9 17.3c-.7-.1-1.2.4-1.2 1M13.7 19.6c.4-.4 1.1-.4 1.6 0M19.3 19.6c-.4-.4-1.1-.4-1.6 0" />
+          </g>
+          <g stroke="rgb(var(--brand-700))" strokeWidth="1.3" strokeLinecap="round">
+            <path className="brand-spark" d="M16.5 3.6V1" />
+            <path className="brand-spark" d="M9.6 6.4L7.9 4.6" />
+            <path className="brand-spark" d="M23.4 6.4l1.7-1.8" />
+            <circle className="brand-spark" cx="16.5" cy="16.4" r="0.9" fill="rgb(var(--brand-700))" stroke="none" />
+          </g>
+        </svg>
+      </span>
+      <span className="leading-none">
+        <span className="block text-[15.5px] font-semibold tracking-tight text-slate-900">
+          Smart<span className="text-brand-500">Cloud</span>
+        </span>
+        <span className="mt-1 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.24em] text-slate-500 transition-colors group-hover:text-slate-700">
+          <span className="h-px w-3 bg-brand-500/70" />Optimizer
+        </span>
       </span>
     </Link>
   );
