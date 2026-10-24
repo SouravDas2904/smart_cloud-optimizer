@@ -18,6 +18,8 @@ Source of truth: `engine/config.py` (also rendered in the app at `/assumptions`)
 | Schedule saving | (resized) plan price × (108 − kept hours a week) ÷ 168; storage still billed | No double counting |
 | Orphans | Unattached ≥ 7 days. Volume saving = GB × (₹6 − ₹2 snapshot); IP ₹300/mo | Snapshot before delete |
 | Risk | HIGH if peak after > 75%, memory-bound, or prod delete; MEDIUM if 60–75%, prod, or bursty (p99/p95 > 2); else LOW | |
+| Risk score | 0–1: LOW band 0–0.33, MEDIUM 0.33–0.67, HIGH 0.67–1; inside the band ⅓ × (0.5 × limit pressure + 0.3 × env weight (dev 0, staging 0.5, prod 1) + 0.2 × (1 − confidence)). Limit pressure = closest of p99/target, max/ceiling after a resize; quiet off-hours CPU ÷ 5% for a schedule | Label never changes; the score breaks ties |
+| Hit my target | Target ₹ = today's bill × %. Per VM: nothing, resize, schedule (priced on the current size), or resize + schedule. Exact search in ₹100 steps, ranked by fewest HIGH → fewest MEDIUM → lowest total risk score → fewest changes → least overshoot. Upsizes always included and netted. Keep / review / investigate never picked | `engine/target.py`, mirrored in `lib/engine.ts` |
 | Confidence | 100 − gaps (up to 30) − 20 if < 14 days − 15 if CV > 1 − 10 if rare peaks | |
 | Anomaly | Robust z (median/MAD of same hour, weekday/weekend, first 21 days) > 4 for ≥ 30 min | Daily jobs aren't flagged |
 | Anomalous VMs | Excluded from sizing until investigated | Don't size on incident data |

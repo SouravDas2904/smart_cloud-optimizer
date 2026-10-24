@@ -68,6 +68,23 @@
    "inr": 856773
   }
  ],
+ "target_tiers": [
+  {
+   "risk": "LOW",
+   "saving": 125052,
+   "pct": 13.43
+  },
+  {
+   "risk": "MEDIUM",
+   "saving": 194877,
+   "pct": 20.93
+  },
+  {
+   "risk": "HIGH",
+   "saving": 200877,
+   "pct": 21.58
+  }
+ ],
  "counts": {
   "resize": 45,
   "schedule": 23,

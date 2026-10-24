@@ -6,6 +6,7 @@ export const NAV = [
   { href: "/savings", label: "Before vs after" },
   { href: "/resources", label: "Resources" },
   { href: "/alerts", label: "Alerts" },
+  { href: "/target", label: "Hit my target" },
   { href: "/whatif", label: "What-if" },
   { href: "/forecast", label: "Forecast" },
   { href: "/sustainability", label: "Sustainability" },

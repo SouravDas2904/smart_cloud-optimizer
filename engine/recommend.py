@@ -80,6 +80,38 @@ def risk_level(env, p99_after, mem_after, bursty, memory_bound):
     return "LOW"
 
 
+RISK_BANDS = {"LOW": 0.0, "MEDIUM": 1 / 3, "HIGH": 2 / 3}
+ENV_WEIGHT = {"dev": 0.0, "staging": 0.5, "prod": 1.0}
+
+
+def pressure(rec: dict, st: dict | None) -> float:
+    """How close the change runs to a safety limit, 0 (far) to 1 (at the limit). Measured, never guessed."""
+    pk = rec.get("peak_check")
+    if rec["action"] == "resize" and pk:
+        return min(1.0, max(pk["cpu_p99_after"] / (C.TARGET_CPU_UTIL * 100), pk["mem_p99_after"] / (C.TARGET_MEM_UTIL * 100),
+                            pk["cpu_max_after"] / (C.MAX_CPU_CEILING * 100), pk["mem_max_after"] / (C.MAX_MEM_CEILING * 100)))
+    if rec["action"] == "schedule" and st:
+        return min(1.0, st.get("offhours_quiet_avg", st["offhours_cpu_avg"]) / C.OFFHOURS_CPU_MAX)
+    if rec["action"] == "stop" and st:
+        return min(1.0, st["cpu_p95"] / C.IDLE_CPU_P95)
+    return 0.0   # orphan clean-ups (inventory fact), upsizes (add capacity), no-change cards
+
+
+def attach_risk_score(rec: dict, st: dict | None) -> None:
+    """risk_score in [0, 1]: the LOW / MEDIUM / HIGH label picks the third, the measured numbers pick the spot inside it.
+
+    score = band + 1/3 × (0.5 × pressure + 0.3 × env weight + 0.2 × (1 − confidence))
+    The label never changes, so a LOW change always scores below any MEDIUM one.
+    """
+    pr = pressure(rec, st)
+    env_w = ENV_WEIGHT.get(rec["env"], 1.0)
+    inside = 0.5 * pr + 0.3 * env_w + 0.2 * (1 - rec["confidence"] / 100)
+    rec["risk_score"] = round(RISK_BANDS[rec["risk"]] + inside / 3, 3)
+    rec["maths"] = rec["maths"] + [
+        f"Risk score = {rec['risk']} band {RISK_BANDS[rec['risk']]:.2f} + ⅓ × (0.5 × limit pressure {pr:.2f} + 0.3 × {rec['env']} "
+        f"{env_w:.1f} + 0.2 × (1 − confidence {rec['confidence'] / 100:.2f})) = {rec['risk_score']:.3f}"]
+
+
 def recommend_vm(r: dict, st: dict, cost: dict) -> list[dict]:
     recs = []
     plan, vcpu, ram, env = r["plan"], r["vcpu"], r["ram_gb"], r["env"]
@@ -208,6 +240,8 @@ def recommend_vm(r: dict, st: dict, cost: dict) -> list[dict]:
                                 f"during the work day. Stop it 8 PM–8 AM on weekdays and all weekend."),
                      "target_plan": None, "saving": round(saving), "risk": "LOW" if env == "dev" else "MEDIUM",
                      "keep_hours": keep,
+                     # the same schedule on the current (un-resized) size, used when a plan skips the resize
+                     "saving_alone": round(price * frac),
                      "maths": ([f"busy night hours (p95 CPU > {C.OFFHOURS_BUSY_P95:.0f}%): {hour_windows(busy)} → keep on {windows} (1 h warm-up)",
                                 f"rest of the night: average CPU {st['offhours_quiet_avg']:.1f}% < {C.OFFHOURS_CPU_MAX:.0f}% → safe to stop"]
                                if keep else

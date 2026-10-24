@@ -15,7 +15,8 @@ import config as C
 from alerts import build_alerts, robust_anomaly
 from forecast import backtest, holt_winters
 from generate import DATA_DIR, METRICS, START
-from recommend import monthly_cost, recommend_orphan, recommend_vm
+from recommend import attach_risk_score, monthly_cost, recommend_orphan, recommend_vm
+from target import plan_for_target, tiers
 from stats import vm_stats
 
 OUT = Path(__file__).resolve().parent.parent / "public" / "data"
@@ -245,6 +246,7 @@ def main():
         rec["saving"] = round(rec["saving"])
         rec["carbon"] = carbon_kg(max(0.0, rec.get("vcpu_removed", 0) or 0))
         rec["default_accepted"] = rec["action"] not in ("review", "keep", "investigate")
+        attach_risk_score(rec, stats.get(rec["resource_id"]))
 
     daily = daily_costs(inv, series)
     current_month = sum(r["cost"]["total"] for r in resources)
@@ -280,6 +282,7 @@ def main():
         "by_env": group("env"), "by_region": group("region"), "by_team": group("team"), "by_type": group("type"),
         "by_component": {k: round(sum(r["cost"][k] for r in resources)) for k in ("compute", "storage", "network", "ip")},
         "bill_history": bill_history(resources),
+        "target_tiers": tiers(recs, current_month),   # Hit my target: most each risk level can save, net of upsizes
         "counts": {a: sum(1 for r in recs if r["action"] == a) for a in
                    ["resize", "schedule", "stop", "review", "delete_volume", "release_ip", "upsize", "keep", "investigate"]},
     }
@@ -297,6 +300,8 @@ def main():
     print(f"current ₹{current_month:,.0f}/month, projected ₹{projected_month:,.0f}, "
           f"potential saving ₹{summary['potential_saving']:,.0f} ({summary['potential_saving'] / current_month:.0%})")
     print("counts", summary["counts"])
+    print("hit-my-target tiers", [f"{t['risk']} {t['pct']:.1f}%" for t in summary["target_tiers"]],
+          "| 15% plan:", plan_for_target(recs, current_month, 15)["message"])
     print(f"{len(alerts)} alerts:", [a["title"] for a in alerts])
     print(f"forecast backtest MAPE {mape:.1f}%")
 
