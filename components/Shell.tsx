@@ -144,14 +144,21 @@ function RoleSwitch({ role, setRole, className }: { role: Role; setRole: (r: Rol
 
 function Brand() {
   return (
-    <Link href="/" className="flex items-center gap-2.5 px-2">
-      <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden>
-        <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" fill="none" stroke="rgb(var(--slate-300))" />
-        <path d="M8 21.5h3.2l2.6-9 3.6 13 2.8-8.5H24" fill="none" stroke="rgb(var(--brand-500))" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-      <span className="leading-tight">
-        <span className="block text-[14px] font-semibold tracking-tight text-slate-900">SmartCloud</span>
-        <span className="block font-mono text-[10.5px] uppercase tracking-[0.18em] text-slate-500">Optimizer</span>
+    <Link href="/" aria-label="SmartCloud Optimizer: go to Overview" title="Go to Overview"
+      className="group flex items-center gap-3 rounded-lg px-2 py-1 transition-colors hover:bg-slate-100/60">
+      <span className="relative grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-gradient-to-br from-brand-700 to-brand-500 shadow-[0_0_18px_-6px_rgb(var(--brand-500)/0.7)] transition-all duration-200 group-hover:-translate-y-px group-hover:shadow-[0_0_24px_-4px_rgb(var(--brand-500)/0.9)]">
+        <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden>
+          <path d="M9.5 21.5a5 5 0 0 1 .6-9.97A7 7 0 0 1 23.4 13.2a4.2 4.2 0 0 1-.6 8.3" fill="none" stroke="rgb(var(--ink))" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" opacity="0.45" />
+          <path d="M7 19.5h3.6l2.4-6.5 3.4 10 2.6-6h5.5" fill="none" stroke="rgb(var(--ink))" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </span>
+      <span className="leading-none">
+        <span className="block text-[15.5px] font-semibold tracking-tight text-slate-900">
+          Smart<span className="text-brand-500">Cloud</span>
+        </span>
+        <span className="mt-1 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.24em] text-slate-500 transition-colors group-hover:text-slate-700">
+          <span className="h-px w-3 bg-brand-500/70" />Optimizer
+        </span>
       </span>
     </Link>
   );
