@@ -142,14 +142,27 @@ function RoleSwitch({ role, setRole, className }: { role: Role; setRole: (r: Rol
   );
 }
 
+// Logo: a brain inside a cloud. On hover the cloud and brain glow and the brain throws a few sparks (globals.css .brand-*).
 function Brand() {
   return (
     <Link href="/" aria-label="SmartCloud Optimizer: go to Overview" title="Go to Overview"
-      className="group flex items-center gap-3 rounded-lg px-2 py-1 transition-colors hover:bg-slate-100/60">
-      <span className="relative grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-gradient-to-br from-brand-700 to-brand-500 shadow-[0_0_18px_-6px_rgb(var(--brand-500)/0.7)] transition-all duration-200 group-hover:-translate-y-px group-hover:shadow-[0_0_24px_-4px_rgb(var(--brand-500)/0.9)]">
-        <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden>
-          <path d="M9.5 21.5a5 5 0 0 1 .6-9.97A7 7 0 0 1 23.4 13.2a4.2 4.2 0 0 1-.6 8.3" fill="none" stroke="rgb(var(--ink))" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" opacity="0.45" />
-          <path d="M7 19.5h3.6l2.4-6.5 3.4 10 2.6-6h5.5" fill="none" stroke="rgb(var(--ink))" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+      className="brand group flex items-center gap-3 rounded-lg px-2 py-1 transition-colors hover:bg-slate-100/60">
+      <span className="relative grid h-9 w-9 shrink-0 place-items-center rounded-[10px] border border-brand-500/35 bg-gradient-to-br from-brand-100 to-ink transition-all duration-300 group-hover:border-brand-500/80 group-hover:shadow-[0_0_22px_-4px_rgb(var(--brand-500)/0.75)]">
+        <svg width="30" height="30" viewBox="0 -3 32 32" aria-hidden className="overflow-visible">
+          <path className="brand-cloud" d="M10 24H23A5 5 0 0 0 23.6 14.05A7.5 7.5 0 0 0 9.3 13.2A5.4 5.4 0 0 0 10 24Z"
+            fill="rgb(var(--brand-500) / 0.08)" stroke="rgb(var(--brand-500))" strokeWidth="1.6" strokeLinejoin="round" />
+          <g className="brand-brain" transform="translate(16.5 16.6) scale(1.55) translate(-16.5 -17.9)"
+            fill="none" stroke="rgb(var(--brand-500))" strokeWidth="0.82" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M16.4 15.4c-.8-.8-2.4-.6-2.7.5-1 .1-1.6 1.2-1.1 2.1-.6.8-.1 2 1 2.1.3.9 1.6 1.2 2.8.5Z" />
+            <path d="M16.6 15.4c.8-.8 2.4-.6 2.7.5 1 .1 1.6 1.2 1.1 2.1.6.8.1 2-1 2.1-.3.9-1.6 1.2-2.8.5Z" />
+            <path d="M14.1 17.3c.7-.1 1.2.4 1.2 1M18.9 17.3c-.7-.1-1.2.4-1.2 1M13.7 19.6c.4-.4 1.1-.4 1.6 0M19.3 19.6c-.4-.4-1.1-.4-1.6 0" />
+          </g>
+          <g stroke="rgb(var(--brand-700))" strokeWidth="1.3" strokeLinecap="round">
+            <path className="brand-spark" d="M16.5 3.6V1" />
+            <path className="brand-spark" d="M9.6 6.4L7.9 4.6" />
+            <path className="brand-spark" d="M23.4 6.4l1.7-1.8" />
+            <circle className="brand-spark" cx="16.5" cy="16.4" r="0.9" fill="rgb(var(--brand-700))" stroke="none" />
+          </g>
         </svg>
       </span>
       <span className="leading-none">
