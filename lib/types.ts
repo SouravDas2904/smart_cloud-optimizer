@@ -23,7 +23,7 @@ export interface Resource {
 
 export interface PeakCheck {
   cpu_p99_before: number; cpu_p99_after: number; mem_p99_before: number; mem_p99_after: number;
-  safe: boolean; avg_based_plan?: string;
+  cpu_max_before?: number; cpu_max_after?: number; safe: boolean; avg_based_plan?: string;
 }
 
 export interface Recommendation {
@@ -63,7 +63,7 @@ export interface Series {
 
 export type Assumptions = Record<string, unknown> & {
   PLANS: Record<string, [number, number, number]>;
-  TARGET_CPU_UTIL: number; TARGET_MEM_UTIL: number; MIN_MEM_MARGIN_GB: number;
+  TARGET_CPU_UTIL: number; TARGET_MEM_UTIL: number; MIN_MEM_MARGIN_GB: number; MAX_CPU_CEILING: number;
   WATTS_PER_VCPU: number; PUE: number; GRID_KG_CO2_PER_KWH: number; HOURS_PER_MONTH: number;
   KG_CO2_PER_TREE_YEAR: number; OFF_HOURS_FRACTION: number; MONTHLY_BUDGET_INR: number;
 };

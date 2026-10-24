@@ -10,6 +10,7 @@ Source of truth: `engine/config.py` (also rendered in the app at `/assumptions`)
 | Plan choice | Cheapest plan with vCPU ≥ required and RAM ≥ required | |
 | Idle | p95 CPU < 5%, p95 net < 0.5 MB/s, p95 IOPS < 10, ≥ 14 days | Three signals must agree |
 | Idle in prod | Flagged for owner review, never stopped | Safety |
+| Spike check | busiest single 5-min CPU reading ≤ 95% on the new plan (`MAX_CPU_CEILING`) | catches spikes shorter than ~15 min/day that p99 misses |
 | Under-provisioned | p99 CPU or memory > 90% → upsize | Reliability first |
 | Off-hours schedule | Non-prod with avg off-window CPU < 5%; window 20:00–08:00 weekdays + weekends = 108/168 = 64.3% | |
 | Schedule saving | (resized) plan price × 64.3%; storage still billed | No double counting |
@@ -30,7 +31,7 @@ Source of truth: `engine/config.py` (also rendered in the app at `/assumptions`)
 Each VM gets a workload pattern: steady-low, healthy, bursty (short daily peak), batch (2-hour nightly job), office-hours dev, idle, memory-heavy, saturated or growing-disk. Series = base + daily shape × weekday factor + noise + events. Planted on purpose: 10 unattached volumes, 6 unused IPs, 8 large ML VMs launched on day 20 (cost jump), one prod VM pegged at ~97% CPU with 25× egress from day 26.4 (anomaly), and metric gaps on 3 VMs. The engine never sees the pattern labels, only the metrics.
 
 ## Simplifications
-No reserved/committed-use discounts; no autoscaling groups; same prices in every region; bill history before the 30-day window is synthetic (+40% over six months, per the scenario).
+No reserved/committed-use discounts; no autoscaling groups; same prices in every region; bill history before the 30-day window is reconstructed from each resource's launch date (`build.py: bill_history`), assuming today's per-resource monthly cost applied since launch; launch dates themselves are simulated.
 
 ## Real-world check
 

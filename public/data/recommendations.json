@@ -18,10 +18,11 @@
   "saving": 5400,
   "risk": "MEDIUM",
   "maths": [
-   "required vCPU = 8 × p99 CPU 14.1% ÷ 70% target = 1.61",
+   "required vCPU = max(8 × p99 CPU 14.1% ÷ 70% target, 8 × max CPU 16.3% ÷ 95% ceiling) = 1.61",
    "required RAM = max(32 GB × p99 mem 28.6% ÷ 75%, used + 1 GB) = 12.2 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 12.2 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 14.1% × 8 ÷ 2 = 56% CPU; memory p99 after = 57%",
+   "Spike check: busiest 5-min reading after = 16.3% × 8 ÷ 2 = 65% (ceiling 95%)",
    "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
   ],
   "vcpu_removed": 6,
@@ -30,6 +31,8 @@
    "cpu_p99_after": 56.4,
    "mem_p99_before": 28.63,
    "mem_p99_after": 57.3,
+   "cpu_max_before": 16.34,
+   "cpu_max_after": 65.4,
    "safe": true
   },
   "id": "rec-001",
@@ -58,10 +61,11 @@
   "saving": 5400,
   "risk": "MEDIUM",
   "maths": [
-   "required vCPU = 8 × p99 CPU 14.6% ÷ 70% target = 1.67",
+   "required vCPU = max(8 × p99 CPU 14.6% ÷ 70% target, 8 × max CPU 16.5% ÷ 95% ceiling) = 1.67",
    "required RAM = max(32 GB × p99 mem 28.8% ÷ 75%, used + 1 GB) = 12.3 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 12.3 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 14.6% × 8 ÷ 2 = 58% CPU; memory p99 after = 58%",
+   "Spike check: busiest 5-min reading after = 16.5% × 8 ÷ 2 = 66% (ceiling 95%)",
    "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
   ],
   "vcpu_removed": 6,
@@ -70,6 +74,8 @@
    "cpu_p99_after": 58.4,
    "mem_p99_before": 28.79,
    "mem_p99_after": 57.6,
+   "cpu_max_before": 16.51,
+   "cpu_max_after": 66.0,
    "safe": true
   },
   "id": "rec-002",
@@ -98,10 +104,11 @@
   "saving": 5400,
   "risk": "MEDIUM",
   "maths": [
-   "required vCPU = 8 × p99 CPU 13.3% ÷ 70% target = 1.52",
+   "required vCPU = max(8 × p99 CPU 13.3% ÷ 70% target, 8 × max CPU 16.0% ÷ 95% ceiling) = 1.52",
    "required RAM = max(32 GB × p99 mem 27.8% ÷ 75%, used + 1 GB) = 11.9 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 11.9 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 13.3% × 8 ÷ 2 = 53% CPU; memory p99 after = 56%",
+   "Spike check: busiest 5-min reading after = 16.0% × 8 ÷ 2 = 64% (ceiling 95%)",
    "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
   ],
   "vcpu_removed": 6,
@@ -110,6 +117,8 @@
    "cpu_p99_after": 53.0,
    "mem_p99_before": 27.84,
    "mem_p99_after": 55.7,
+   "cpu_max_before": 15.97,
+   "cpu_max_after": 63.9,
    "safe": true
   },
   "id": "rec-003",
@@ -138,10 +147,11 @@
   "saving": 5400,
   "risk": "MEDIUM",
   "maths": [
-   "required vCPU = 8 × p99 CPU 13.8% ÷ 70% target = 1.57",
+   "required vCPU = max(8 × p99 CPU 13.8% ÷ 70% target, 8 × max CPU 16.9% ÷ 95% ceiling) = 1.57",
    "required RAM = max(32 GB × p99 mem 26.1% ÷ 75%, used + 1 GB) = 11.1 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 11.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 13.8% × 8 ÷ 2 = 55% CPU; memory p99 after = 52%",
+   "Spike check: busiest 5-min reading after = 16.9% × 8 ÷ 2 = 68% (ceiling 95%)",
    "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
   ],
   "vcpu_removed": 6,
@@ -150,6 +160,8 @@
    "cpu_p99_after": 55.1,
    "mem_p99_before": 26.13,
    "mem_p99_after": 52.3,
+   "cpu_max_before": 16.94,
+   "cpu_max_after": 67.8,
    "safe": true
   },
   "id": "rec-004",
@@ -178,10 +190,11 @@
   "saving": 5400,
   "risk": "MEDIUM",
   "maths": [
-   "required vCPU = 8 × p99 CPU 14.9% ÷ 70% target = 1.71",
+   "required vCPU = max(8 × p99 CPU 14.9% ÷ 70% target, 8 × max CPU 17.5% ÷ 95% ceiling) = 1.71",
    "required RAM = max(32 GB × p99 mem 27.1% ÷ 75%, used + 1 GB) = 11.5 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 11.5 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 14.9% × 8 ÷ 2 = 60% CPU; memory p99 after = 54%",
+   "Spike check: busiest 5-min reading after = 17.5% × 8 ÷ 2 = 70% (ceiling 95%)",
    "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
   ],
   "vcpu_removed": 6,
@@ -190,6 +203,8 @@
    "cpu_p99_after": 59.7,
    "mem_p99_before": 27.07,
    "mem_p99_after": 54.1,
+   "cpu_max_before": 17.46,
+   "cpu_max_after": 69.8,
    "safe": true
   },
   "id": "rec-005",
@@ -218,10 +233,11 @@
   "saving": 5400,
   "risk": "MEDIUM",
   "maths": [
-   "required vCPU = 8 × p99 CPU 11.8% ÷ 70% target = 1.34",
+   "required vCPU = max(8 × p99 CPU 11.8% ÷ 70% target, 8 × max CPU 14.5% ÷ 95% ceiling) = 1.34",
    "required RAM = max(32 GB × p99 mem 30.6% ÷ 75%, used + 1 GB) = 13.1 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 13.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 11.8% × 8 ÷ 2 = 47% CPU; memory p99 after = 61%",
+   "Spike check: busiest 5-min reading after = 14.5% × 8 ÷ 2 = 58% (ceiling 95%)",
    "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
   ],
   "vcpu_removed": 6,
@@ -230,6 +246,8 @@
    "cpu_p99_after": 47.0,
    "mem_p99_before": 30.64,
    "mem_p99_after": 61.3,
+   "cpu_max_before": 14.49,
+   "cpu_max_after": 58.0,
    "safe": true
   },
   "id": "rec-006",
@@ -258,10 +276,11 @@
   "saving": 4000,
   "risk": "MEDIUM",
   "maths": [
-   "required vCPU = 8 × p99 CPU 14.5% ÷ 70% target = 1.65",
+   "required vCPU = max(8 × p99 CPU 14.5% ÷ 70% target, 8 × max CPU 16.8% ÷ 95% ceiling) = 1.65",
    "required RAM = max(16 GB × p99 mem 31.8% ÷ 75%, used + 1 GB) = 6.8 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 6.8 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 14.5% × 8 ÷ 2 = 58% CPU; memory p99 after = 64%",
+   "Spike check: busiest 5-min reading after = 16.8% × 8 ÷ 2 = 67% (ceiling 95%)",
    "Saving = ₹6,000 − ₹2,000 = ₹4,000/month"
   ],
   "vcpu_removed": 6,
@@ -270,6 +289,8 @@
    "cpu_p99_after": 57.9,
    "mem_p99_before": 31.75,
    "mem_p99_after": 63.5,
+   "cpu_max_before": 16.8,
+   "cpu_max_after": 67.2,
    "safe": true
   },
   "id": "rec-007",
@@ -298,10 +319,11 @@
   "saving": 4000,
   "risk": "MEDIUM",
   "maths": [
-   "required vCPU = 8 × p99 CPU 12.8% ÷ 70% target = 1.47",
+   "required vCPU = max(8 × p99 CPU 12.8% ÷ 70% target, 8 × max CPU 14.9% ÷ 95% ceiling) = 1.47",
    "required RAM = max(16 GB × p99 mem 31.2% ÷ 75%, used + 1 GB) = 6.7 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 6.7 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 12.8% × 8 ÷ 2 = 51% CPU; memory p99 after = 62%",
+   "Spike check: busiest 5-min reading after = 14.9% × 8 ÷ 2 = 59% (ceiling 95%)",
    "Saving = ₹6,000 − ₹2,000 = ₹4,000/month"
   ],
   "vcpu_removed": 6,
@@ -310,6 +332,8 @@
    "cpu_p99_after": 51.3,
    "mem_p99_before": 31.21,
    "mem_p99_after": 62.4,
+   "cpu_max_before": 14.86,
+   "cpu_max_after": 59.4,
    "safe": true
   },
   "id": "rec-008",
@@ -338,10 +362,11 @@
   "saving": 4000,
   "risk": "MEDIUM",
   "maths": [
-   "required vCPU = 8 × p99 CPU 13.1% ÷ 70% target = 1.50",
+   "required vCPU = max(8 × p99 CPU 13.1% ÷ 70% target, 8 × max CPU 15.5% ÷ 95% ceiling) = 1.50",
    "required RAM = max(16 GB × p99 mem 31.1% ÷ 75%, used + 1 GB) = 6.6 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 6.6 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 13.1% × 8 ÷ 2 = 52% CPU; memory p99 after = 62%",
+   "Spike check: busiest 5-min reading after = 15.5% × 8 ÷ 2 = 62% (ceiling 95%)",
    "Saving = ₹6,000 − ₹2,000 = ₹4,000/month"
   ],
   "vcpu_removed": 6,
@@ -350,6 +375,8 @@
    "cpu_p99_after": 52.4,
    "mem_p99_before": 31.14,
    "mem_p99_after": 62.3,
+   "cpu_max_before": 15.47,
+   "cpu_max_after": 61.9,
    "safe": true
   },
   "id": "rec-009",
@@ -378,10 +405,11 @@
   "saving": 4000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 8 × p99 CPU 11.8% ÷ 70% target = 1.34",
+   "required vCPU = max(8 × p99 CPU 11.8% ÷ 70% target, 8 × max CPU 14.4% ÷ 95% ceiling) = 1.34",
    "required RAM = max(16 GB × p99 mem 25.5% ÷ 75%, used + 1 GB) = 5.4 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 5.4 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 11.8% × 8 ÷ 2 = 47% CPU; memory p99 after = 51%",
+   "Spike check: busiest 5-min reading after = 14.4% × 8 ÷ 2 = 58% (ceiling 95%)",
    "Saving = ₹6,000 − ₹2,000 = ₹4,000/month"
   ],
   "vcpu_removed": 6,
@@ -390,6 +418,8 @@
    "cpu_p99_after": 47.0,
    "mem_p99_before": 25.54,
    "mem_p99_after": 51.1,
+   "cpu_max_before": 14.43,
+   "cpu_max_after": 57.7,
    "safe": true
   },
   "id": "rec-010",
@@ -418,10 +448,11 @@
   "saving": 4000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 8 × p99 CPU 12.3% ÷ 70% target = 1.41",
+   "required vCPU = max(8 × p99 CPU 12.3% ÷ 70% target, 8 × max CPU 14.6% ÷ 95% ceiling) = 1.41",
    "required RAM = max(16 GB × p99 mem 27.8% ÷ 75%, used + 1 GB) = 5.9 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 5.9 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 12.3% × 8 ÷ 2 = 49% CPU; memory p99 after = 56%",
+   "Spike check: busiest 5-min reading after = 14.6% × 8 ÷ 2 = 58% (ceiling 95%)",
    "Saving = ₹6,000 − ₹2,000 = ₹4,000/month"
   ],
   "vcpu_removed": 6,
@@ -430,6 +461,8 @@
    "cpu_p99_after": 49.4,
    "mem_p99_before": 27.84,
    "mem_p99_after": 55.7,
+   "cpu_max_before": 14.55,
+   "cpu_max_after": 58.2,
    "safe": true
   },
   "id": "rec-011",
@@ -458,10 +491,11 @@
   "saving": 2000,
   "risk": "MEDIUM",
   "maths": [
-   "required vCPU = 4 × p99 CPU 14.8% ÷ 70% target = 0.85",
+   "required vCPU = max(4 × p99 CPU 14.8% ÷ 70% target, 4 × max CPU 17.3% ÷ 95% ceiling) = 0.85",
    "required RAM = max(16 GB × p99 mem 32.3% ÷ 75%, used + 1 GB) = 6.9 GB",
    "cheapest plan with ≥ 1 vCPU and ≥ 6.9 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 14.8% × 4 ÷ 2 = 30% CPU; memory p99 after = 65%",
+   "Spike check: busiest 5-min reading after = 17.3% × 4 ÷ 2 = 35% (ceiling 95%)",
    "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
   ],
   "vcpu_removed": 2,
@@ -470,6 +504,8 @@
    "cpu_p99_after": 29.7,
    "mem_p99_before": 32.31,
    "mem_p99_after": 64.6,
+   "cpu_max_before": 17.28,
+   "cpu_max_after": 34.6,
    "safe": true
   },
   "id": "rec-012",
@@ -498,10 +534,11 @@
   "saving": 2000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 4 × p99 CPU 14.0% ÷ 70% target = 0.80",
+   "required vCPU = max(4 × p99 CPU 14.0% ÷ 70% target, 4 × max CPU 16.2% ÷ 95% ceiling) = 0.80",
    "required RAM = max(16 GB × p99 mem 26.7% ÷ 75%, used + 1 GB) = 5.7 GB",
    "cheapest plan with ≥ 1 vCPU and ≥ 5.7 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 14.0% × 4 ÷ 2 = 28% CPU; memory p99 after = 53%",
+   "Spike check: busiest 5-min reading after = 16.2% × 4 ÷ 2 = 32% (ceiling 95%)",
    "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
   ],
   "vcpu_removed": 2,
@@ -510,6 +547,8 @@
    "cpu_p99_after": 28.0,
    "mem_p99_before": 26.7,
    "mem_p99_after": 53.4,
+   "cpu_max_before": 16.16,
+   "cpu_max_after": 32.3,
    "safe": true
   },
   "id": "rec-013",
@@ -538,10 +577,11 @@
   "saving": 2000,
   "risk": "MEDIUM",
   "maths": [
-   "required vCPU = 4 × p99 CPU 14.4% ÷ 70% target = 0.83",
+   "required vCPU = max(4 × p99 CPU 14.4% ÷ 70% target, 4 × max CPU 16.5% ÷ 95% ceiling) = 0.83",
    "required RAM = max(16 GB × p99 mem 31.9% ÷ 75%, used + 1 GB) = 6.8 GB",
    "cheapest plan with ≥ 1 vCPU and ≥ 6.8 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 14.4% × 4 ÷ 2 = 29% CPU; memory p99 after = 64%",
+   "Spike check: busiest 5-min reading after = 16.5% × 4 ÷ 2 = 33% (ceiling 95%)",
    "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
   ],
   "vcpu_removed": 2,
@@ -550,6 +590,8 @@
    "cpu_p99_after": 28.9,
    "mem_p99_before": 31.9,
    "mem_p99_after": 63.8,
+   "cpu_max_before": 16.53,
+   "cpu_max_after": 33.1,
    "safe": true
   },
   "id": "rec-014",
@@ -578,10 +620,11 @@
   "saving": 2000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 4 × p99 CPU 12.3% ÷ 70% target = 0.70",
+   "required vCPU = max(4 × p99 CPU 12.3% ÷ 70% target, 4 × max CPU 14.6% ÷ 95% ceiling) = 0.70",
    "required RAM = max(16 GB × p99 mem 29.5% ÷ 75%, used + 1 GB) = 6.3 GB",
    "cheapest plan with ≥ 1 vCPU and ≥ 6.3 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 12.3% × 4 ÷ 2 = 25% CPU; memory p99 after = 59%",
+   "Spike check: busiest 5-min reading after = 14.6% × 4 ÷ 2 = 29% (ceiling 95%)",
    "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
   ],
   "vcpu_removed": 2,
@@ -590,6 +633,8 @@
    "cpu_p99_after": 24.6,
    "mem_p99_before": 29.54,
    "mem_p99_after": 59.1,
+   "cpu_max_before": 14.58,
+   "cpu_max_after": 29.2,
    "safe": true
   },
   "id": "rec-015",
@@ -618,10 +663,11 @@
   "saving": 2000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 4 × p99 CPU 14.1% ÷ 70% target = 0.80",
+   "required vCPU = max(4 × p99 CPU 14.1% ÷ 70% target, 4 × max CPU 16.6% ÷ 95% ceiling) = 0.80",
    "required RAM = max(16 GB × p99 mem 26.2% ÷ 75%, used + 1 GB) = 5.6 GB",
    "cheapest plan with ≥ 1 vCPU and ≥ 5.6 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 14.1% × 4 ÷ 2 = 28% CPU; memory p99 after = 52%",
+   "Spike check: busiest 5-min reading after = 16.6% × 4 ÷ 2 = 33% (ceiling 95%)",
    "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
   ],
   "vcpu_removed": 2,
@@ -630,6 +676,8 @@
    "cpu_p99_after": 28.1,
    "mem_p99_before": 26.23,
    "mem_p99_after": 52.5,
+   "cpu_max_before": 16.55,
+   "cpu_max_after": 33.1,
    "safe": true
   },
   "id": "rec-016",
@@ -658,10 +706,11 @@
   "saving": 2000,
   "risk": "MEDIUM",
   "maths": [
-   "required vCPU = 4 × p99 CPU 11.7% ÷ 70% target = 0.67",
+   "required vCPU = max(4 × p99 CPU 11.7% ÷ 70% target, 4 × max CPU 14.4% ÷ 95% ceiling) = 0.67",
    "required RAM = max(16 GB × p99 mem 31.8% ÷ 75%, used + 1 GB) = 6.8 GB",
    "cheapest plan with ≥ 1 vCPU and ≥ 6.8 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 11.7% × 4 ÷ 2 = 23% CPU; memory p99 after = 64%",
+   "Spike check: busiest 5-min reading after = 14.4% × 4 ÷ 2 = 29% (ceiling 95%)",
    "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
   ],
   "vcpu_removed": 2,
@@ -670,6 +719,8 @@
    "cpu_p99_after": 23.4,
    "mem_p99_before": 31.82,
    "mem_p99_after": 63.6,
+   "cpu_max_before": 14.43,
+   "cpu_max_after": 28.9,
    "safe": true
   },
   "id": "rec-017",
@@ -698,10 +749,11 @@
   "saving": 2000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 4 × p99 CPU 12.9% ÷ 70% target = 0.74",
+   "required vCPU = max(4 × p99 CPU 12.9% ÷ 70% target, 4 × max CPU 15.2% ÷ 95% ceiling) = 0.74",
    "required RAM = max(16 GB × p99 mem 28.2% ÷ 75%, used + 1 GB) = 6.0 GB",
    "cheapest plan with ≥ 1 vCPU and ≥ 6.0 GB = s-2-8 (2 vCPU / 8 GB, ₹2,000/month)",
    "Peak Safety Check: p99 after = 12.9% × 4 ÷ 2 = 26% CPU; memory p99 after = 56%",
+   "Spike check: busiest 5-min reading after = 15.2% × 4 ÷ 2 = 30% (ceiling 95%)",
    "Saving = ₹4,000 − ₹2,000 = ₹2,000/month"
   ],
   "vcpu_removed": 2,
@@ -710,6 +762,8 @@
    "cpu_p99_after": 25.9,
    "mem_p99_before": 28.22,
    "mem_p99_after": 56.4,
+   "cpu_max_before": 15.21,
+   "cpu_max_after": 30.4,
    "safe": true
   },
   "id": "rec-018",
@@ -739,8 +793,8 @@
   "risk": "LOW",
   "maths": [
    "average-based: 8 × 10.5% ÷ 70% → s-2-8 (2 vCPU)",
-   "peak on s-2-8 = 80.7% × 8 ÷ 2 = 323% → overload",
-   "required vCPU = 8 × p99 CPU 80.7% ÷ 70% target = 9.22",
+   "peak on s-2-8 = p99 80.7% × 8 ÷ 2 = 323% → overload",
+   "required vCPU = max(8 × p99 CPU 80.7% ÷ 70% target, 8 × max CPU 85.6% ÷ 95% ceiling) = 9.22",
    "required ≥ current size → no safe downsize"
   ],
   "vcpu_removed": 0,
@@ -749,6 +803,8 @@
    "cpu_p99_after": 322.7,
    "mem_p99_before": 54.89,
    "mem_p99_after": 27.4,
+   "cpu_max_before": 85.62,
+   "cpu_max_after": 42.8,
    "safe": false,
    "avg_based_plan": "s-2-8"
   },
@@ -780,8 +836,8 @@
   "risk": "LOW",
   "maths": [
    "average-based: 8 × 10.6% ÷ 70% → s-2-8 (2 vCPU)",
-   "peak on s-2-8 = 83.9% × 8 ÷ 2 = 335% → overload",
-   "required vCPU = 8 × p99 CPU 83.9% ÷ 70% target = 9.58",
+   "peak on s-2-8 = p99 83.9% × 8 ÷ 2 = 335% → overload",
+   "required vCPU = max(8 × p99 CPU 83.9% ÷ 70% target, 8 × max CPU 88.3% ÷ 95% ceiling) = 9.58",
    "required ≥ current size → no safe downsize"
   ],
   "vcpu_removed": 0,
@@ -790,6 +846,8 @@
    "cpu_p99_after": 335.4,
    "mem_p99_before": 55.18,
    "mem_p99_after": 27.6,
+   "cpu_max_before": 88.26,
+   "cpu_max_after": 44.1,
    "safe": false,
    "avg_based_plan": "s-2-8"
   },
@@ -821,8 +879,8 @@
   "risk": "LOW",
   "maths": [
    "average-based: 8 × 10.6% ÷ 70% → s-2-8 (2 vCPU)",
-   "peak on s-2-8 = 85.2% × 8 ÷ 2 = 341% → overload",
-   "required vCPU = 8 × p99 CPU 85.2% ÷ 70% target = 9.74",
+   "peak on s-2-8 = p99 85.2% × 8 ÷ 2 = 341% → overload",
+   "required vCPU = max(8 × p99 CPU 85.2% ÷ 70% target, 8 × max CPU 90.1% ÷ 95% ceiling) = 9.74",
    "required ≥ current size → no safe downsize"
   ],
   "vcpu_removed": 0,
@@ -831,6 +889,8 @@
    "cpu_p99_after": 340.8,
    "mem_p99_before": 55.36,
    "mem_p99_after": 27.7,
+   "cpu_max_before": 90.06,
+   "cpu_max_after": 45.0,
    "safe": false,
    "avg_based_plan": "s-2-8"
   },
@@ -862,8 +922,8 @@
   "risk": "LOW",
   "maths": [
    "average-based: 8 × 10.5% ÷ 70% → s-2-8 (2 vCPU)",
-   "peak on s-2-8 = 81.9% × 8 ÷ 2 = 328% → overload",
-   "required vCPU = 8 × p99 CPU 81.9% ÷ 70% target = 9.36",
+   "peak on s-2-8 = p99 81.9% × 8 ÷ 2 = 328% → overload",
+   "required vCPU = max(8 × p99 CPU 81.9% ÷ 70% target, 8 × max CPU 86.5% ÷ 95% ceiling) = 9.36",
    "required ≥ current size → no safe downsize"
   ],
   "vcpu_removed": 0,
@@ -872,6 +932,8 @@
    "cpu_p99_after": 327.6,
    "mem_p99_before": 55.12,
    "mem_p99_after": 27.6,
+   "cpu_max_before": 86.5,
+   "cpu_max_after": 43.2,
    "safe": false,
    "avg_based_plan": "s-2-8"
   },
@@ -903,8 +965,8 @@
   "risk": "LOW",
   "maths": [
    "average-based: 8 × 10.5% ÷ 70% → s-2-8 (2 vCPU)",
-   "peak on s-2-8 = 81.8% × 8 ÷ 2 = 327% → overload",
-   "required vCPU = 8 × p99 CPU 81.8% ÷ 70% target = 9.35",
+   "peak on s-2-8 = p99 81.8% × 8 ÷ 2 = 327% → overload",
+   "required vCPU = max(8 × p99 CPU 81.8% ÷ 70% target, 8 × max CPU 87.9% ÷ 95% ceiling) = 9.35",
    "required ≥ current size → no safe downsize"
   ],
   "vcpu_removed": 0,
@@ -913,6 +975,8 @@
    "cpu_p99_after": 327.3,
    "mem_p99_before": 54.97,
    "mem_p99_after": 27.5,
+   "cpu_max_before": 87.89,
+   "cpu_max_after": 43.9,
    "safe": false,
    "avg_based_plan": "s-2-8"
   },
@@ -943,8 +1007,8 @@
   "risk": "LOW",
   "maths": [
    "average-based: 8 × 8.3% ÷ 70% → m-2-16 (2 vCPU)",
-   "peak on m-2-16 = 78.7% × 8 ÷ 2 = 315% → overload",
-   "required vCPU = 8 × p99 CPU 78.7% ÷ 70% target = 8.99",
+   "peak on m-2-16 = p99 78.7% × 8 ÷ 2 = 315% → overload",
+   "required vCPU = max(8 × p99 CPU 78.7% ÷ 70% target, 8 × max CPU 79.8% ÷ 95% ceiling) = 8.99",
    "required ≥ current size → no safe downsize"
   ],
   "vcpu_removed": 0,
@@ -953,6 +1017,8 @@
    "cpu_p99_after": 314.6,
    "mem_p99_before": 66.17,
    "mem_p99_after": 66.2,
+   "cpu_max_before": 79.83,
+   "cpu_max_after": 39.9,
    "safe": false,
    "avg_based_plan": "m-2-16"
   },
@@ -983,8 +1049,8 @@
   "risk": "LOW",
   "maths": [
    "average-based: 8 × 8.3% ÷ 70% → m-2-16 (2 vCPU)",
-   "peak on m-2-16 = 78.8% × 8 ÷ 2 = 315% → overload",
-   "required vCPU = 8 × p99 CPU 78.8% ÷ 70% target = 9.01",
+   "peak on m-2-16 = p99 78.8% × 8 ÷ 2 = 315% → overload",
+   "required vCPU = max(8 × p99 CPU 78.8% ÷ 70% target, 8 × max CPU 79.7% ÷ 95% ceiling) = 9.01",
    "required ≥ current size → no safe downsize"
   ],
   "vcpu_removed": 0,
@@ -993,6 +1059,8 @@
    "cpu_p99_after": 315.2,
    "mem_p99_before": 66.15,
    "mem_p99_after": 66.2,
+   "cpu_max_before": 79.66,
+   "cpu_max_after": 39.8,
    "safe": false,
    "avg_based_plan": "m-2-16"
   },
@@ -1024,8 +1092,8 @@
   "risk": "LOW",
   "maths": [
    "average-based: 8 × 8.4% ÷ 70% → m-2-16 (2 vCPU)",
-   "peak on m-2-16 = 79.8% × 8 ÷ 2 = 319% → overload",
-   "required vCPU = 8 × p99 CPU 79.8% ÷ 70% target = 9.11",
+   "peak on m-2-16 = p99 79.8% × 8 ÷ 2 = 319% → overload",
+   "required vCPU = max(8 × p99 CPU 79.8% ÷ 70% target, 8 × max CPU 80.7% ÷ 95% ceiling) = 9.11",
    "required ≥ current size → no safe downsize"
   ],
   "vcpu_removed": 0,
@@ -1034,6 +1102,8 @@
    "cpu_p99_after": 319.0,
    "mem_p99_before": 66.22,
    "mem_p99_after": 66.2,
+   "cpu_max_before": 80.72,
+   "cpu_max_after": 40.4,
    "safe": false,
    "avg_based_plan": "m-2-16"
   },
@@ -1064,8 +1134,8 @@
   "risk": "LOW",
   "maths": [
    "average-based: 8 × 8.2% ÷ 70% → m-2-16 (2 vCPU)",
-   "peak on m-2-16 = 76.7% × 8 ÷ 2 = 307% → overload",
-   "required vCPU = 8 × p99 CPU 76.7% ÷ 70% target = 8.77",
+   "peak on m-2-16 = p99 76.7% × 8 ÷ 2 = 307% → overload",
+   "required vCPU = max(8 × p99 CPU 76.7% ÷ 70% target, 8 × max CPU 77.8% ÷ 95% ceiling) = 8.77",
    "required ≥ current size → no safe downsize"
   ],
   "vcpu_removed": 0,
@@ -1074,6 +1144,8 @@
    "cpu_p99_after": 306.9,
    "mem_p99_before": 66.27,
    "mem_p99_after": 66.3,
+   "cpu_max_before": 77.8,
+   "cpu_max_after": 38.9,
    "safe": false,
    "avg_based_plan": "m-2-16"
   },
@@ -1104,8 +1176,8 @@
   "risk": "LOW",
   "maths": [
    "average-based: 4 × 8.6% ÷ 70% → s-2-8 (2 vCPU)",
-   "peak on s-2-8 = 81.6% × 4 ÷ 2 = 163% → overload",
-   "required vCPU = 4 × p99 CPU 81.6% ÷ 70% target = 4.66",
+   "peak on s-2-8 = p99 81.6% × 4 ÷ 2 = 163% → overload",
+   "required vCPU = max(4 × p99 CPU 81.6% ÷ 70% target, 4 × max CPU 83.0% ÷ 95% ceiling) = 4.66",
    "required ≥ current size → no safe downsize"
   ],
   "vcpu_removed": 0,
@@ -1114,6 +1186,8 @@
    "cpu_p99_after": 163.2,
    "mem_p99_before": 66.19,
    "mem_p99_after": 66.2,
+   "cpu_max_before": 83.03,
+   "cpu_max_after": 41.5,
    "safe": false,
    "avg_based_plan": "s-2-8"
   },
@@ -1145,8 +1219,8 @@
   "risk": "LOW",
   "maths": [
    "average-based: 4 × 8.4% ÷ 70% → s-2-8 (2 vCPU)",
-   "peak on s-2-8 = 79.9% × 4 ÷ 2 = 160% → overload",
-   "required vCPU = 4 × p99 CPU 79.9% ÷ 70% target = 4.57",
+   "peak on s-2-8 = p99 79.9% × 4 ÷ 2 = 160% → overload",
+   "required vCPU = max(4 × p99 CPU 79.9% ÷ 70% target, 4 × max CPU 81.2% ÷ 95% ceiling) = 4.57",
    "required ≥ current size → no safe downsize"
   ],
   "vcpu_removed": 0,
@@ -1155,6 +1229,8 @@
    "cpu_p99_after": 159.9,
    "mem_p99_before": 66.09,
    "mem_p99_after": 66.1,
+   "cpu_max_before": 81.2,
+   "cpu_max_after": 40.6,
    "safe": false,
    "avg_based_plan": "s-2-8"
   },
@@ -1184,10 +1260,11 @@
   "saving": 3000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 8 × p99 CPU 24.4% ÷ 70% target = 2.79",
+   "required vCPU = max(8 × p99 CPU 24.4% ÷ 70% target, 8 × max CPU 26.6% ÷ 95% ceiling) = 2.79",
    "required RAM = max(32 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 18.3 GB",
    "cheapest plan with ≥ 3 vCPU and ≥ 18.3 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 24.4% × 8 ÷ 4 = 49% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 26.6% × 8 ÷ 4 = 53% (ceiling 95%)",
    "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
   ],
   "vcpu_removed": 4,
@@ -1196,6 +1273,8 @@
    "cpu_p99_after": 48.9,
    "mem_p99_before": 42.78,
    "mem_p99_after": 42.8,
+   "cpu_max_before": 26.62,
+   "cpu_max_after": 53.2,
    "safe": true
   },
   "id": "rec-030",
@@ -1256,10 +1335,11 @@
   "saving": 3000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 8 × p99 CPU 25.6% ÷ 70% target = 2.93",
+   "required vCPU = max(8 × p99 CPU 25.6% ÷ 70% target, 8 × max CPU 27.1% ÷ 95% ceiling) = 2.93",
    "required RAM = max(32 GB × p99 mem 42.9% ÷ 75%, used + 1 GB) = 18.3 GB",
    "cheapest plan with ≥ 3 vCPU and ≥ 18.3 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 25.6% × 8 ÷ 4 = 51% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 27.1% × 8 ÷ 4 = 54% (ceiling 95%)",
    "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
   ],
   "vcpu_removed": 4,
@@ -1268,6 +1348,8 @@
    "cpu_p99_after": 51.2,
    "mem_p99_before": 42.85,
    "mem_p99_after": 42.9,
+   "cpu_max_before": 27.11,
+   "cpu_max_after": 54.2,
    "safe": true
   },
   "id": "rec-032",
@@ -1328,10 +1410,11 @@
   "saving": 3000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 8 × p99 CPU 26.1% ÷ 70% target = 2.98",
+   "required vCPU = max(8 × p99 CPU 26.1% ÷ 70% target, 8 × max CPU 28.4% ÷ 95% ceiling) = 2.98",
    "required RAM = max(32 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 18.3 GB",
    "cheapest plan with ≥ 3 vCPU and ≥ 18.3 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 26.1% × 8 ÷ 4 = 52% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 28.4% × 8 ÷ 4 = 57% (ceiling 95%)",
    "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
   ],
   "vcpu_removed": 4,
@@ -1340,6 +1423,8 @@
    "cpu_p99_after": 52.2,
    "mem_p99_before": 42.84,
    "mem_p99_after": 42.8,
+   "cpu_max_before": 28.35,
+   "cpu_max_after": 56.7,
    "safe": true
   },
   "id": "rec-034",
@@ -1400,10 +1485,11 @@
   "saving": 3000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 8 × p99 CPU 23.0% ÷ 70% target = 2.63",
+   "required vCPU = max(8 × p99 CPU 23.0% ÷ 70% target, 8 × max CPU 24.7% ÷ 95% ceiling) = 2.63",
    "required RAM = max(32 GB × p99 mem 42.7% ÷ 75%, used + 1 GB) = 18.2 GB",
    "cheapest plan with ≥ 3 vCPU and ≥ 18.2 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 23.0% × 8 ÷ 4 = 46% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 24.7% × 8 ÷ 4 = 49% (ceiling 95%)",
    "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
   ],
   "vcpu_removed": 4,
@@ -1412,6 +1498,8 @@
    "cpu_p99_after": 46.0,
    "mem_p99_before": 42.71,
    "mem_p99_after": 42.7,
+   "cpu_max_before": 24.67,
+   "cpu_max_after": 49.3,
    "safe": true
   },
   "id": "rec-036",
@@ -1472,10 +1560,11 @@
   "saving": 3000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 8 × p99 CPU 26.8% ÷ 70% target = 3.07",
+   "required vCPU = max(8 × p99 CPU 26.8% ÷ 70% target, 8 × max CPU 28.9% ÷ 95% ceiling) = 3.07",
    "required RAM = max(32 GB × p99 mem 42.7% ÷ 75%, used + 1 GB) = 18.2 GB",
    "cheapest plan with ≥ 4 vCPU and ≥ 18.2 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 26.8% × 8 ÷ 4 = 54% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 28.9% × 8 ÷ 4 = 58% (ceiling 95%)",
    "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
   ],
   "vcpu_removed": 4,
@@ -1484,6 +1573,8 @@
    "cpu_p99_after": 53.7,
    "mem_p99_before": 42.71,
    "mem_p99_after": 42.7,
+   "cpu_max_before": 28.88,
+   "cpu_max_after": 57.8,
    "safe": true
   },
   "id": "rec-038",
@@ -1544,10 +1635,11 @@
   "saving": 3000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 8 × p99 CPU 21.1% ÷ 70% target = 2.41",
+   "required vCPU = max(8 × p99 CPU 21.1% ÷ 70% target, 8 × max CPU 22.9% ÷ 95% ceiling) = 2.41",
    "required RAM = max(32 GB × p99 mem 42.7% ÷ 75%, used + 1 GB) = 18.2 GB",
    "cheapest plan with ≥ 3 vCPU and ≥ 18.2 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 21.1% × 8 ÷ 4 = 42% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 22.9% × 8 ÷ 4 = 46% (ceiling 95%)",
    "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
   ],
   "vcpu_removed": 4,
@@ -1556,6 +1648,8 @@
    "cpu_p99_after": 42.2,
    "mem_p99_before": 42.69,
    "mem_p99_after": 42.7,
+   "cpu_max_before": 22.87,
+   "cpu_max_after": 45.7,
    "safe": true
   },
   "id": "rec-040",
@@ -1616,10 +1710,11 @@
   "saving": 3000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 8 × p99 CPU 24.4% ÷ 70% target = 2.79",
+   "required vCPU = max(8 × p99 CPU 24.4% ÷ 70% target, 8 × max CPU 26.4% ÷ 95% ceiling) = 2.79",
    "required RAM = max(32 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 18.3 GB",
    "cheapest plan with ≥ 3 vCPU and ≥ 18.3 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 24.4% × 8 ÷ 4 = 49% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 26.4% × 8 ÷ 4 = 53% (ceiling 95%)",
    "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
   ],
   "vcpu_removed": 4,
@@ -1628,6 +1723,8 @@
    "cpu_p99_after": 48.9,
    "mem_p99_before": 42.83,
    "mem_p99_after": 42.8,
+   "cpu_max_before": 26.41,
+   "cpu_max_after": 52.8,
    "safe": true
   },
   "id": "rec-042",
@@ -1688,10 +1785,11 @@
   "saving": 3000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 8 × p99 CPU 30.0% ÷ 70% target = 3.42",
+   "required vCPU = max(8 × p99 CPU 30.0% ÷ 70% target, 8 × max CPU 31.8% ÷ 95% ceiling) = 3.42",
    "required RAM = max(32 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 18.3 GB",
    "cheapest plan with ≥ 4 vCPU and ≥ 18.3 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 30.0% × 8 ÷ 4 = 60% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 31.8% × 8 ÷ 4 = 64% (ceiling 95%)",
    "Saving = ₹8,000 − ₹5,000 = ₹3,000/month"
   ],
   "vcpu_removed": 4,
@@ -1700,6 +1798,8 @@
    "cpu_p99_after": 59.9,
    "mem_p99_before": 42.78,
    "mem_p99_after": 42.8,
+   "cpu_max_before": 31.79,
+   "cpu_max_after": 63.6,
    "safe": true
   },
   "id": "rec-044",
@@ -1760,10 +1860,11 @@
   "saving": 1400,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 4 × p99 CPU 29.5% ÷ 70% target = 1.69",
+   "required vCPU = max(4 × p99 CPU 29.5% ÷ 70% target, 4 × max CPU 31.9% ÷ 95% ceiling) = 1.69",
    "required RAM = max(16 GB × p99 mem 42.7% ÷ 75%, used + 1 GB) = 9.1 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 29.5% × 4 ÷ 2 = 59% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 31.9% × 4 ÷ 2 = 64% (ceiling 95%)",
    "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
   ],
   "vcpu_removed": 2,
@@ -1772,6 +1873,8 @@
    "cpu_p99_after": 59.1,
    "mem_p99_before": 42.7,
    "mem_p99_after": 42.7,
+   "cpu_max_before": 31.88,
+   "cpu_max_after": 63.8,
    "safe": true
   },
   "id": "rec-046",
@@ -1832,10 +1935,11 @@
   "saving": 1400,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 4 × p99 CPU 21.6% ÷ 70% target = 1.24",
+   "required vCPU = max(4 × p99 CPU 21.6% ÷ 70% target, 4 × max CPU 23.7% ÷ 95% ceiling) = 1.24",
    "required RAM = max(16 GB × p99 mem 42.9% ÷ 75%, used + 1 GB) = 9.1 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 21.6% × 4 ÷ 2 = 43% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 23.7% × 4 ÷ 2 = 47% (ceiling 95%)",
    "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
   ],
   "vcpu_removed": 2,
@@ -1844,6 +1948,8 @@
    "cpu_p99_after": 43.3,
    "mem_p99_before": 42.87,
    "mem_p99_after": 42.9,
+   "cpu_max_before": 23.7,
+   "cpu_max_after": 47.4,
    "safe": true
   },
   "id": "rec-048",
@@ -1904,10 +2010,11 @@
   "saving": 1400,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 4 × p99 CPU 21.7% ÷ 70% target = 1.24",
+   "required vCPU = max(4 × p99 CPU 21.7% ÷ 70% target, 4 × max CPU 23.4% ÷ 95% ceiling) = 1.24",
    "required RAM = max(16 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 9.1 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 21.7% × 4 ÷ 2 = 43% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 23.4% × 4 ÷ 2 = 47% (ceiling 95%)",
    "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
   ],
   "vcpu_removed": 2,
@@ -1916,6 +2023,8 @@
    "cpu_p99_after": 43.4,
    "mem_p99_before": 42.77,
    "mem_p99_after": 42.8,
+   "cpu_max_before": 23.35,
+   "cpu_max_after": 46.7,
    "safe": true
   },
   "id": "rec-050",
@@ -1976,10 +2085,11 @@
   "saving": 1400,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 4 × p99 CPU 21.8% ÷ 70% target = 1.25",
+   "required vCPU = max(4 × p99 CPU 21.8% ÷ 70% target, 4 × max CPU 24.0% ÷ 95% ceiling) = 1.25",
    "required RAM = max(16 GB × p99 mem 42.7% ÷ 75%, used + 1 GB) = 9.1 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 21.8% × 4 ÷ 2 = 44% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 24.0% × 4 ÷ 2 = 48% (ceiling 95%)",
    "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
   ],
   "vcpu_removed": 2,
@@ -1988,6 +2098,8 @@
    "cpu_p99_after": 43.7,
    "mem_p99_before": 42.67,
    "mem_p99_after": 42.7,
+   "cpu_max_before": 24.04,
+   "cpu_max_after": 48.1,
    "safe": true
   },
   "id": "rec-052",
@@ -2049,10 +2161,11 @@
   "saving": 1400,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 4 × p99 CPU 26.0% ÷ 70% target = 1.49",
+   "required vCPU = max(4 × p99 CPU 26.0% ÷ 70% target, 4 × max CPU 28.3% ÷ 95% ceiling) = 1.49",
    "required RAM = max(16 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 9.1 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 26.0% × 4 ÷ 2 = 52% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 28.3% × 4 ÷ 2 = 57% (ceiling 95%)",
    "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
   ],
   "vcpu_removed": 2,
@@ -2061,6 +2174,8 @@
    "cpu_p99_after": 52.1,
    "mem_p99_before": 42.83,
    "mem_p99_after": 42.8,
+   "cpu_max_before": 28.3,
+   "cpu_max_after": 56.6,
    "safe": true
   },
   "id": "rec-054",
@@ -2122,10 +2237,11 @@
   "saving": 1400,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 4 × p99 CPU 23.0% ÷ 70% target = 1.31",
+   "required vCPU = max(4 × p99 CPU 23.0% ÷ 70% target, 4 × max CPU 25.2% ÷ 95% ceiling) = 1.31",
    "required RAM = max(16 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 9.1 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 23.0% × 4 ÷ 2 = 46% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 25.2% × 4 ÷ 2 = 50% (ceiling 95%)",
    "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
   ],
   "vcpu_removed": 2,
@@ -2134,6 +2250,8 @@
    "cpu_p99_after": 46.0,
    "mem_p99_before": 42.79,
    "mem_p99_after": 42.8,
+   "cpu_max_before": 25.21,
+   "cpu_max_after": 50.4,
    "safe": true
   },
   "id": "rec-056",
@@ -2194,10 +2312,11 @@
   "saving": 1400,
   "risk": "MEDIUM",
   "maths": [
-   "required vCPU = 4 × p99 CPU 30.2% ÷ 70% target = 1.73",
+   "required vCPU = max(4 × p99 CPU 30.2% ÷ 70% target, 4 × max CPU 32.5% ÷ 95% ceiling) = 1.73",
    "required RAM = max(16 GB × p99 mem 42.6% ÷ 75%, used + 1 GB) = 9.1 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 9.1 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 30.2% × 4 ÷ 2 = 60% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 32.5% × 4 ÷ 2 = 65% (ceiling 95%)",
    "Saving = ₹4,000 − ₹2,600 = ₹1,400/month"
   ],
   "vcpu_removed": 2,
@@ -2206,6 +2325,8 @@
    "cpu_p99_after": 60.4,
    "mem_p99_before": 42.63,
    "mem_p99_after": 42.6,
+   "cpu_max_before": 32.47,
+   "cpu_max_after": 64.9,
    "safe": true
   },
   "id": "rec-058",
@@ -2266,10 +2387,11 @@
   "saving": 2000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 8 × p99 CPU 24.2% ÷ 70% target = 2.77",
+   "required vCPU = max(8 × p99 CPU 24.2% ÷ 70% target, 8 × max CPU 26.6% ÷ 95% ceiling) = 2.77",
    "required RAM = max(16 GB × p99 mem 42.9% ÷ 75%, used + 1 GB) = 9.1 GB",
    "cheapest plan with ≥ 3 vCPU and ≥ 9.1 GB = s-4-16 (4 vCPU / 16 GB, ₹4,000/month)",
    "Peak Safety Check: p99 after = 24.2% × 8 ÷ 4 = 48% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 26.6% × 8 ÷ 4 = 53% (ceiling 95%)",
    "Saving = ₹6,000 − ₹4,000 = ₹2,000/month"
   ],
   "vcpu_removed": 4,
@@ -2278,6 +2400,8 @@
    "cpu_p99_after": 48.4,
    "mem_p99_before": 42.85,
    "mem_p99_after": 42.9,
+   "cpu_max_before": 26.59,
+   "cpu_max_after": 53.2,
    "safe": true
   },
   "id": "rec-060",
@@ -2338,10 +2462,11 @@
   "saving": 2000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 8 × p99 CPU 28.0% ÷ 70% target = 3.20",
+   "required vCPU = max(8 × p99 CPU 28.0% ÷ 70% target, 8 × max CPU 30.0% ÷ 95% ceiling) = 3.20",
    "required RAM = max(16 GB × p99 mem 42.6% ÷ 75%, used + 1 GB) = 9.1 GB",
    "cheapest plan with ≥ 4 vCPU and ≥ 9.1 GB = s-4-16 (4 vCPU / 16 GB, ₹4,000/month)",
    "Peak Safety Check: p99 after = 28.0% × 8 ÷ 4 = 56% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 30.0% × 8 ÷ 4 = 60% (ceiling 95%)",
    "Saving = ₹6,000 − ₹4,000 = ₹2,000/month"
   ],
   "vcpu_removed": 4,
@@ -2350,6 +2475,8 @@
    "cpu_p99_after": 55.9,
    "mem_p99_before": 42.65,
    "mem_p99_after": 42.6,
+   "cpu_max_before": 30.01,
+   "cpu_max_after": 60.0,
    "safe": true
   },
   "id": "rec-062",
@@ -2410,10 +2537,11 @@
   "saving": 2000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 8 × p99 CPU 23.0% ÷ 70% target = 2.63",
+   "required vCPU = max(8 × p99 CPU 23.0% ÷ 70% target, 8 × max CPU 25.3% ÷ 95% ceiling) = 2.63",
    "required RAM = max(16 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 9.1 GB",
    "cheapest plan with ≥ 3 vCPU and ≥ 9.1 GB = s-4-16 (4 vCPU / 16 GB, ₹4,000/month)",
    "Peak Safety Check: p99 after = 23.0% × 8 ÷ 4 = 46% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 25.3% × 8 ÷ 4 = 51% (ceiling 95%)",
    "Saving = ₹6,000 − ₹4,000 = ₹2,000/month"
   ],
   "vcpu_removed": 4,
@@ -2422,6 +2550,8 @@
    "cpu_p99_after": 46.1,
    "mem_p99_before": 42.8,
    "mem_p99_after": 42.8,
+   "cpu_max_before": 25.34,
+   "cpu_max_after": 50.7,
    "safe": true
   },
   "id": "rec-064",
@@ -2482,10 +2612,11 @@
   "saving": 2000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 8 × p99 CPU 21.9% ÷ 70% target = 2.50",
+   "required vCPU = max(8 × p99 CPU 21.9% ÷ 70% target, 8 × max CPU 24.3% ÷ 95% ceiling) = 2.50",
    "required RAM = max(16 GB × p99 mem 42.9% ÷ 75%, used + 1 GB) = 9.1 GB",
    "cheapest plan with ≥ 3 vCPU and ≥ 9.1 GB = s-4-16 (4 vCPU / 16 GB, ₹4,000/month)",
    "Peak Safety Check: p99 after = 21.9% × 8 ÷ 4 = 44% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 24.3% × 8 ÷ 4 = 49% (ceiling 95%)",
    "Saving = ₹6,000 − ₹4,000 = ₹2,000/month"
   ],
   "vcpu_removed": 4,
@@ -2494,6 +2625,8 @@
    "cpu_p99_after": 43.8,
    "mem_p99_before": 42.86,
    "mem_p99_after": 42.9,
+   "cpu_max_before": 24.32,
+   "cpu_max_after": 48.6,
    "safe": true
   },
   "id": "rec-066",
@@ -2554,10 +2687,11 @@
   "saving": 2000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 8 × p99 CPU 22.0% ÷ 70% target = 2.52",
+   "required vCPU = max(8 × p99 CPU 22.0% ÷ 70% target, 8 × max CPU 24.9% ÷ 95% ceiling) = 2.52",
    "required RAM = max(16 GB × p99 mem 42.8% ÷ 75%, used + 1 GB) = 9.1 GB",
    "cheapest plan with ≥ 3 vCPU and ≥ 9.1 GB = s-4-16 (4 vCPU / 16 GB, ₹4,000/month)",
    "Peak Safety Check: p99 after = 22.0% × 8 ÷ 4 = 44% CPU; memory p99 after = 43%",
+   "Spike check: busiest 5-min reading after = 24.9% × 8 ÷ 4 = 50% (ceiling 95%)",
    "Saving = ₹6,000 − ₹4,000 = ₹2,000/month"
   ],
   "vcpu_removed": 4,
@@ -2566,6 +2700,8 @@
    "cpu_p99_after": 44.1,
    "mem_p99_before": 42.81,
    "mem_p99_after": 42.8,
+   "cpu_max_before": 24.87,
+   "cpu_max_after": 49.7,
    "safe": true
   },
   "id": "rec-068",
@@ -2882,10 +3018,11 @@
   "saving": 1000,
   "risk": "HIGH",
   "maths": [
-   "required vCPU = 8 × p99 CPU 16.0% ÷ 70% target = 1.83",
+   "required vCPU = max(8 × p99 CPU 16.0% ÷ 70% target, 8 × max CPU 18.5% ÷ 95% ceiling) = 1.83",
    "required RAM = max(16 GB × p99 mem 80.0% ÷ 75%, used + 1 GB) = 17.1 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 17.1 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 16.0% × 8 ÷ 4 = 32% CPU; memory p99 after = 40%",
+   "Spike check: busiest 5-min reading after = 18.5% × 8 ÷ 4 = 37% (ceiling 95%)",
    "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
   ],
   "vcpu_removed": 4,
@@ -2894,6 +3031,8 @@
    "cpu_p99_after": 32.0,
    "mem_p99_before": 80.03,
    "mem_p99_after": 40.0,
+   "cpu_max_before": 18.46,
+   "cpu_max_after": 36.9,
    "safe": true
   },
   "id": "rec-078",
@@ -2922,10 +3061,11 @@
   "saving": 1000,
   "risk": "HIGH",
   "maths": [
-   "required vCPU = 8 × p99 CPU 16.0% ÷ 70% target = 1.83",
+   "required vCPU = max(8 × p99 CPU 16.0% ÷ 70% target, 8 × max CPU 18.9% ÷ 95% ceiling) = 1.83",
    "required RAM = max(16 GB × p99 mem 84.9% ÷ 75%, used + 1 GB) = 18.1 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 18.1 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 16.0% × 8 ÷ 4 = 32% CPU; memory p99 after = 42%",
+   "Spike check: busiest 5-min reading after = 18.9% × 8 ÷ 4 = 38% (ceiling 95%)",
    "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
   ],
   "vcpu_removed": 4,
@@ -2934,6 +3074,8 @@
    "cpu_p99_after": 32.0,
    "mem_p99_before": 84.94,
    "mem_p99_after": 42.5,
+   "cpu_max_before": 18.94,
+   "cpu_max_after": 37.9,
    "safe": true
   },
   "id": "rec-079",
@@ -2962,10 +3104,11 @@
   "saving": 1000,
   "risk": "HIGH",
   "maths": [
-   "required vCPU = 8 × p99 CPU 16.2% ÷ 70% target = 1.85",
+   "required vCPU = max(8 × p99 CPU 16.2% ÷ 70% target, 8 × max CPU 19.9% ÷ 95% ceiling) = 1.85",
    "required RAM = max(16 GB × p99 mem 80.8% ÷ 75%, used + 1 GB) = 17.2 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 17.2 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 16.2% × 8 ÷ 4 = 32% CPU; memory p99 after = 40%",
+   "Spike check: busiest 5-min reading after = 19.9% × 8 ÷ 4 = 40% (ceiling 95%)",
    "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
   ],
   "vcpu_removed": 4,
@@ -2974,6 +3117,8 @@
    "cpu_p99_after": 32.4,
    "mem_p99_before": 80.76,
    "mem_p99_after": 40.4,
+   "cpu_max_before": 19.85,
+   "cpu_max_after": 39.7,
    "safe": true
   },
   "id": "rec-080",
@@ -3002,10 +3147,11 @@
   "saving": 1000,
   "risk": "HIGH",
   "maths": [
-   "required vCPU = 8 × p99 CPU 16.2% ÷ 70% target = 1.85",
+   "required vCPU = max(8 × p99 CPU 16.2% ÷ 70% target, 8 × max CPU 19.5% ÷ 95% ceiling) = 1.85",
    "required RAM = max(16 GB × p99 mem 82.3% ÷ 75%, used + 1 GB) = 17.6 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 17.6 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 16.2% × 8 ÷ 4 = 32% CPU; memory p99 after = 41%",
+   "Spike check: busiest 5-min reading after = 19.5% × 8 ÷ 4 = 39% (ceiling 95%)",
    "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
   ],
   "vcpu_removed": 4,
@@ -3014,6 +3160,8 @@
    "cpu_p99_after": 32.4,
    "mem_p99_before": 82.28,
    "mem_p99_after": 41.1,
+   "cpu_max_before": 19.53,
+   "cpu_max_after": 39.1,
    "safe": true
   },
   "id": "rec-081",
@@ -3042,10 +3190,11 @@
   "saving": 1000,
   "risk": "HIGH",
   "maths": [
-   "required vCPU = 8 × p99 CPU 16.1% ÷ 70% target = 1.84",
+   "required vCPU = max(8 × p99 CPU 16.1% ÷ 70% target, 8 × max CPU 20.2% ÷ 95% ceiling) = 1.84",
    "required RAM = max(16 GB × p99 mem 82.1% ÷ 75%, used + 1 GB) = 17.5 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 17.5 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 16.1% × 8 ÷ 4 = 32% CPU; memory p99 after = 41%",
+   "Spike check: busiest 5-min reading after = 20.2% × 8 ÷ 4 = 40% (ceiling 95%)",
    "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
   ],
   "vcpu_removed": 4,
@@ -3054,6 +3203,8 @@
    "cpu_p99_after": 32.1,
    "mem_p99_before": 82.1,
    "mem_p99_after": 41.0,
+   "cpu_max_before": 20.16,
+   "cpu_max_after": 40.3,
    "safe": true
   },
   "id": "rec-082",
@@ -3082,10 +3233,11 @@
   "saving": 1000,
   "risk": "HIGH",
   "maths": [
-   "required vCPU = 8 × p99 CPU 16.1% ÷ 70% target = 1.85",
+   "required vCPU = max(8 × p99 CPU 16.1% ÷ 70% target, 8 × max CPU 20.9% ÷ 95% ceiling) = 1.85",
    "required RAM = max(16 GB × p99 mem 84.2% ÷ 75%, used + 1 GB) = 18.0 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 18.0 GB = m-4-32 (4 vCPU / 32 GB, ₹5,000/month)",
    "Peak Safety Check: p99 after = 16.1% × 8 ÷ 4 = 32% CPU; memory p99 after = 42%",
+   "Spike check: busiest 5-min reading after = 20.9% × 8 ÷ 4 = 42% (ceiling 95%)",
    "Saving = ₹6,000 − ₹5,000 = ₹1,000/month"
   ],
   "vcpu_removed": 4,
@@ -3094,6 +3246,8 @@
    "cpu_p99_after": 32.3,
    "mem_p99_before": 84.16,
    "mem_p99_after": 42.1,
+   "cpu_max_before": 20.88,
+   "cpu_max_after": 41.8,
    "safe": true
   },
   "id": "rec-083",
@@ -3122,10 +3276,11 @@
   "saving": -3000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 4 × p99 CPU 99.5% ÷ 70% target = 5.69",
+   "required vCPU = max(4 × p99 CPU 99.5% ÷ 70% target, 4 × max CPU 100.0% ÷ 95% ceiling) = 5.69",
    "required RAM = max(8 GB × p99 mem 77.0% ÷ 75%, used + 1 GB) = 8.2 GB",
    "cheapest plan with ≥ 6 vCPU and ≥ 8.2 GB = s-8-16 (8 vCPU / 16 GB, ₹6,000/month)",
    "Peak Safety Check: p99 after = 99.5% × 4 ÷ 8 = 50% CPU; memory p99 after = 39%",
+   "Spike check: busiest 5-min reading after = 100.0% × 4 ÷ 8 = 50% (ceiling 95%)",
    "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)"
   ],
   "vcpu_removed": -4,
@@ -3134,6 +3289,8 @@
    "cpu_p99_after": 49.8,
    "mem_p99_before": 77.05,
    "mem_p99_after": 38.5,
+   "cpu_max_before": 100.0,
+   "cpu_max_after": 50.0,
    "safe": true
   },
   "id": "rec-084",
@@ -3162,10 +3319,11 @@
   "saving": -3000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 4 × p99 CPU 99.5% ÷ 70% target = 5.69",
+   "required vCPU = max(4 × p99 CPU 99.5% ÷ 70% target, 4 × max CPU 100.0% ÷ 95% ceiling) = 5.69",
    "required RAM = max(8 GB × p99 mem 76.9% ÷ 75%, used + 1 GB) = 8.2 GB",
    "cheapest plan with ≥ 6 vCPU and ≥ 8.2 GB = s-8-16 (8 vCPU / 16 GB, ₹6,000/month)",
    "Peak Safety Check: p99 after = 99.5% × 4 ÷ 8 = 50% CPU; memory p99 after = 38%",
+   "Spike check: busiest 5-min reading after = 100.0% × 4 ÷ 8 = 50% (ceiling 95%)",
    "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)"
   ],
   "vcpu_removed": -4,
@@ -3174,6 +3332,8 @@
    "cpu_p99_after": 49.8,
    "mem_p99_before": 76.88,
    "mem_p99_after": 38.4,
+   "cpu_max_before": 100.0,
+   "cpu_max_after": 50.0,
    "safe": true
   },
   "id": "rec-085",
@@ -3202,10 +3362,11 @@
   "saving": -3000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 4 × p99 CPU 99.4% ÷ 70% target = 5.68",
+   "required vCPU = max(4 × p99 CPU 99.4% ÷ 70% target, 4 × max CPU 100.0% ÷ 95% ceiling) = 5.68",
    "required RAM = max(8 GB × p99 mem 77.0% ÷ 75%, used + 1 GB) = 8.2 GB",
    "cheapest plan with ≥ 6 vCPU and ≥ 8.2 GB = s-8-16 (8 vCPU / 16 GB, ₹6,000/month)",
    "Peak Safety Check: p99 after = 99.4% × 4 ÷ 8 = 50% CPU; memory p99 after = 39%",
+   "Spike check: busiest 5-min reading after = 100.0% × 4 ÷ 8 = 50% (ceiling 95%)",
    "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)"
   ],
   "vcpu_removed": -4,
@@ -3214,6 +3375,8 @@
    "cpu_p99_after": 49.7,
    "mem_p99_before": 77.02,
    "mem_p99_after": 38.5,
+   "cpu_max_before": 100.0,
+   "cpu_max_after": 50.0,
    "safe": true
   },
   "id": "rec-086",
@@ -3242,10 +3405,11 @@
   "saving": -3000,
   "risk": "LOW",
   "maths": [
-   "required vCPU = 4 × p99 CPU 99.8% ÷ 70% target = 5.70",
+   "required vCPU = max(4 × p99 CPU 99.8% ÷ 70% target, 4 × max CPU 100.0% ÷ 95% ceiling) = 5.70",
    "required RAM = max(8 GB × p99 mem 76.8% ÷ 75%, used + 1 GB) = 8.2 GB",
    "cheapest plan with ≥ 6 vCPU and ≥ 8.2 GB = s-8-16 (8 vCPU / 16 GB, ₹6,000/month)",
    "Peak Safety Check: p99 after = 99.8% × 4 ÷ 8 = 50% CPU; memory p99 after = 38%",
+   "Spike check: busiest 5-min reading after = 100.0% × 4 ÷ 8 = 50% (ceiling 95%)",
    "Extra cost = ₹6,000 − ₹3,000 = ₹3,000/month (reliability, not savings)"
   ],
   "vcpu_removed": -4,
@@ -3254,6 +3418,8 @@
    "cpu_p99_after": 49.9,
    "mem_p99_before": 76.78,
    "mem_p99_after": 38.4,
+   "cpu_max_before": 100.0,
+   "cpu_max_after": 50.0,
    "safe": true
   },
   "id": "rec-087",
@@ -3283,8 +3449,8 @@
   "risk": "LOW",
   "maths": [
    "average-based: 8 × 10.5% ÷ 70% → s-2-8 (2 vCPU)",
-   "peak on s-2-8 = 80.5% × 8 ÷ 2 = 322% → overload",
-   "required vCPU = 8 × p99 CPU 80.5% ÷ 70% target = 9.19",
+   "peak on s-2-8 = p99 80.5% × 8 ÷ 2 = 322% → overload",
+   "required vCPU = max(8 × p99 CPU 80.5% ÷ 70% target, 8 × max CPU 85.7% ÷ 95% ceiling) = 9.19",
    "required ≥ current size → no safe downsize"
   ],
   "vcpu_removed": 0,
@@ -3293,6 +3459,8 @@
    "cpu_p99_after": 321.8,
    "mem_p99_before": 55.0,
    "mem_p99_after": 27.5,
+   "cpu_max_before": 85.67,
+   "cpu_max_after": 42.8,
    "safe": false,
    "avg_based_plan": "s-2-8"
   },
@@ -3322,10 +3490,11 @@
   "saving": 5400,
   "risk": "MEDIUM",
   "maths": [
-   "required vCPU = 8 × p99 CPU 15.4% ÷ 70% target = 1.76",
+   "required vCPU = max(8 × p99 CPU 15.4% ÷ 70% target, 8 × max CPU 18.2% ÷ 95% ceiling) = 1.76",
    "required RAM = max(32 GB × p99 mem 29.6% ÷ 75%, used + 1 GB) = 12.6 GB",
    "cheapest plan with ≥ 2 vCPU and ≥ 12.6 GB = m-2-16 (2 vCPU / 16 GB, ₹2,600/month)",
    "Peak Safety Check: p99 after = 15.4% × 8 ÷ 2 = 62% CPU; memory p99 after = 59%",
+   "Spike check: busiest 5-min reading after = 18.2% × 8 ÷ 2 = 73% (ceiling 95%)",
    "Saving = ₹8,000 − ₹2,600 = ₹5,400/month"
   ],
   "vcpu_removed": 6,
@@ -3334,6 +3503,8 @@
    "cpu_p99_after": 61.6,
    "mem_p99_before": 29.61,
    "mem_p99_after": 59.2,
+   "cpu_max_before": 18.23,
+   "cpu_max_after": 72.9,
    "safe": true
   },
   "id": "rec-089",

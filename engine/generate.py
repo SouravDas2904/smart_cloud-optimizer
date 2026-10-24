@@ -189,7 +189,8 @@ def build():
         region = region or rng.choice(C.REGIONS)
         vcpu, ram, _ = C.PLANS[plan]
         vid = f"vm-{len([r for r in resources if r.type == 'vm']) + 1:03d}"
-        created = created_day if created_day is not None else -rng.uniform(40, 400)
+        # launch dates spread over ~2 years; build.py turns them into the monthly bill history
+        created = created_day if created_day is not None else -rng.uniform(40, 700)
         r = Resource(id=vid, name=name or new_name(env, team), type="vm", region=region, env=env,
                      team=team, created_at=iso(created), plan=plan, vcpu=vcpu, ram_gb=ram,
                      disk_gb=int(rng.choice([50, 100, 200, 500])), persona=persona)
@@ -277,14 +278,6 @@ def build():
                                   team=team, created_at=iso(detached - 30), attached_to=None,
                                   detached_since=iso(detached)))
     return resources, series
-
-
-def bill_history(current_month_inr: float):
-    """Six months of monthly bills ending at the current run-rate (+40% over six months)."""
-    months = pd.period_range(end=pd.Period("2026-10", "M"), periods=7, freq="M")
-    start = current_month_inr / 1.40
-    growth = np.array([0, .04, .09, .15, .21, .30, .40])
-    return [{"month": str(m), "inr": round(start * (1 + g))} for m, g in zip(months, growth)]
 
 
 def main():

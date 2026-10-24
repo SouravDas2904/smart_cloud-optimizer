@@ -29,8 +29,10 @@ def pick_plan(req_vcpu: float, req_ram: float) -> str:
     return min(fits, key=lambda p: (C.PLANS[p][2], C.PLANS[p][0]))
 
 
-def size_for(vcpu, ram, cpu_p, mem_p, target_cpu=C.TARGET_CPU_UTIL, target_mem=C.TARGET_MEM_UTIL):
+def size_for(vcpu, ram, cpu_p, mem_p, target_cpu=C.TARGET_CPU_UTIL, target_mem=C.TARGET_MEM_UTIL, cpu_max=None):
     req_vcpu = vcpu * (cpu_p / 100) / target_cpu
+    if cpu_max is not None:   # the busiest single reading must also fit under the ceiling
+        req_vcpu = max(req_vcpu, vcpu * (cpu_max / 100) / C.MAX_CPU_CEILING)
     used_gb = ram * mem_p / 100
     req_ram = max(ram * (mem_p / 100) / target_mem, used_gb + C.MIN_MEM_MARGIN_GB)
     return req_vcpu, req_ram, pick_plan(req_vcpu, req_ram)
@@ -97,18 +99,23 @@ def recommend_vm(r: dict, st: dict, cost: dict) -> list[dict]:
                          "vcpu_removed": vcpu, "peak_check": None})
         return recs
 
-    req_vcpu, req_ram, target = size_for(vcpu, ram, st["cpu_p99"], st["mem_p99"])
+    req_vcpu, req_ram, target = size_for(vcpu, ram, st["cpu_p99"], st["mem_p99"], cpu_max=st["cpu_max"])
     tv, tr, tprice = C.PLANS[target]
     p99_after = st["cpu_p99"] * vcpu / tv
+    max_after = st["cpu_max"] * vcpu / tv
     mem_after = st["mem_p99"] * ram / tr
     sizing_maths = [
-        f"required vCPU = {vcpu} × p99 CPU {st['cpu_p99']:.1f}% ÷ {C.TARGET_CPU_UTIL:.0%} target = {req_vcpu:.2f}",
+        f"required vCPU = max({vcpu} × p99 CPU {st['cpu_p99']:.1f}% ÷ {C.TARGET_CPU_UTIL:.0%} target, "
+        f"{vcpu} × max CPU {st['cpu_max']:.1f}% ÷ {C.MAX_CPU_CEILING:.0%} ceiling) = {req_vcpu:.2f}",
         f"required RAM = max({ram} GB × p99 mem {st['mem_p99']:.1f}% ÷ {C.TARGET_MEM_UTIL:.0%}, used + {C.MIN_MEM_MARGIN_GB:.0f} GB) = {req_ram:.1f} GB",
         f"cheapest plan with ≥ {math.ceil(req_vcpu - 1e-9)} vCPU and ≥ {req_ram:.1f} GB = {target} ({tv} vCPU / {tr} GB, {INR(tprice)}/month)",
         f"Peak Safety Check: p99 after = {st['cpu_p99']:.1f}% × {vcpu} ÷ {tv} = {p99_after:.0f}% CPU; memory p99 after = {mem_after:.0f}%",
+        f"Spike check: busiest 5-min reading after = {st['cpu_max']:.1f}% × {vcpu} ÷ {tv} = {max_after:.0f}% (ceiling {C.MAX_CPU_CEILING:.0%})",
     ]
     peak = {"cpu_p99_before": st["cpu_p99"], "cpu_p99_after": round(p99_after, 1),
-            "mem_p99_before": st["mem_p99"], "mem_p99_after": round(mem_after, 1), "safe": p99_after <= 75 and mem_after <= 80}
+            "mem_p99_before": st["mem_p99"], "mem_p99_after": round(mem_after, 1),
+            "cpu_max_before": st["cpu_max"], "cpu_max_after": round(max_after, 1),
+            "safe": p99_after <= 75 and mem_after <= 80 and max_after <= C.MAX_CPU_CEILING * 100}
 
     # 2. under-provisioned -> upsize
     if st["cpu_p99"] > C.UNDER_P99 or st["mem_p99"] > C.UNDER_P99:
@@ -144,15 +151,19 @@ def recommend_vm(r: dict, st: dict, cost: dict) -> list[dict]:
         # 3b. the trap: average says shrink, peak says no -> explicit "protected" card
         _, _, avg_plan = size_for(vcpu, ram, st["cpu_avg"], st["mem_avg"])
         av = C.PLANS[avg_plan][0]
-        crash = st["cpu_p99"] * vcpu / av
+        # show the p99 peak; if p99 alone would fit, it was a short spike (the max reading) that blocked the shrink
+        peak_val, peak_name = st["cpu_p99"], "p99"
+        if st["cpu_p99"] * vcpu / av <= 100:
+            peak_val, peak_name = st["cpu_max"], "busiest 5-min reading"
+        crash = peak_val * vcpu / av
         peak_hour = max(range(24), key=lambda h: st["hourly_cpu"][h])
         recs.append({**base, "action": "keep", "title": "Keep size: daily peak protected",
                      "reason": f"Average CPU is only {st['cpu_avg']:.0f}%, so an average-based tool would shrink it to {avg_plan}. "
-                               f"But every day around {peak_hour:02d}:00 it reaches {st['cpu_p99']:.0f}% (p99). On {avg_plan} that peak "
+                               f"But {'every day ' if peak_name == 'p99' else ''}around {peak_hour:02d}:00 it reaches {peak_val:.0f}% ({peak_name}). On {avg_plan} that peak "
                                f"would need {crash:.0f}% CPU and the VM would fall over. We do not downsize it.",
                      "target_plan": plan, "saving": 0, "risk": "LOW",
                      "maths": [f"average-based: {vcpu} × {st['cpu_avg']:.1f}% ÷ 70% → {avg_plan} ({av} vCPU)",
-                               f"peak on {avg_plan} = {st['cpu_p99']:.1f}% × {vcpu} ÷ {av} = {crash:.0f}% → overload",
+                               f"peak on {avg_plan} = {peak_name} {peak_val:.1f}% × {vcpu} ÷ {av} = {crash:.0f}% → overload",
                                sizing_maths[0], "required ≥ current size → no safe downsize"],
                      "vcpu_removed": 0,
                      "peak_check": {**peak, "cpu_p99_after": round(crash, 1), "safe": False, "avg_based_plan": avg_plan}})

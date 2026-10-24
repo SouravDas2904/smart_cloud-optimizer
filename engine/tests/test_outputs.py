@@ -26,6 +26,14 @@ def test_every_resize_respects_headroom():
         if r["action"] == "resize":
             assert r["peak_check"]["cpu_p99_after"] <= 70.01
             assert r["peak_check"]["mem_p99_after"] <= 75.01
+            assert r["peak_check"]["cpu_max_after"] <= 95.01   # no single 5-min reading over the ceiling
+
+
+def test_bill_history_is_computed_from_inventory():
+    s = load("summary")
+    bills = [b["inr"] for b in s["bill_history"]]
+    assert len(bills) == 7 and bills == sorted(bills)   # resources are only ever added in the simulation
+    assert bills[-1] <= s["current_monthly"]            # the last month is at most today's full run-rate
 
 
 def test_production_is_never_stopped_or_scheduled():
