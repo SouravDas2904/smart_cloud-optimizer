@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import config as C  # noqa: E402
 from recommend import confidence, recommend_vm, size_for  # noqa: E402
+from stats import daily_trend  # noqa: E402
 from forecast import holt_winters  # noqa: E402
 
 
@@ -16,7 +17,7 @@ def stats(**kw):
     base = dict(cpu_avg=10, cpu_p50=9, cpu_p95=12, cpu_p99=15, cpu_max=20, mem_avg=25, mem_p95=28, mem_p99=30,
                 mem_max=32, cpu_time_above_80=0, offhours_cpu_avg=10, work_cpu_avg=10, net_p95_mbps=2,
                 iops_p95=200, disk_now=50, disk_slope_per_day=0, egress_gb_30d=10, cv=0.3, days_of_data=30,
-                missing_frac=0, hourly_cpu=[10] * 24, heatmap_cpu=[[10] * 24] * 7)
+                missing_frac=0, hourly_cpu=[10] * 24, heatmap_cpu=[[10] * 24] * 7, offhours_cpu_p99=4)
     base.update(kw)
     return base
 
@@ -101,3 +102,30 @@ def test_resize_keeps_busiest_reading_under_ceiling():
     r = recommend_vm(vm("s-8-32", env="staging"), stats(cpu_p99=28, cpu_p95=25, cpu_max=45, mem_p99=35), COST)[0]
     assert r["action"] == "resize"
     assert r["peak_check"]["cpu_max_after"] <= C.MAX_CPU_CEILING * 100
+
+
+def test_short_nightly_job_blocks_the_off_hours_schedule():
+    """A 30-minute job at 2 AM barely moves the night-time average, but its p99 shows it: don't switch it off."""
+    quiet = stats(cpu_p99=15, cpu_p95=13, offhours_cpu_avg=2.5, offhours_cpu_p99=4, work_cpu_avg=14)
+    nightly_job = {**quiet, "offhours_cpu_p99": 70}
+    assert "schedule" in [r["action"] for r in recommend_vm(vm("s-8-32", env="dev"), quiet, COST)]
+    assert "schedule" not in [r["action"] for r in recommend_vm(vm("s-8-32", env="dev"), nightly_job, COST)]
+
+
+def test_memory_spike_blocks_a_ram_shrink():
+    """p99 memory 30% fits 8 GB, but one 85% reading on 32 GB (27 GB) must still fit under the 90% ceiling."""
+    st = stats(cpu_p99=28, cpu_p95=25, mem_p99=30, mem_max=85)
+    _, req_ram, _ = size_for(8, 32, 28, 30, mem_max=85)
+    assert req_ram == pytest.approx(32 * 0.85 / C.MAX_MEM_CEILING)
+    r = recommend_vm(vm("s-8-32", env="staging"), st, COST)[0]
+    assert C.PLANS[r["target_plan"]][1] >= 32 * 0.85 / C.MAX_MEM_CEILING
+    assert r["peak_check"]["mem_max_after"] <= C.MAX_MEM_CEILING * 100
+
+
+def test_daily_trend_finds_a_steady_climb_and_ignores_noise():
+    days = np.arange(C.N_POINTS) / C.POINTS_PER_DAY
+    climb = 40 + 0.9 * days + np.random.default_rng(0).normal(0, 1, C.N_POINTS)
+    noise = 40 + np.random.default_rng(1).normal(0, 8, C.N_POINTS)
+    up = daily_trend(climb)
+    assert up["slope"] == pytest.approx(0.9, abs=0.1) and up["r2"] > 0.9
+    assert daily_trend(noise)["r2"] < C.TREND_MIN_R2

@@ -7,10 +7,14 @@ export type Action =
 export interface Stats {
   cpu_avg: number; cpu_p50: number; cpu_p95: number; cpu_p99: number; cpu_max: number;
   mem_avg: number; mem_p95: number; mem_p99: number; mem_max: number;
-  cpu_time_above_80: number; offhours_cpu_avg: number; work_cpu_avg: number;
+  cpu_time_above_80: number; offhours_cpu_avg: number; offhours_cpu_p99: number; work_cpu_avg: number;
+  cpu_trend: Trend; mem_trend: Trend;
   net_p95_mbps: number; iops_p95: number; disk_now: number; disk_slope_per_day: number;
   egress_gb_30d: number; cv: number; days_of_data: number; missing_frac: number;
 }
+
+/** least-squares line through the daily p95 of the last 14 days (engine/stats.py: daily_trend) */
+export interface Trend { slope: number; level: number; r2: number }
 
 export interface Cost { compute: number; storage: number; network: number; ip: number; total: number }
 
@@ -23,7 +27,7 @@ export interface Resource {
 
 export interface PeakCheck {
   cpu_p99_before: number; cpu_p99_after: number; mem_p99_before: number; mem_p99_after: number;
-  cpu_max_before?: number; cpu_max_after?: number; safe: boolean; avg_based_plan?: string;
+  cpu_max_before?: number; cpu_max_after?: number; mem_max_before?: number; mem_max_after?: number; safe: boolean; avg_based_plan?: string;
 }
 
 export interface Recommendation {
@@ -45,6 +49,11 @@ export interface DayCost { date: string; inr: number }
 export interface Forecast {
   history: DayCost[]; mape_7d: number; sigma: number; budget_monthly: number;
   forecast: { date: string; inr: number; lo: number; hi: number }[];
+  usage: Record<"cpu" | "mem", UsageForecast>;
+}
+export interface UsageForecast {
+  history: { date: string; pct: number }[]; mape_7d: number;
+  forecast: { date: string; pct: number; lo: number; hi: number }[];
 }
 
 export interface Summary {
@@ -63,7 +72,7 @@ export interface Series {
 
 export type Assumptions = Record<string, unknown> & {
   PLANS: Record<string, [number, number, number]>;
-  TARGET_CPU_UTIL: number; TARGET_MEM_UTIL: number; MIN_MEM_MARGIN_GB: number; MAX_CPU_CEILING: number;
+  TARGET_CPU_UTIL: number; TARGET_MEM_UTIL: number; MIN_MEM_MARGIN_GB: number; MAX_CPU_CEILING: number; MAX_MEM_CEILING: number;
   WATTS_PER_VCPU: number; PUE: number; GRID_KG_CO2_PER_KWH: number; HOURS_PER_MONTH: number;
   KG_CO2_PER_TREE_YEAR: number; OFF_HOURS_FRACTION: number; MONTHLY_BUDGET_INR: number;
 };
@@ -78,5 +87,13 @@ export interface Fleet {
   };
   by_region: Record<string, FleetGroup>; by_team: Record<string, FleetGroup>; by_env: Record<string, FleetGroup>;
 }
+
+/** hourly fleet sums per (region, env, team): add any selection of cells to filter the utilization charts */
+export interface FleetCell {
+  region: string; env: Env; team: string; vms: number;
+  vcpu_used: number[]; vcpu_prov: number[]; ram_used: number[]; ram_prov: number[];
+  disk_used: number[]; disk_prov: number[]; net_in: number[]; net_out: number[];
+}
+export interface FleetCells { start: string; step_min: number; cells: FleetCell[] }
 
 export type Role = "engineer" | "finance" | "leadership";

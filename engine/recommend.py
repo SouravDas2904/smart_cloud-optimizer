@@ -29,12 +29,14 @@ def pick_plan(req_vcpu: float, req_ram: float) -> str:
     return min(fits, key=lambda p: (C.PLANS[p][2], C.PLANS[p][0]))
 
 
-def size_for(vcpu, ram, cpu_p, mem_p, target_cpu=C.TARGET_CPU_UTIL, target_mem=C.TARGET_MEM_UTIL, cpu_max=None):
+def size_for(vcpu, ram, cpu_p, mem_p, target_cpu=C.TARGET_CPU_UTIL, target_mem=C.TARGET_MEM_UTIL, cpu_max=None, mem_max=None):
     req_vcpu = vcpu * (cpu_p / 100) / target_cpu
     if cpu_max is not None:   # the busiest single reading must also fit under the ceiling
         req_vcpu = max(req_vcpu, vcpu * (cpu_max / 100) / C.MAX_CPU_CEILING)
     used_gb = ram * mem_p / 100
     req_ram = max(ram * (mem_p / 100) / target_mem, used_gb + C.MIN_MEM_MARGIN_GB)
+    if mem_max is not None:   # ...and the highest memory reading under its ceiling (running out of RAM kills processes)
+        req_ram = max(req_ram, ram * (mem_max / 100) / C.MAX_MEM_CEILING)
     return req_vcpu, req_ram, pick_plan(req_vcpu, req_ram)
 
 
@@ -99,15 +101,17 @@ def recommend_vm(r: dict, st: dict, cost: dict) -> list[dict]:
                          "vcpu_removed": vcpu, "peak_check": None})
         return recs
 
-    req_vcpu, req_ram, target = size_for(vcpu, ram, st["cpu_p99"], st["mem_p99"], cpu_max=st["cpu_max"])
+    req_vcpu, req_ram, target = size_for(vcpu, ram, st["cpu_p99"], st["mem_p99"], cpu_max=st["cpu_max"], mem_max=st["mem_max"])
     tv, tr, tprice = C.PLANS[target]
     p99_after = st["cpu_p99"] * vcpu / tv
     max_after = st["cpu_max"] * vcpu / tv
     mem_after = st["mem_p99"] * ram / tr
+    mem_max_after = st["mem_max"] * ram / tr
     sizing_maths = [
         f"required vCPU = max({vcpu} × p99 CPU {st['cpu_p99']:.1f}% ÷ {C.TARGET_CPU_UTIL:.0%} target, "
         f"{vcpu} × max CPU {st['cpu_max']:.1f}% ÷ {C.MAX_CPU_CEILING:.0%} ceiling) = {req_vcpu:.2f}",
-        f"required RAM = max({ram} GB × p99 mem {st['mem_p99']:.1f}% ÷ {C.TARGET_MEM_UTIL:.0%}, used + {C.MIN_MEM_MARGIN_GB:.0f} GB) = {req_ram:.1f} GB",
+        f"required RAM = max({ram} GB × p99 mem {st['mem_p99']:.1f}% ÷ {C.TARGET_MEM_UTIL:.0%}, used + {C.MIN_MEM_MARGIN_GB:.0f} GB, "
+        f"{ram} GB × max mem {st['mem_max']:.1f}% ÷ {C.MAX_MEM_CEILING:.0%} ceiling) = {req_ram:.1f} GB",
         f"cheapest plan with ≥ {math.ceil(req_vcpu - 1e-9)} vCPU and ≥ {req_ram:.1f} GB = {target} ({tv} vCPU / {tr} GB, {INR(tprice)}/month)",
         f"Peak Safety Check: p99 after = {st['cpu_p99']:.1f}% × {vcpu} ÷ {tv} = {p99_after:.0f}% CPU; memory p99 after = {mem_after:.0f}%",
         f"Spike check: busiest 5-min reading after = {st['cpu_max']:.1f}% × {vcpu} ÷ {tv} = {max_after:.0f}% (ceiling {C.MAX_CPU_CEILING:.0%})",
@@ -115,7 +119,9 @@ def recommend_vm(r: dict, st: dict, cost: dict) -> list[dict]:
     peak = {"cpu_p99_before": st["cpu_p99"], "cpu_p99_after": round(p99_after, 1),
             "mem_p99_before": st["mem_p99"], "mem_p99_after": round(mem_after, 1),
             "cpu_max_before": st["cpu_max"], "cpu_max_after": round(max_after, 1),
-            "safe": p99_after <= 75 and mem_after <= 80 and max_after <= C.MAX_CPU_CEILING * 100}
+            "mem_max_before": st["mem_max"], "mem_max_after": round(mem_max_after, 1),
+            "safe": p99_after <= 75 and mem_after <= 80 and max_after <= C.MAX_CPU_CEILING * 100
+                    and mem_max_after <= C.MAX_MEM_CEILING * 100}
 
     # 2. under-provisioned -> upsize
     if st["cpu_p99"] > C.UNDER_P99 or st["mem_p99"] > C.UNDER_P99:
@@ -169,7 +175,9 @@ def recommend_vm(r: dict, st: dict, cost: dict) -> list[dict]:
                      "peak_check": {**peak, "cpu_p99_after": round(crash, 1), "safe": False, "avg_based_plan": avg_plan}})
 
     # 4. off-hours schedule for non-prod
-    if env != "prod" and st["offhours_cpu_avg"] < C.OFFHOURS_CPU_MAX:
+    # the night-time average must be low AND the busiest 1% of night readings too, so a short nightly job
+    # (which barely moves the average) is never switched off
+    if env != "prod" and st["offhours_cpu_avg"] < C.OFFHOURS_CPU_MAX and st["offhours_cpu_p99"] < C.OFFHOURS_CPU_P99_MAX:
         frac = C.off_hours_fraction()
         nightly = (24 - C.OFF_START_HOUR + C.OFF_END_HOUR) % 24
         saving = effective_price * frac
@@ -178,7 +186,9 @@ def recommend_vm(r: dict, st: dict, cost: dict) -> list[dict]:
                      "reason": f"Average CPU outside office hours is {st['offhours_cpu_avg']:.1f}% versus {st['work_cpu_avg']:.0f}% "
                                f"during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
                      "target_plan": None, "saving": round(saving), "risk": "LOW" if env == "dev" else "MEDIUM",
-                     "maths": [f"off window = {nightly} h × 5 weekdays + 48 weekend h = {nightly * 5 + 48} of 168 weekly hours = {frac:.1%}",
+                     "maths": [f"off-window CPU: average {st['offhours_cpu_avg']:.1f}% < {C.OFFHOURS_CPU_MAX:.0f}% and "
+                               f"p99 {st['offhours_cpu_p99']:.1f}% < {C.OFFHOURS_CPU_P99_MAX:.0f}% → nothing important runs at night",
+                               f"off window = {nightly} h × 5 weekdays + 48 weekend h = {nightly * 5 + 48} of 168 weekly hours = {frac:.1%}",
                                f"Saving = {INR(effective_price)} {'(after resize) ' if effective_price != price else ''}× {frac:.1%} = {INR(saving)}/month",
                                "Storage keeps billing while stopped (not counted as saving)"],
                      "vcpu_removed": kept_vcpu * frac,   # on top of any vCPUs the resize already removed

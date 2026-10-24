@@ -12,6 +12,7 @@ import { inr, inrShort } from "@/lib/format";
 export default function Forecast() {
   const { data, accepted } = useApp();
   const [horizon, setHorizon] = useState<30 | 60 | 90>(30);
+  const [usage, setUsage] = useState<"cpu" | "mem">("cpu");
   if (!data) return <Loading />;
   const f = data.forecast;
   const t = totals(data.resources, data.recs, accepted);
@@ -26,9 +27,17 @@ export default function Forecast() {
   const doNothing = sum("inr");
   const optimised = doNothing - dailySaving * horizon;
 
+  // usage forecast: the same Holt-Winters model on daily fleet CPU % / memory % (engine/build.py: usage_forecast)
+  const u = f.usage[usage];
+  const uRows = [
+    ...u.history.map((d) => ({ date: d.date, actual: d.pct })),
+    ...u.forecast.slice(0, horizon).map((d) => ({ date: d.date, forecast: d.pct, band: [d.lo, d.hi] as [number, number] })),
+  ];
+  const uEnd = u.forecast[horizon - 1];
+
   return (
     <div className="space-y-5">
-      <PageTitle title="Cost forecast"
+      <PageTitle title="Cost and usage forecast"
         sub={`Holt-Winters exponential smoothing (level + damped trend + weekly seasonality) on daily cost. Back-tested on the last 7 days: ${f.mape_7d}% average error. The lime line applies the recommendations you have accepted.`}
         right={
           <div className="flex gap-1 rounded-lg bg-slate-100 p-1 text-sm">
@@ -61,6 +70,29 @@ export default function Forecast() {
           </ComposedChart>
         )}
         footer={<p className="mt-2 text-xs text-slate-500">The jump mid-window is the 8 ML VMs launched by the Data team; the bump near the end is the anomaly&apos;s extra egress. The model has 30 days of history, so the range widens with the horizon.</p>} />
+
+      <ChartCard title={`Fleet ${usage === "cpu" ? "CPU" : "memory"} usage: actual and forecast`} height={260}
+        sub={`Daily average share of provisioned ${usage === "cpu" ? "vCPU" : "RAM"} in use, forecast with the same Holt-Winters model. Back-tested on the last 7 days: ${u.mape_7d}% average error. In ${horizon} days: ${uEnd.pct.toFixed(1)}% (likely ${uEnd.lo.toFixed(1)}–${uEnd.hi.toFixed(1)}%).`}
+        actions={
+          <div className="flex gap-1 rounded-lg bg-slate-100 p-1 text-sm" onClick={(e) => e.stopPropagation()}>
+            {([["cpu", "CPU"], ["mem", "Memory"]] as const).map(([k, l]) => (
+              <button key={k} onClick={() => setUsage(k)} className={usage === k ? "rounded-md bg-white px-3 py-1 font-medium shadow-sm" : "px-3 py-1 text-slate-500"}>{l}</button>
+            ))}
+          </div>
+        }
+        render={(big) => (
+          <ComposedChart data={uRows} margin={{ left: 4, right: 10, top: 8 }}>
+            <CartesianGrid {...GRID} />
+            <XAxis dataKey="date" {...AXIS} minTickGap={big ? 50 : 36} tickFormatter={(d: string) => fmtDay(new Date(d).getTime())} />
+            <YAxis {...AXIS} width={44} unit="%" domain={[0, 100]} tickCount={5} />
+            <Tooltip {...TOOLTIP} formatter={(v: number | number[]) => Array.isArray(v) ? `${v[0].toFixed(1)}% – ${v[1].toFixed(1)}%` : `${v.toFixed(1)}%`} />
+            <Legend verticalAlign="top" height={30} iconType="plainline" wrapperStyle={{ fontSize: 12 }} />
+            <Area dataKey="band" name="Forecast range" stroke="none" fill="#26262b" isAnimationActive={false} />
+            <Line dataKey="actual" name="Actual (daily average)" stroke="#e8e8ea" dot={false} strokeWidth={1.6} isAnimationActive={false} />
+            <Line dataKey="forecast" name="Forecast" stroke={usage === "cpu" ? "#c6f432" : "#b48cff"} dot={false} strokeDasharray="5 3" strokeWidth={1.8} isAnimationActive={false} />
+            <ReferenceLine y={70} stroke="#4a4a52" strokeDasharray="4 4" label={{ value: "70% target", fontSize: 11, fill: "#8c8c94", position: "insideTopRight" }} />
+          </ComposedChart>
+        )} />
     </div>
   );
 }

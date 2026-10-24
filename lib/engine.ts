@@ -24,12 +24,13 @@ export function pickPlan(plans: Assumptions["PLANS"], reqVcpu: number, reqRam: n
   return fits[0][0];
 }
 
-export function sizeFor(a: Assumptions, vcpu: number, ram: number, cpuP: number, memP: number, targetCpu: number, cpuMax?: number) {
+export function sizeFor(a: Assumptions, vcpu: number, ram: number, cpuP: number, memP: number, targetCpu: number, cpuMax?: number, memMax?: number) {
   let reqVcpu = (vcpu * (cpuP / 100)) / targetCpu;
   // the busiest single reading must also fit under the ceiling (same as recommend.py)
   if (cpuMax !== undefined) reqVcpu = Math.max(reqVcpu, (vcpu * (cpuMax / 100)) / a.MAX_CPU_CEILING);
   const used = (ram * memP) / 100;
-  const reqRam = Math.max((ram * (memP / 100)) / a.TARGET_MEM_UTIL, used + a.MIN_MEM_MARGIN_GB);
+  let reqRam = Math.max((ram * (memP / 100)) / a.TARGET_MEM_UTIL, used + a.MIN_MEM_MARGIN_GB);
+  if (memMax !== undefined) reqRam = Math.max(reqRam, (ram * (memMax / 100)) / a.MAX_MEM_CEILING);
   return { reqVcpu, reqRam, plan: pickPlan(a.PLANS, reqVcpu, reqRam) };
 }
 
@@ -104,7 +105,7 @@ export function whatIfHeadroom(resources: Resource[], recs: Recommendation[], a:
   let riskyCount = 0;
   for (const r of resources) {
     if (r.type !== "vm" || !r.stats || excluded.has(r.id)) continue;
-    const { plan } = sizeFor(a, r.vcpu, r.ram_gb, r.stats.cpu_p99, r.stats.mem_p99, targetCpu, r.stats.cpu_max);
+    const { plan } = sizeFor(a, r.vcpu, r.ram_gb, r.stats.cpu_p99, r.stats.mem_p99, targetCpu, r.stats.cpu_max, r.stats.mem_max);
     const cur = a.PLANS[r.plan!][2];
     const tgt = a.PLANS[plan][2];
     if (tgt < cur) {

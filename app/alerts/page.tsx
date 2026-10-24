@@ -18,16 +18,17 @@ function MetricMini({ a }: { a: Alert }) {
   useEffect(() => { fetch(`/data/series/${a.resource_id}.json`).then((r) => r.json()).then(setS).catch(() => {}); }, [a.resource_id]);
   if (!s) return <div className="h-28" />;
   const start = new Date(s.start).getTime();
-  const key = a.metric === "disk" ? "disk" : "cpu";
+  const key = a.metric === "disk" || a.metric === "mem" ? a.metric : "cpu";
+  const label = { disk: "disk used", mem: "memory", cpu: "CPU" }[key];
   const rows = s[key].map((v, i) => ({ t: start + i * s.step_min * 60000, v, out: s.net_out[i] }));
   return (
-    <ChartCard bare title={`${a.resource_name}: ${key === "disk" ? "disk used" : "CPU"} over 30 days`} height={112} render={(big) => (
+    <ChartCard bare title={`${a.resource_name}: ${label} over 30 days`} height={112} render={(big) => (
         <AreaChart data={rows} margin={{ left: big ? 0 : -20, right: 4, top: 4 }}>
           <XAxis dataKey="t" type="number" scale="time" domain={["dataMin", "dataMax"]} hide={!big} tickFormatter={fmtDay} {...AXIS} minTickGap={60} />
           <YAxis domain={[0, 100]} {...AXIS} tick={{ fontSize: big ? 11 : 9, fill: "#4a4a52" }} unit="%" width={big ? 44 : 50} tickCount={big ? 5 : 3} />
           <Tooltip {...TOOLTIP} labelFormatter={(t: number) => new Date(t).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} formatter={(v: number) => v?.toFixed(1)} />
           {a.start && <ReferenceArea ifOverflow="hidden" x1={new Date(a.start).getTime()} x2={new Date(a.end!).getTime()} fill="#5a1d18" fillOpacity={0.7} />}
-          {a.metric === "disk" && <ReferenceLine y={90} stroke="#ff5a4e" strokeDasharray="3 3" />}
+          {a.kind === "capacity" && <ReferenceLine y={90} stroke="#ff5a4e" strokeDasharray="3 3" />}
           <Area dataKey="v" stroke={a.kind === "anomaly" ? "#ff5a4e" : "#c6f432"} fill={a.kind === "anomaly" ? "#3a1512" : "#232a12"} isAnimationActive={false} dot={false} name={key} />
           {big && <Brush dataKey="t" {...BRUSH} tickFormatter={fmtDay} />}
         </AreaChart>

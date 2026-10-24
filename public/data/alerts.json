@@ -33,6 +33,21 @@
   "cost_impact": 176396
  },
  {
+  "id": "memtrend-vm-029",
+  "kind": "capacity",
+  "severity": "warning",
+  "resource_id": "vm-029",
+  "resource_name": "prod-auth-02",
+  "team": "Platform",
+  "env": "prod",
+  "region": "Mumbai",
+  "title": "Memory climbing toward its limit on prod-auth-02",
+  "why": "Daily peak (p95) memory is 80% and has risen 0.90% per day over the last 14 days (straight-line fit, R² 0.99). At this rate it passes 90% in about 11 days. A steady climb in memory with flat traffic usually means a memory leak: check the last deploy.",
+  "metric": "mem",
+  "days_left": 11.0,
+  "cost_impact": 0
+ },
+ {
   "id": "cpu-vm-080",
   "kind": "capacity",
   "severity": "warning",

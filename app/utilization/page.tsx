@@ -1,15 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Cpu, HardDrive, MemoryStick, Network } from "lucide-react";
 import { Brush, CartesianGrid, Legend, Line, LineChart, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
 import { ChartCard } from "@/components/ChartCard";
 import { AXIS, TOOLTIP, BRUSH, GRID, fmtDateTime } from "@/lib/chart";
 import { useApp } from "../providers";
-import { Kpi, Loading, PageTitle } from "@/components/ui";
+import { Kpi, Loading, MultiSelect, PageTitle } from "@/components/ui";
 import { cls, inr } from "@/lib/format";
-import type { FleetGroup, Resource } from "@/lib/types";
+import type { FleetCells, FleetGroup, Resource } from "@/lib/types";
 
 const METRICS = [
   { id: "cpu", label: "CPU", icon: Cpu },
@@ -31,32 +31,68 @@ function Meter({ v }: { v: number }) {
   );
 }
 
+/** Capacity-weighted utilisation of a set of VMs, the same formula as engine/build.py: sum(used) / sum(provisioned). */
+function groupStats(list: Resource[]): FleetGroup {
+  const g = { vms: list.length, vcpu: 0, ram_gb: 0, disk_gb: 0, egress_gb: 0, cpu: 0, mem: 0, disk: 0 };
+  for (const r of list) {
+    const s = r.stats!;
+    g.vcpu += r.vcpu; g.ram_gb += r.ram_gb; g.disk_gb += r.disk_gb; g.egress_gb += s.egress_gb_30d;
+    g.cpu += (s.cpu_avg / 100) * r.vcpu; g.mem += (s.mem_avg / 100) * r.ram_gb; g.disk += (s.disk_now / 100) * r.disk_gb;
+  }
+  return { vms: g.vms, vcpu: g.vcpu, ram_gb: g.ram_gb, disk_gb: g.disk_gb, egress_gb: Math.round(g.egress_gb),
+    cpu_pct: (g.cpu / g.vcpu) * 100, mem_pct: (g.mem / g.ram_gb) * 100, disk_pct: (g.disk / g.disk_gb) * 100 };
+}
+
 export default function Utilization() {
   const { data } = useApp();
   const [metric, setMetric] = useState<Metric>("cpu");
-  const [by, setBy] = useState<"by_region" | "by_team" | "by_env">("by_region");
+  const [by, setBy] = useState<"region" | "team" | "env">("region");
+  const [envs, setEnvs] = useState(["prod", "staging", "dev"]);
+  const [regions, setRegions] = useState<string[] | null>(null);
+  const [teams, setTeams] = useState<string[] | null>(null);
+  const [cells, setCells] = useState<FleetCells | null>(null);
 
+  // per (region, env, team) hourly sums, only needed on this page (~1 MB, so not part of the shared load)
+  useEffect(() => {
+    fetch("/data/fleet_cells.json").then((r) => (r.ok ? r.json() : null)).then(setCells).catch(() => setCells(null));
+  }, []);
+
+  const regs = data ? Object.keys(data.summary.by_region) : [];
+  const tms = data ? Object.keys(data.summary.by_team) : [];
+  const keep = (r: { region: string; env: string; team: string }) =>
+    envs.includes(r.env) && (regions ?? regs).includes(r.region) && (teams ?? tms).includes(r.team);
+
+  // the hourly timeline for the selected VMs: add up the matching cells, then divide used by provisioned
   const rows = useMemo(() => {
-    if (!data) return [];
-    const t = data.fleet.timeline;
-    const start = new Date(t.start).getTime();
-    return t.cpu_pct.map((_, i) => ({
-      t: start + i * t.step_min * 60000, cpu: t.cpu_pct[i], mem: t.mem_pct[i], disk: t.disk_pct[i],
-      net_in: t.net_in_mbps[i], net_out: t.net_out_mbps[i],
+    if (!data || !cells) return [];
+    const sel = cells.cells.filter(keep);
+    const start = new Date(cells.start).getTime();
+    const n = cells.cells[0]?.vcpu_used.length ?? 0;
+    const sum = (k: keyof FleetCells["cells"][number], i: number) => sel.reduce((s, c) => s + (c[k] as number[])[i], 0);
+    const pct = (u: number, p: number) => (p > 0 ? +((u / p) * 100).toFixed(1) : null);
+    return Array.from({ length: n }, (_, i) => ({
+      t: start + i * cells.step_min * 60000,
+      cpu: pct(sum("vcpu_used", i), sum("vcpu_prov", i)), mem: pct(sum("ram_used", i), sum("ram_prov", i)),
+      disk: pct(sum("disk_used", i), sum("disk_prov", i)),
+      net_in: +sum("net_in", i).toFixed(2), net_out: +sum("net_out", i).toFixed(2),
+      vcpu_used: sum("vcpu_used", i), vcpu_prov: sum("vcpu_prov", i),
     }));
-  }, [data]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, cells, envs, regions, teams]);
 
   if (!data) return <Loading />;
-  const { fleet, resources } = data;
-  const t = fleet.timeline;
-  const vms = resources.filter((r) => r.type === "vm" && r.stats);
-  const volumes = resources.filter((r) => r.type === "volume");
+  const { resources } = data;
+  const vms = resources.filter((r) => r.type === "vm" && r.stats && keep(r));
+  const volumes = resources.filter((r) => r.type === "volume" && keep(r));
+  const live = rows.filter((x) => x.cpu !== null);
+  const cpuPct = live.map((x) => x.cpu!), memPct = live.map((x) => x.mem!);
+  const filtered = vms.length < resources.filter((r) => r.type === "vm").length;
   const orphanGb = volumes.filter((r) => !r.attached_to).reduce((s, r) => s + r.disk_gb, 0);
   const vmDiskGb = vms.reduce((s, r) => s + r.disk_gb, 0);
   const usedGb = vms.reduce((s, r) => s + (r.stats!.disk_now / 100) * r.disk_gb, 0);
   const egressGb = vms.reduce((s, r) => s + r.stats!.egress_gb_30d, 0);
   const egressCost = vms.reduce((s, r) => s + r.cost.network, 0);
-  const vcpuProv = t.vcpu_prov.at(-1)!;
+  const vcpuProv = live.at(-1)?.vcpu_prov ?? 0;
   const ramProv = vms.reduce((s, r) => s + r.ram_gb, 0);
   const fmtT = (x: number) => new Date(x).toLocaleDateString("en-IN", { day: "2-digit", month: "short" });
 
@@ -90,18 +126,25 @@ export default function Utilization() {
       <PageTitle title="Infrastructure utilization"
         sub={`CPU, memory, storage and network usage across all ${vms.length} VMs and ${volumes.length} block volumes, from 30 days of 5-minute readings. Percentages are capacity-weighted: a 16-vCPU VM counts eight times a 2-vCPU one.`} />
 
+      <div className="card flex flex-wrap items-center gap-x-6 gap-y-3 p-3">
+        <MultiSelect label="Env" options={["prod", "staging", "dev"]} value={envs} onChange={setEnvs} />
+        <MultiSelect label="Region" options={regs} value={regions ?? regs} onChange={setRegions} />
+        <MultiSelect label="Team" options={tms} value={teams ?? tms} onChange={setTeams} />
+        <span className="ml-auto text-xs text-slate-500">{vms.length} VMs selected{filtered && <> · <button className="underline" onClick={() => { setEnvs(["prod", "staging", "dev"]); setRegions(null); setTeams(null); }}>clear filters</button></>}</span>
+      </div>
+
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Kpi label="CPU utilization" value={`${mean(t.cpu_pct).toFixed(1)}%`} icon={<Cpu size={16} />}
-          sub={`${mean(t.vcpu_used).toFixed(0)} of ${vcpuProv.toFixed(0)} vCPUs busy on average · peak hour ${Math.max(...t.cpu_pct).toFixed(0)}%`} />
-        <Kpi label="Memory utilization" value={`${mean(t.mem_pct).toFixed(1)}%`} icon={<MemoryStick size={16} />}
-          sub={`of ${(ramProv / 1024).toFixed(1)} TB provisioned RAM · peak hour ${Math.max(...t.mem_pct).toFixed(0)}%`} />
-        <Kpi label="Storage used" value={`${((usedGb / vmDiskGb) * 100).toFixed(1)}%`} icon={<HardDrive size={16} />}
+        <Kpi label="CPU utilization" value={live.length ? `${mean(cpuPct).toFixed(1)}%` : "–"} icon={<Cpu size={16} />}
+          sub={live.length ? `${mean(live.map((x) => x.vcpu_used)).toFixed(0)} of ${vcpuProv.toFixed(0)} vCPUs busy on average · peak hour ${Math.max(...cpuPct).toFixed(0)}%` : "no VMs selected"} />
+        <Kpi label="Memory utilization" value={live.length ? `${mean(memPct).toFixed(1)}%` : "–"} icon={<MemoryStick size={16} />}
+          sub={live.length ? `of ${(ramProv / 1024).toFixed(1)} TB provisioned RAM · peak hour ${Math.max(...memPct).toFixed(0)}%` : "no VMs selected"} />
+        <Kpi label="Storage used" value={vmDiskGb ? `${((usedGb / vmDiskGb) * 100).toFixed(1)}%` : "–"} icon={<HardDrive size={16} />}
           sub={`${(usedGb / 1024).toFixed(1)} of ${(vmDiskGb / 1024).toFixed(1)} TB on VM disks · ${(orphanGb / 1024).toFixed(1)} TB in unattached volumes`} />
         <Kpi label="Network egress (30 days)" value={`${(egressGb / 1024).toFixed(1)} TB`} icon={<Network size={16} />}
           sub={`${inr(egressCost)}/month at ₹${data.assumptions.EGRESS_INR_PER_GB as number}/GB`} />
       </div>
 
-      <ChartCard title="Fleet usage over 30 days (hourly)" sub={chart.note} height={260}
+      <ChartCard title={filtered ? `Usage of the ${vms.length} selected VMs over 30 days (hourly)` : "Fleet usage over 30 days (hourly)"} sub={chart.note} height={260}
         actions={
           <div className="flex flex-wrap gap-1 rounded-lg bg-slate-100 p-1 text-sm" onClick={(e) => e.stopPropagation()}>
             {METRICS.map(({ id, label, icon: Icon }) => (
@@ -129,7 +172,7 @@ export default function Utilization() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="font-semibold text-slate-900">Utilization by group</h2>
           <div className="flex flex-wrap gap-1 rounded-lg bg-slate-100 p-1 text-sm">
-            {([["by_region", "Region"], ["by_team", "Team"], ["by_env", "Environment"]] as const).map(([k, l]) => (
+            {([["region", "Region"], ["team", "Team"], ["env", "Environment"]] as const).map(([k, l]) => (
               <button key={k} onClick={() => setBy(k)} className={cls("rounded-md px-3 py-1", by === k ? "bg-white font-medium text-slate-900 shadow-sm" : "text-slate-500")}>{l}</button>
             ))}
           </div>
@@ -140,7 +183,8 @@ export default function Utilization() {
               <th className="text-right">RAM</th><th className="text-right">Memory used</th><th className="text-right">Storage</th><th className="text-right">Disk used</th><th className="text-right">Egress 30d</th></tr>
           </thead>
           <tbody>
-            {Object.entries(fleet[by] as Record<string, FleetGroup>).map(([k, g]) => (
+            {Object.entries(vms.reduce<Record<string, Resource[]>>((m, r) => ((m[r[by]] ??= []).push(r), m), {}))
+              .sort(([a], [b]) => a.localeCompare(b)).map(([k, list]) => [k, groupStats(list)] as const).map(([k, g]) => (
               <tr key={k} className="border-t border-slate-100">
                 <td className="py-2 font-medium capitalize">{k}</td>
                 <td className="text-right tabular-nums">{g.vms}</td>

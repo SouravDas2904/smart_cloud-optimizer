@@ -23,7 +23,8 @@ export default function Assumptions() {
     ["Idle", `p95 CPU < ${a.IDLE_CPU_P95}%, p95 network < ${a.IDLE_NET_P95_MBPS} MB/s, p95 IOPS < ${a.IDLE_IOPS_P95}, for ≥ ${a.IDLE_MIN_DAYS} days`, "Three signals must agree to avoid false idle calls"],
     ["Under-provisioned", `p99 CPU or memory > ${a.UNDER_P99}%`, "Recommend an upsize: reliability first"],
     ["Off-hours window", `${a.OFF_START_HOUR}:00–0${a.OFF_END_HOUR}:00 weekdays + weekends (IST) = ${(a.OFF_HOURS_FRACTION * 100).toFixed(1)}% of the week`, "Typical Indian engineering hours"],
-    ["Schedulable", `non-prod and average CPU in the off window < ${a.OFFHOURS_CPU_MAX}%`, "Production is never scheduled"],
+    ["Spike ceiling after resize", `busiest 5-min CPU ≤ ${a.MAX_CPU_CEILING * 100}%, busiest memory reading ≤ ${a.MAX_MEM_CEILING * 100}%`, "p99 ignores the top 1% (~14 min a day); this catches what p99 can't see"],
+    ["Schedulable", `non-prod, average CPU in the off window < ${a.OFFHOURS_CPU_MAX}% and its p99 < ${a.OFFHOURS_CPU_P99_MAX}%`, "Production is never scheduled; a short nightly job blocks the schedule"],
     ["Orphan grace period", `${a.ORPHAN_GRACE_DAYS} days`, "Don't flag a disk detached a few minutes ago"],
     ["Block storage", `₹${a.BLOCK_INR_PER_GB_MONTH}/GB-month (billed while a VM is stopped)`, "Illustrative"],
     ["Snapshot", `₹${a.SNAPSHOT_INR_PER_GB_MONTH}/GB-month`, "Kept as a safety net before deleting a volume"],
@@ -33,6 +34,7 @@ export default function Assumptions() {
     ["Anomaly", `robust z-score > ${a.ANOMALY_Z} for ≥ ${a.ANOMALY_MIN_POINTS * a.STEP_MIN} min, vs median/MAD of the same hour on comparable days (first 21 days as baseline)`, "Robust to outliers; daily jobs aren't flagged"],
     ["Cost jump", `daily cost > ${a.COST_JUMP_PCT}% above trailing 7-day average`, ""],
     ["Capacity", `disk projected to hit ${a.CAPACITY_WARN_PCT}% within ${a.CAPACITY_HORIZON_DAYS} days (14-day linear fit)`, ""],
+    ["CPU / memory trend", `daily p95 rising ≥ ${a.TREND_MIN_SLOPE}%/day over ${a.TREND_DAYS} days (straight-line fit, R² ≥ ${a.TREND_MIN_R2}) and projected to pass ${a.CAPACITY_WARN_PCT}% within ${a.CAPACITY_HORIZON_DAYS} days`, "R² keeps noisy VMs from raising false trends"],
     ["Carbon", `${a.WATTS_PER_VCPU} W/vCPU, PUE ${a.PUE}, ${a.GRID_KG_CO2_PER_KWH} kg CO₂/kWh, ${a.KG_CO2_PER_TREE_YEAR} kg CO₂/tree/year`, "Cloud Carbon Footprint-style estimate; India CEA grid factor"],
     ["Random seed", `${a.SEED}`, "Same data every run: reproducible demo"],
   ];
