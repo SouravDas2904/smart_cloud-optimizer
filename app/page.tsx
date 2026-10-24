@@ -10,7 +10,7 @@ import { ChartCard } from "@/components/ChartCard";
 import { FleetGrid } from "@/components/FleetGrid";
 import { CountUp, FadeIn, WasteTicker } from "@/components/motion";
 import { totals } from "@/lib/engine";
-import { AXIS, CURSOR, GRID, barLabel, inrTick } from "@/lib/chart";
+import { AXIS, TOOLTIP, CURSOR, GRID, barLabel, inrTick } from "@/lib/chart";
 import { ACTION_LABEL, CHART, ENV_COLOR, cls, inr, inrShort } from "@/lib/format";
 
 export default function Overview() {
@@ -64,7 +64,7 @@ export default function Overview() {
           <CartesianGrid {...GRID} />
           <XAxis dataKey="month" {...AXIS} />
           <YAxis tickFormatter={inrTick} {...AXIS} width={60} tickCount={4} />
-          <Tooltip formatter={(v: number) => inr(v)} cursor={CURSOR} />
+          <Tooltip {...TOOLTIP} formatter={(v: number) => inr(v)} cursor={CURSOR} />
           <Bar isAnimationActive={false} dataKey="inr" name="Monthly bill" radius={[6, 6, 0, 0]} maxBarSize={56}>
             {s.bill_history.map((_, i) => <Cell key={i} fill={i === s.bill_history.length - 1 ? "#ff5a4e" : "#3a3a40"} />)}
             <LabelList dataKey="inr" position="top" formatter={inrTick} style={barLabel(big)} />
@@ -113,7 +113,7 @@ export default function Overview() {
             label={big ? ({ name, value }: { name: string; value: number }) => `${name} ${inrShort(value)}` : false} labelLine={big} fontSize={13}>
             {env.map((e) => <Cell key={e.name} fill={ENV_COLOR[e.name]} />)}
           </Pie>
-          <Tooltip formatter={(v: number) => inr(v)} />
+          <Tooltip {...TOOLTIP} formatter={(v: number) => inr(v)} />
         </PieChart>
       )}
       footer={
@@ -135,7 +135,7 @@ export default function Overview() {
         <BarChart data={team} layout="vertical" margin={{ left: 4, right: 40 }}>
           <XAxis type="number" tickFormatter={inrTick} {...AXIS} tickCount={4} />
           <YAxis type="category" dataKey="name" {...AXIS} width={84} />
-          <Tooltip formatter={(v: number) => inr(v)} cursor={CURSOR} />
+          <Tooltip {...TOOLTIP} formatter={(v: number) => inr(v)} cursor={CURSOR} />
           <Bar isAnimationActive={false} dataKey="value" name="Monthly cost" fill="#c6f432" radius={[0, 6, 6, 0]} maxBarSize={22}>
             <LabelList dataKey="value" position="right" formatter={inrTick} style={barLabel(big)} />
           </Bar>
@@ -325,7 +325,7 @@ function ComponentChart() {
         <BarChart data={rows} layout="vertical" margin={{ left: 4, right: 44 }}>
           <XAxis type="number" tickFormatter={inrTick} {...AXIS} tickCount={4} />
           <YAxis type="category" dataKey="name" {...AXIS} width={104} />
-          <Tooltip formatter={(v: number) => inr(v)} cursor={CURSOR} />
+          <Tooltip {...TOOLTIP} formatter={(v: number) => inr(v)} cursor={CURSOR} />
           <Bar isAnimationActive={false} dataKey="value" name="Monthly cost" radius={[0, 6, 6, 0]} maxBarSize={22}>
             {rows.map((_, i) => <Cell key={i} fill={CHART[i]} />)}
             <LabelList dataKey="value" position="right" formatter={inrTick} style={barLabel(big)} />

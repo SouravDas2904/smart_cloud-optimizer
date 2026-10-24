@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { Cpu, HardDrive, MemoryStick, Network } from "lucide-react";
 import { Brush, CartesianGrid, Legend, Line, LineChart, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
 import { ChartCard } from "@/components/ChartCard";
-import { AXIS, BRUSH, GRID, fmtDateTime } from "@/lib/chart";
+import { AXIS, TOOLTIP, BRUSH, GRID, fmtDateTime } from "@/lib/chart";
 import { useApp } from "../providers";
 import { Kpi, Loading, PageTitle } from "@/components/ui";
 import { cls, inr } from "@/lib/format";
@@ -117,7 +117,7 @@ export default function Utilization() {
             <CartesianGrid {...GRID} />
             <XAxis dataKey="t" type="number" scale="time" domain={["dataMin", "dataMax"]} tickFormatter={big ? fmtDateTime : fmtT} {...AXIS} minTickGap={big ? 70 : 44} />
             <YAxis {...AXIS} width={44} unit={chart.unit} tickCount={5} domain={chart.unit === "%" ? [0, 100] : [0, "auto"]} />
-            <Tooltip labelFormatter={(x: number) => fmtDateTime(x)} formatter={(v: number) => v.toFixed(1)} />
+            <Tooltip {...TOOLTIP} labelFormatter={(x: number) => fmtDateTime(x)} formatter={(v: number) => v.toFixed(1)} />
             {big && <Legend verticalAlign="top" height={28} iconType="plainline" />}
             {chart.unit === "%" && <ReferenceLine y={70} stroke="#4a4a52" strokeDasharray="4 4" label={{ value: "70% target", fontSize: 11, fill: "#8c8c94", position: "insideTopRight" }} />}
             {chart.keys.map(([k, name, color]) => <Line key={k} isAnimationActive={false} dataKey={k} name={name} stroke={color} dot={false} strokeWidth={big ? 1.6 : 1.4} />)}

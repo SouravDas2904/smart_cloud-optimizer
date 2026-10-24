@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { AlertOctagon, AlertTriangle, HardDrive, IndianRupee, Wallet } from "lucide-react";
 import { Area, AreaChart, Bar, BarChart, Brush, Cell, ReferenceArea, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
 import { ChartCard } from "@/components/ChartCard";
-import { AXIS, BRUSH, fmtDay, inrTick } from "@/lib/chart";
+import { AXIS, TOOLTIP, BRUSH, fmtDay, inrTick } from "@/lib/chart";
 import { useApp } from "../providers";
 import { Loading, PageTitle } from "@/components/ui";
 import { cls, inr, inrShort } from "@/lib/format";
@@ -25,7 +25,7 @@ function MetricMini({ a }: { a: Alert }) {
         <AreaChart data={rows} margin={{ left: big ? 0 : -20, right: 4, top: 4 }}>
           <XAxis dataKey="t" type="number" scale="time" domain={["dataMin", "dataMax"]} hide={!big} tickFormatter={fmtDay} {...AXIS} minTickGap={60} />
           <YAxis domain={[0, 100]} {...AXIS} tick={{ fontSize: big ? 11 : 9, fill: "#4a4a52" }} unit="%" width={big ? 44 : 50} tickCount={big ? 5 : 3} />
-          <Tooltip labelFormatter={(t: number) => new Date(t).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} formatter={(v: number) => v?.toFixed(1)} />
+          <Tooltip {...TOOLTIP} labelFormatter={(t: number) => new Date(t).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} formatter={(v: number) => v?.toFixed(1)} />
           {a.start && <ReferenceArea ifOverflow="hidden" x1={new Date(a.start).getTime()} x2={new Date(a.end!).getTime()} fill="#5a1d18" fillOpacity={0.7} />}
           {a.metric === "disk" && <ReferenceLine y={90} stroke="#ff5a4e" strokeDasharray="3 3" />}
           <Area dataKey="v" stroke={a.kind === "anomaly" ? "#ff5a4e" : "#c6f432"} fill={a.kind === "anomaly" ? "#3a1512" : "#232a12"} isAnimationActive={false} dot={false} name={key} />
@@ -41,7 +41,7 @@ function CostMini({ days, date }: { days: DayCost[]; date: string }) {
         <BarChart data={days} margin={{ left: -10, right: 4, top: 4 }}>
           <XAxis dataKey="date" hide={!big} {...AXIS} minTickGap={40} />
           <YAxis tickFormatter={inrTick} {...AXIS} tick={{ fontSize: big ? 11 : 9, fill: "#4a4a52" }} width={big ? 60 : 50} tickCount={big ? 5 : 3} />
-          <Tooltip formatter={(v: number) => inr(v)} />
+          <Tooltip {...TOOLTIP} formatter={(v: number) => inr(v)} />
           <Bar isAnimationActive={false} dataKey="inr" name="daily cost" radius={[3, 3, 0, 0]}>{days.map((d) => <Cell key={d.date} fill={d.date >= date ? "#ff9f1c" : "#3a3a40"} />)}</Bar>
         </BarChart>
     )} />

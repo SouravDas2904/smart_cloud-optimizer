@@ -2,7 +2,7 @@
 
 import { Bar, BarChart, LabelList, Tooltip, XAxis, YAxis } from "recharts";
 import { ChartCard } from "@/components/ChartCard";
-import { AXIS, CURSOR, barLabel } from "@/lib/chart";
+import { AXIS, TOOLTIP, CURSOR, barLabel } from "@/lib/chart";
 import { Leaf, TreePine, Zap } from "lucide-react";
 import { useApp } from "../providers";
 import { Kpi, Loading, PageTitle } from "@/components/ui";
@@ -37,7 +37,7 @@ export default function Sustainability() {
             <BarChart data={rows} layout="vertical" margin={{ left: 10, right: 40 }}>
               <XAxis type="number" {...AXIS} tickCount={5} />
               <YAxis type="category" dataKey="team" width={84} {...AXIS} />
-              <Tooltip cursor={CURSOR} />
+              <Tooltip {...TOOLTIP} cursor={CURSOR} />
               <Bar isAnimationActive={false} dataKey="kg" fill="#c6f432" radius={[0, 6, 6, 0]} name="kg CO₂ / month" maxBarSize={24}>
                 <LabelList dataKey="kg" position="right" formatter={(v: number) => `${v} kg`} style={barLabel(big)} />
               </Bar>

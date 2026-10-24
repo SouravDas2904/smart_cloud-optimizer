@@ -21,6 +21,19 @@ export const AXIS = { tick: { fontSize: 12, fill: INK.tick }, stroke: INK.axis, 
 export const GRID = { vertical: false, stroke: INK.grid } as const;
 export const BRUSH = { height: 28, stroke: INK.accent, fill: INK.surface, travellerWidth: 10 } as const;
 
+// Hover tooltips. Recharts colours each row with its series colour by default, which is unreadable
+// for dark series (grey bars, transparent waterfall bases) on the dark card, so every row uses the
+// light text colour instead. Spread into every <Tooltip>: <Tooltip {...TOOLTIP} formatter={...} />
+export const TOOLTIP = {
+  contentStyle: {
+    background: "#1a1a1e", border: `1px solid ${INK.axis}`, borderRadius: 8, padding: "8px 12px",
+    boxShadow: "0 8px 24px rgb(0 0 0 / .5)", fontSize: 13,
+  },
+  labelStyle: { color: "#f2f2f3", fontWeight: 600, marginBottom: 2 },
+  itemStyle: { color: INK.text, padding: "2px 0" },
+  wrapperStyle: { outline: "none", zIndex: 20 },
+} as const;
+
 // The faint column Recharts paints behind the hovered bar.
 export const CURSOR = { fill: "rgb(255 255 255 / 0.04)" } as const;
 

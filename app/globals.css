@@ -76,6 +76,7 @@ body::before {
   box-shadow: 0 8px 24px rgb(0 0 0 / .5);
 }
 .recharts-tooltip-label { color: rgb(var(--slate-900)) !important; }
+.recharts-tooltip-item { color: rgb(var(--slate-800)) !important; }   /* never the (possibly dark) series colour */
 .recharts-cartesian-axis-tick text { fill: rgb(var(--slate-500)); font-family: var(--font-geist-mono), monospace; font-size: 11.5px; }
 .recharts-tooltip-cursor { fill: rgb(255 255 255 / .04); }
 .recharts-legend-item-text { color: rgb(var(--slate-600)) !important; }
