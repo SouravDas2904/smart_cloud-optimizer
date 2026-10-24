@@ -84,7 +84,7 @@ export default function Recommendations() {
       <div className="space-y-3">{list.map((r) => <RecCard key={r.id} r={r} />)}</div>
       {!list.length && <div className="card p-8 text-center text-sm text-slate-500">No recommendations match these filters.</div>}
 
-      <div className="no-print fixed inset-x-0 bottom-0 z-20 border-t border-slate-200 bg-white/95 backdrop-blur md:left-60">
+      <div className="no-print fixed inset-x-0 bottom-0 z-20 border-t border-slate-200 bg-white/95 backdrop-blur md:left-56">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-1 px-4 py-3 text-sm md:px-6">
           <span>Before <b className="tabular-nums">{inr(t.before)}</b></span>
           <span>After <b className="tabular-nums">{inr(t.after)}</b></span>

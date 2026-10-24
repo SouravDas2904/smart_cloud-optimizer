@@ -92,7 +92,7 @@ export function FleetGrid({ vms, recs }: { vms: Resource[]; recs: Recommendation
         <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5">
           {KINDS.map((k) => (
             <button key={k.id} onClick={() => setOnly(only === k.id ? null : k.id)}
-              className={cls("flex items-center gap-1.5 font-mono text-[10.5px] uppercase tracking-wider transition-opacity",
+              className={cls("flex items-center gap-1.5 font-mono text-[11.5px] uppercase tracking-wider transition-opacity",
                 only && only !== k.id ? "opacity-40" : "text-slate-600")}>
               <span className="h-2 w-2 rounded-[2px]" style={{ background: k.color }} />
               {k.label} <span className="text-slate-400">{counts[k.id] ?? 0}</span>
@@ -103,12 +103,12 @@ export function FleetGrid({ vms, recs }: { vms: Resource[]; recs: Recommendation
 
       {/* readout for the hovered VM */}
       {show && (
-        <div className="rounded-md border border-slate-200 bg-ink p-3 font-mono text-[11px] leading-relaxed">
+        <div className="rounded-md border border-slate-200 bg-ink p-3 font-mono text-[12px] leading-relaxed">
           <div className="label mb-1.5 flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-full" style={{ background: color(show.kind) }} />
             {hover ? "Selected VM" : "Hover or tap a cell"}
           </div>
-          <div className="truncate text-[13px] text-slate-900">{show.r.name}</div>
+          <div className="truncate text-[14px] text-slate-900">{show.r.name}</div>
           <div className="text-slate-500">{show.r.plan} · {show.r.env} · {show.r.region}</div>
           <div className="mt-2 space-y-0.5">
             <Row k="avg CPU" v={`${show.r.stats?.cpu_avg.toFixed(1)}%`} />

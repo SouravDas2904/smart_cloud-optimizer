@@ -24,7 +24,7 @@ export function PageTitle({ title, sub, right, kicker }: { title: string; sub?: 
     <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
       <div>
         {kicker && <div className="label mb-2 text-brand-500">{kicker}</div>}
-        <h1 className="text-2xl font-semibold tracking-[-0.02em] text-slate-900 md:text-[28px]">{title}</h1>
+        <h1 className="text-2xl font-semibold tracking-[-0.02em] text-slate-900 md:text-[30px]">{title}</h1>
         {sub && <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-500">{sub}</p>}
       </div>
       {right}
@@ -44,7 +44,7 @@ export function Kpi({ label, value, sub, tone = "default", icon, count, fmt }: {
         <span className="label">{label}</span>
         {icon && <span className="text-slate-400">{icon}</span>}
       </div>
-      <div className={cls("mt-3 text-[26px] font-semibold leading-none tracking-[-0.03em] tabular-nums", TONE[tone])}>
+      <div className={cls("mt-3 text-[28px] font-semibold leading-none tracking-[-0.03em] tabular-nums", TONE[tone])}>
         {count !== undefined && fmt ? <CountUp value={count} format={fmt} /> : value}
       </div>
       {sub && <div className="mt-2 text-xs leading-relaxed text-slate-500">{sub}</div>}
@@ -71,7 +71,7 @@ export function ConfidenceBar({ value }: { value: number }) {
       <div className="flex gap-[2px]">
         {Array.from({ length: 10 }, (_, i) => <span key={i} className={cls("h-2.5 w-[4px] rounded-[1px]", i < lit ? c : "bg-slate-200")} />)}
       </div>
-      <span className="font-mono text-[11px] tabular-nums text-slate-500">{value}%</span>
+      <span className="font-mono text-[12px] tabular-nums text-slate-500">{value}%</span>
     </div>
   );
 }

@@ -52,7 +52,7 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
               if (e.key === "Enter") go(shown[sel]);
               if (e.key === "Escape") onClose();
             }} />
-          <kbd className="rounded border border-slate-300 px-1 font-mono text-[10px] text-slate-500">Esc</kbd>
+          <kbd className="rounded border border-slate-300 px-1 font-mono text-[11px] text-slate-500">Esc</kbd>
         </div>
         <ul className="max-h-[50vh] overflow-y-auto p-1.5">
           {shown.length === 0 && <li className="px-3 py-6 text-center text-sm text-slate-500">Nothing matches “{q}”.</li>}
@@ -61,8 +61,8 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
               {(n === 0 || shown[n - 1].group !== i.group) && <div className="label px-3 pb-1 pt-2">{i.group}</div>}
               <button onMouseEnter={() => setSel(n)} onClick={() => go(i)}
                 className={cls("flex w-full items-center gap-3 rounded-md px-3 py-2 text-left text-sm", n === sel ? "bg-slate-100 text-slate-900" : "text-slate-700")}>
-                <span className={cls("font-mono", i.group === "VMs" && "text-[13px]")}>{i.label}</span>
-                <span className="truncate font-mono text-[11px] text-slate-500">{i.group === "VMs" ? i.hint : ""}</span>
+                <span className={cls("font-mono", i.group === "VMs" && "text-[14px]")}>{i.label}</span>
+                <span className="truncate font-mono text-[12px] text-slate-500">{i.group === "VMs" ? i.hint : ""}</span>
                 {n === sel && <CornerDownLeft size={13} className="ml-auto shrink-0 text-slate-500" />}
               </button>
             </li>

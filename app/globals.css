@@ -22,6 +22,9 @@
   --teal-50: 15 39 37; --teal-700: 110 231 216;
 }
 
+/* One step up from the browser's 16px, so every rem-based size (text-sm, padding, gaps) grows a little. */
+html { font-size: 17px; }
+
 body {
   @apply bg-ink text-slate-700 antialiased;
   font-feature-settings: "ss01", "cv11";
@@ -55,12 +58,12 @@ body::before {
 .card:hover::before, .card:hover::after { opacity: 1; }
 
 .card-pad { @apply p-4 md:p-5; }
-.h-section { @apply font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500; }
-.label { @apply font-mono text-[10.5px] uppercase tracking-[0.14em] text-slate-500; }
+.h-section { @apply font-mono text-[12px] font-medium uppercase tracking-[0.14em] text-slate-500; }
+.label { @apply font-mono text-[11.5px] uppercase tracking-[0.14em] text-slate-500; }
 .btn { @apply inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-[background-color,color,border-color,transform] active:scale-[.97] disabled:opacity-50; }
 .btn-primary { @apply btn bg-brand-600 text-ink hover:bg-brand-700; }
 .btn-ghost { @apply btn border border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50; }
-.chip { @apply inline-flex items-center rounded px-1.5 py-0.5 font-mono text-[10.5px] font-medium uppercase tracking-wide; }
+.chip { @apply inline-flex items-center rounded px-1.5 py-0.5 font-mono text-[11px] font-medium uppercase tracking-wide; }
 .select { @apply rounded-md border border-slate-200 bg-white px-2.5 py-1.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500/30; }
 .mono { @apply font-mono; }
 .code { @apply rounded-md border border-slate-200 bg-ink p-3 font-mono text-xs leading-relaxed text-slate-700; }
@@ -73,8 +76,14 @@ body::before {
   box-shadow: 0 8px 24px rgb(0 0 0 / .5);
 }
 .recharts-tooltip-label { color: rgb(var(--slate-900)) !important; }
-.recharts-cartesian-axis-tick text { fill: rgb(var(--slate-500)); font-family: var(--font-geist-mono), monospace; font-size: 10px; }
+.recharts-cartesian-axis-tick text { fill: rgb(var(--slate-500)); font-family: var(--font-geist-mono), monospace; font-size: 11.5px; }
 .recharts-tooltip-cursor { fill: rgb(255 255 255 / .04); }
+.recharts-legend-item-text { color: rgb(var(--slate-600)) !important; }
+.recharts-brush-texts text { font-size: 11px; fill: rgb(var(--slate-500)); font-family: var(--font-geist-mono), monospace; }
+
+/* chart popup (components/ChartCard.tsx) */
+@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+@keyframes popIn { from { opacity: 0; transform: translateY(8px) scale(.98) } to { opacity: 1; transform: none } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

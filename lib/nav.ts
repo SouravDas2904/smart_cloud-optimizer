@@ -1,5 +1,7 @@
+// Sidebar order. Shared by the Shell and the Ctrl+K command palette.
 export const NAV = [
   { href: "/", label: "Overview" },
+  { href: "/utilization", label: "Utilization" },
   { href: "/recommendations", label: "Recommendations" },
   { href: "/savings", label: "Before vs after" },
   { href: "/resources", label: "Resources" },

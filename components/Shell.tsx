@@ -12,12 +12,11 @@ import { CommandPalette } from "./CommandPalette";
 import { CountUp } from "./motion";
 import { NAV } from "@/lib/nav";
 
-
-
-const ROLES: { id: Role; label: string }[] = [
-  { id: "engineer", label: "Engineer" },
-  { id: "finance", label: "Finance" },
-  { id: "leadership", label: "Leadership" },
+// The role changes what the Overview and the recommendation cards emphasise.
+const ROLES: { id: Role; label: string; hint: string }[] = [
+  { id: "engineer", label: "Engineer", hint: "Full technical detail: peak checks, maths, plans" },
+  { id: "finance", label: "Finance", hint: "Money view: chargeback by team, annual savings, budget gap" },
+  { id: "leadership", label: "Leadership", hint: "One-minute summary and the decisions that need you" },
 ];
 
 export function Shell({ children }: { children: React.ReactNode }) {
@@ -45,14 +44,14 @@ export function Shell({ children }: { children: React.ReactNode }) {
         const active = href === "/" ? path === "/" : path.startsWith(href);
         return (
           <Link key={href} href={href} onClick={() => setOpen(false)}
-            className={cls("group relative flex items-center gap-3 rounded-md px-3 py-[7px] text-[13px] transition-colors",
+            className={cls("group relative flex items-center gap-3 rounded-md px-3 py-[7px] text-[14px] transition-colors",
               active ? "bg-slate-50 text-slate-900" : "text-slate-500 hover:text-slate-800")}>
             <span className={cls("absolute left-0 top-1/2 h-4 w-[2px] -translate-y-1/2 rounded-full transition-all",
               active ? "bg-brand-500 opacity-100" : "bg-slate-400 opacity-0 group-hover:opacity-60")} />
-            <span className={cls("font-mono text-[10px] tabular-nums", active ? "text-brand-500" : "text-slate-400")}>{String(i + 1).padStart(2, "0")}</span>
+            <span className={cls("font-mono text-[11px] tabular-nums", active ? "text-brand-500" : "text-slate-400")}>{String(i + 1).padStart(2, "0")}</span>
             <span className="flex-1">{label}</span>
             {href === "/alerts" && critical > 0 && (
-              <span className="flex items-center gap-1 font-mono text-[10px] text-red-500">
+              <span className="flex items-center gap-1 font-mono text-[11px] text-red-500">
                 <span className="h-1.5 w-1.5 animate-blink rounded-full bg-red-500" />{critical}
               </span>
             )}
@@ -70,7 +69,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <div className="label mb-2 px-3">Workspace</div>
           {nav}
         </div>
-        <div className="mt-auto space-y-2 rounded-md border border-slate-200 p-3 font-mono text-[10.5px] uppercase leading-relaxed tracking-wider text-slate-500">
+        <div className="mt-auto space-y-2 rounded-md border border-slate-200 p-3 font-mono text-[11.5px] uppercase leading-relaxed tracking-wider text-slate-500">
           <div className="flex items-center gap-2 text-slate-700">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-500 opacity-60" />
@@ -96,6 +95,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <div className="no-print border-b border-slate-200 bg-ink px-3 pb-4 md:hidden">
           {nav}
           <RoleSwitch role={role} setRole={setRole} className="mt-3" />
+          <p className="mt-2 px-1 text-xs text-slate-500">{ROLES.find((r) => r.id === role)?.hint}</p>
         </div>
       )}
 
@@ -117,8 +117,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <button onClick={() => setPalette(true)}
             className="ml-auto flex w-56 items-center gap-2 rounded-md border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-500 transition-colors hover:border-slate-300 hover:text-slate-700">
             <Search size={13} /> Jump to a VM or page
-            <kbd className="ml-auto rounded border border-slate-300 px-1 font-mono text-[10px] text-slate-500">Ctrl K</kbd>
+            <kbd className="ml-auto rounded border border-slate-300 px-1 font-mono text-[11px] text-slate-500">Ctrl K</kbd>
           </button>
+          <span className="hidden max-w-[200px] text-right text-xs leading-tight text-slate-500 2xl:block">{ROLES.find((r) => r.id === role)?.hint}</span>
           <RoleSwitch role={role} setRole={setRole} />
         </header>
         <main key={path} className="page-enter mx-auto max-w-7xl px-4 py-5 md:px-6 md:py-7">{children}</main>
@@ -132,7 +133,7 @@ function RoleSwitch({ role, setRole, className }: { role: Role; setRole: (r: Rol
   return (
     <div className={cls("flex items-center rounded-md border border-slate-200 p-0.5 text-xs", className)}>
       {ROLES.map((r) => (
-        <button key={r.id} onClick={() => setRole(r.id)}
+        <button key={r.id} onClick={() => setRole(r.id)} title={r.hint}
           className={cls("rounded px-2.5 py-1 transition-colors", role === r.id ? "bg-slate-100 text-slate-900" : "text-slate-500 hover:text-slate-800")}>
           {r.label}
         </button>
@@ -149,8 +150,8 @@ function Brand() {
         <path d="M8 21.5h3.2l2.6-9 3.6 13 2.8-8.5H24" fill="none" stroke="rgb(var(--brand-500))" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
       <span className="leading-tight">
-        <span className="block text-[13px] font-semibold tracking-tight text-slate-900">SmartCloud</span>
-        <span className="block font-mono text-[9.5px] uppercase tracking-[0.18em] text-slate-500">Optimizer</span>
+        <span className="block text-[14px] font-semibold tracking-tight text-slate-900">SmartCloud</span>
+        <span className="block font-mono text-[10.5px] uppercase tracking-[0.18em] text-slate-500">Optimizer</span>
       </span>
     </Link>
   );

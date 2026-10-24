@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Fragment, isValidElement, useEffect, useMemo, useState } from "react";
 import { ArrowLeft } from "lucide-react";
-import { Area, ComposedChart, CartesianGrid, Line, ReferenceArea, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, Brush, ComposedChart, CartesianGrid, Line, ReferenceArea, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
+import { ChartCard } from "@/components/ChartCard";
+import { AXIS, BRUSH, GRID } from "@/lib/chart";
 import { useApp } from "../../providers";
 import { EnvPill, Loading } from "@/components/ui";
 import { RecCard } from "@/components/RecCard";
@@ -54,21 +56,17 @@ export default function ResourceDetail() {
     const series = isValidElement(children) && children.type === Fragment
       ? (children.props as { children: React.ReactNode }).children : children;
     return (
-    <div className="card card-pad">
-      <h3 className="mb-2 text-sm font-semibold text-slate-800">{title}</h3>
-      <div className="h-48">
-        <ResponsiveContainer>
-          <ComposedChart data={rows} margin={{ left: -10, right: 8, top: 4 }}>
-            <CartesianGrid vertical={false} stroke="#1c1c20" />
-            <XAxis dataKey="t" type="number" domain={["dataMin", "dataMax"]} scale="time" tickFormatter={fmtT} tick={{ fontSize: 10 }} stroke="#4a4a52" />
-            <YAxis domain={domain ?? ["auto", "auto"]} tick={{ fontSize: 10 }} stroke="#4a4a52" unit={unit} />
-            <Tooltip labelFormatter={(t: number) => fmtFull(t)} formatter={(v: number) => (v == null ? "—" : v.toFixed(1))} />
-            {alert?.start && <ReferenceArea ifOverflow="hidden" x1={new Date(alert.start).getTime()} x2={new Date(alert.end!).getTime()} fill="#3a1512" fillOpacity={0.6} />}
-            {series}
-          </ComposedChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
+      <ChartCard title={title} height={200} render={(big) => (
+        <ComposedChart data={rows} margin={{ left: big ? 4 : -10, right: 8, top: big ? 10 : 4 }}>
+          <CartesianGrid {...GRID} />
+          <XAxis dataKey="t" type="number" domain={["dataMin", "dataMax"]} scale="time" tickFormatter={big ? fmtFull : fmtT} {...AXIS} minTickGap={big ? 60 : 36} />
+          <YAxis domain={domain ?? ["auto", "auto"]} {...AXIS} unit={unit} width={44} tickCount={5} />
+          <Tooltip labelFormatter={(t: number) => fmtFull(t)} formatter={(v: number) => (v == null ? "—" : v.toFixed(1))} />
+          {alert?.start && <ReferenceArea ifOverflow="hidden" x1={new Date(alert.start).getTime()} x2={new Date(alert.end!).getTime()} fill="#3a1512" fillOpacity={0.6} />}
+          {series}
+          {big && <Brush dataKey="t" {...BRUSH} tickFormatter={fmtT} />}
+        </ComposedChart>
+      )} />
     );
   };
 
@@ -92,7 +90,7 @@ export default function ResourceDetail() {
       <div className="grid grid-cols-2 gap-3 md:grid-cols-6">
         {[["Avg CPU", st.cpu_avg], ["p95 CPU", st.cpu_p95], ["p99 CPU", st.cpu_p99], ["Max CPU", st.cpu_max], ["p99 Memory", st.mem_p99], ["Disk used", st.disk_now]].map(([l, v]) => (
           <div key={l as string} className="card p-3">
-            <div className="text-[11px] uppercase text-slate-500">{l}</div>
+            <div className="text-[12px] uppercase text-slate-500">{l}</div>
             <div className="text-xl font-semibold tabular-nums">{(v as number).toFixed(1)}%</div>
           </div>
         ))}
@@ -105,15 +103,15 @@ export default function ResourceDetail() {
           <div className="grid gap-5 lg:grid-cols-2">
             {chart("CPU (30-min average, with 30-min peak)", <>
               <Area dataKey="cpu_max" stroke="none" fill="#4a5a1c" fillOpacity={0.6} name="peak" isAnimationActive={false} />
-              <Line dataKey="cpu" stroke="#c6f432" dot={false} strokeWidth={1.4} name="avg" isAnimationActive={false} />
+              <Line dataKey="cpu" stroke="#c6f432" dot={false} strokeWidth={1.5} name="avg" isAnimationActive={false} />
               <ReferenceLine y={st.cpu_p95} stroke="#ff9f1c" strokeDasharray="4 3" label={{ value: `p95 ${st.cpu_p95.toFixed(0)}%`, fontSize: 10, position: "insideTopLeft", fill: "#ffb44d" }} />
               <ReferenceLine y={st.cpu_p99} stroke="#ff5a4e" strokeDasharray="4 3" label={{ value: `p99 ${st.cpu_p99.toFixed(0)}%`, fontSize: 10, position: "insideTopRight", fill: "#ff8a80" }} />
             </>, [0, 100])}
             {chart("Memory", <>
-              <Line dataKey="mem" stroke="#b48cff" dot={false} strokeWidth={1.4} name="mem" isAnimationActive={false} />
+              <Line dataKey="mem" stroke="#b48cff" dot={false} strokeWidth={1.5} name="mem" isAnimationActive={false} />
               <ReferenceLine y={st.mem_p99} stroke="#ff5a4e" strokeDasharray="4 3" label={{ value: `p99 ${st.mem_p99.toFixed(0)}%`, fontSize: 10, position: "insideTopRight", fill: "#ff8a80" }} />
             </>, [0, 100])}
-            {chart("Disk used", <Line dataKey="disk" stroke="#5cc8ff" dot={false} strokeWidth={1.4} name="disk" isAnimationActive={false} />, [0, 100])}
+            {chart("Disk used", <Line dataKey="disk" stroke="#5cc8ff" dot={false} strokeWidth={1.5} name="disk" isAnimationActive={false} />, [0, 100])}
             {chart("Network (MB/s)", <>
               <Line dataKey="net_in" stroke="#4fd1c5" dot={false} strokeWidth={1.2} name="in" isAnimationActive={false} />
               <Line dataKey="net_out" stroke="#ff7a1a" dot={false} strokeWidth={1.2} name="out" isAnimationActive={false} />
@@ -125,10 +123,10 @@ export default function ResourceDetail() {
             <p className="text-xs text-slate-500">Darker = busier. Off-hours windows that stay pale are candidates for scheduled shutdown.</p>
             <div className="mt-3 inline-grid min-w-[640px] gap-[2px]" style={{ gridTemplateColumns: "36px repeat(24, minmax(20px, 1fr))" }}>
               <div />
-              {Array.from({ length: 24 }, (_, h) => <div key={h} className="text-center text-[10px] text-slate-400">{h}</div>)}
+              {Array.from({ length: 24 }, (_, h) => <div key={h} className="text-center text-[11px] text-slate-400">{h}</div>)}
               {series.heatmap_cpu.map((row, d) => (
                 <Fragment key={d}>
-                  <div className="pr-1 text-right text-[11px] leading-5 text-slate-500">{DAYS[d]}</div>
+                  <div className="pr-1 text-right text-[12px] leading-5 text-slate-500">{DAYS[d]}</div>
                   {row.map((v, h) => <div key={`${d}-${h}`} title={`${DAYS[d]} ${h}:00 · ${v.toFixed(1)}%`} className="h-5 rounded-sm" style={{ background: heatColor(v) }} />)}
                 </Fragment>
               ))}
