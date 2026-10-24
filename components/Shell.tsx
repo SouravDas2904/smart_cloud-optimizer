@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
-  AlertTriangle, BarChart3, BookOpen, Cloud, FileText, FlaskConical, Gauge, Leaf, ListChecks, Menu, Server, TrendingUp, X,
+  Activity, AlertTriangle, BarChart3, BookOpen, Cloud, FileText, FlaskConical, Gauge, Leaf, ListChecks, Menu, Server, TrendingUp, X,
 } from "lucide-react";
 import { useApp } from "@/app/providers";
 import { totals } from "@/lib/engine";
@@ -13,6 +13,7 @@ import type { Role } from "@/lib/types";
 
 const NAV = [
   { href: "/", label: "Overview", icon: Gauge },
+  { href: "/utilization", label: "Utilization", icon: Activity },
   { href: "/recommendations", label: "Recommendations", icon: ListChecks },
   { href: "/savings", label: "Before vs After", icon: BarChart3 },
   { href: "/resources", label: "Resources", icon: Server },

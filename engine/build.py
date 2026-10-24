@@ -67,6 +67,51 @@ def daily_costs(inv, series):
     return days
 
 
+def fleet_rollup(vms, series, stats):
+    """Fleet-wide utilisation per hour: how much of the provisioned CPU, RAM and disk is actually used."""
+    hours = C.N_POINTS // 12
+    vcpu = np.array([r["vcpu"] for r in vms], dtype=float)[:, None]
+    ram = np.array([r["ram_gb"] for r in vms], dtype=float)[:, None]
+    disk_gb = np.array([r["disk_gb"] for r in vms], dtype=float)[:, None]
+
+    def hourly(m):   # VMs x hours, NaN where the VM did not exist yet
+        x = np.stack([series[r["id"]][m] for r in vms]).reshape(len(vms), hours, 12)
+        with np.errstate(all="ignore"):
+            return np.nanmean(x, axis=2)
+
+    cpu, mem, disk = hourly("cpu"), hourly("mem"), hourly("disk")
+    alive = ~np.isnan(cpu)
+    used_vcpu = np.nansum(cpu / 100 * vcpu, axis=0)
+    used_ram = np.nansum(mem / 100 * ram, axis=0)
+    used_disk = np.nansum(disk / 100 * disk_gb, axis=0)
+    prov_vcpu, prov_ram, prov_disk = (alive * vcpu).sum(0), (alive * ram).sum(0), (alive * disk_gb).sum(0)
+    net_in, net_out, iops = (np.nansum(hourly(m), axis=0) for m in ("net_in", "net_out", "iops"))
+    rnd = lambda a, d=1: [round(float(v), d) for v in a]
+    timeline = {
+        "start": C.START, "step_min": 60,
+        "cpu_pct": rnd(used_vcpu / prov_vcpu * 100), "mem_pct": rnd(used_ram / prov_ram * 100),
+        "disk_pct": rnd(used_disk / prov_disk * 100),
+        "vcpu_used": rnd(used_vcpu), "vcpu_prov": rnd(prov_vcpu, 0),
+        "net_in_mbps": rnd(net_in, 2), "net_out_mbps": rnd(net_out, 2), "iops": rnd(iops, 0),
+    }
+
+    def groups(key):
+        out = {}
+        for r in vms:
+            st, g = stats[r["id"]], out.setdefault(r[key], {"vms": 0, "vcpu": 0, "ram_gb": 0, "disk_gb": 0, "_cpu": 0.0, "_mem": 0.0, "_disk": 0.0, "egress_gb": 0.0})
+            g["vms"] += 1; g["vcpu"] += r["vcpu"]; g["ram_gb"] += r["ram_gb"]; g["disk_gb"] += r["disk_gb"]
+            g["_cpu"] += st["cpu_avg"] / 100 * r["vcpu"]; g["_mem"] += st["mem_avg"] / 100 * r["ram_gb"]
+            g["_disk"] += st["disk_now"] / 100 * r["disk_gb"]; g["egress_gb"] += st["egress_gb_30d"]
+        for g in out.values():   # capacity-weighted utilisation (a 16-vCPU VM counts more than a 2-vCPU one)
+            g["cpu_pct"] = round(g.pop("_cpu") / g["vcpu"] * 100, 1)
+            g["mem_pct"] = round(g.pop("_mem") / g["ram_gb"] * 100, 1)
+            g["disk_pct"] = round(g.pop("_disk") / g["disk_gb"] * 100, 1)
+            g["egress_gb"] = round(g["egress_gb"])
+        return dict(sorted(out.items()))
+
+    return {"timeline": timeline, "by_region": groups("region"), "by_team": groups("team"), "by_env": groups("env")}
+
+
 def carbon_kg(vcpu: float) -> dict:
     kwh = vcpu * C.WATTS_PER_VCPU * C.HOURS_PER_MONTH * C.PUE / 1000
     return {"kwh": round(kwh, 1), "kg_co2": round(kwh * C.GRID_KG_CO2_PER_KWH, 1)}
@@ -167,7 +212,9 @@ def main():
     assumptions = {k: getattr(C, k) for k in dir(C) if k.isupper()}
     assumptions["OFF_HOURS_FRACTION"] = round(C.off_hours_fraction(), 4)
 
-    for name, obj in [("resources", resources), ("recommendations", recs), ("alerts", alerts),
+    fleet = fleet_rollup(vms, series, stats)
+
+    for name, obj in [("fleet", fleet), ("resources", resources), ("recommendations", recs), ("alerts", alerts),
                       ("forecast", forecast), ("summary", summary), ("assumptions", assumptions)]:
         (OUT / f"{name}.json").write_text(json.dumps(obj, indent=1, ensure_ascii=False, default=float))
 

@@ -68,4 +68,15 @@ export type Assumptions = Record<string, unknown> & {
   KG_CO2_PER_TREE_YEAR: number; OFF_HOURS_FRACTION: number; MONTHLY_BUDGET_INR: number;
 };
 
+export interface FleetGroup {
+  vms: number; vcpu: number; ram_gb: number; disk_gb: number; egress_gb: number; cpu_pct: number; mem_pct: number; disk_pct: number;
+}
+export interface Fleet {
+  timeline: {
+    start: string; step_min: number; cpu_pct: number[]; mem_pct: number[]; disk_pct: number[];
+    vcpu_used: number[]; vcpu_prov: number[]; net_in_mbps: number[]; net_out_mbps: number[]; iops: number[];
+  };
+  by_region: Record<string, FleetGroup>; by_team: Record<string, FleetGroup>; by_env: Record<string, FleetGroup>;
+}
+
 export type Role = "engineer" | "finance" | "leadership";

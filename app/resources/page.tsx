@@ -23,7 +23,7 @@ export default function Resources() {
   const [types, setTypes] = useState(["vm", "volume", "ip"]);
   const [regions, setRegions] = useState<string[] | null>(null);
   const [teams, setTeams] = useState<string[] | null>(null);
-  const [sort, setSort] = useState<"cost" | "cpu_p99" | "cpu_avg" | "name">("cost");
+  const [sort, setSort] = useState<"cost" | "cpu_p99" | "cpu_avg" | "mem_p99" | "disk_now" | "egress_gb_30d" | "name">("cost");
 
   const recByRes = useMemo(() => {
     const m: Record<string, string[]> = {};
@@ -43,7 +43,7 @@ export default function Resources() {
 
   return (
     <div>
-      <PageTitle title="Resource utilization" sub="Every VM, disk and IP with its utilization and monthly cost. Click a VM to see its full 30-day history." />
+      <PageTitle title="Resource utilization" sub={<>Every VM, disk and IP with its CPU, memory, storage and network utilization and monthly cost. Click a VM for its full 30-day history, or see <Link href="/utilization" className="text-brand-600 underline">fleet-wide utilization</Link>.</>} />
       <div className="card mb-4 flex flex-wrap items-center gap-x-6 gap-y-3 p-3">
         <input className="select w-44" placeholder="Search name…" value={q} onChange={(e) => setQ(e.target.value)} />
         <MultiSelect label="Type" options={["vm", "volume", "ip"]} value={types} onChange={setTypes} />
@@ -52,15 +52,15 @@ export default function Resources() {
         <MultiSelect label="Team" options={tms} value={teams ?? tms} onChange={setTeams} />
         <label className="flex items-center gap-2 text-xs text-slate-500">Sort
           <select className="select" value={sort} onChange={(e) => setSort(e.target.value as typeof sort)}>
-            <option value="cost">Monthly cost</option><option value="cpu_p99">p99 CPU</option><option value="cpu_avg">Avg CPU</option><option value="name">Name</option>
+            <option value="cost">Monthly cost</option><option value="cpu_p99">p99 CPU</option><option value="cpu_avg">Avg CPU</option><option value="mem_p99">p99 memory</option><option value="disk_now">Disk used</option><option value="egress_gb_30d">Network egress</option><option value="name">Name</option>
           </select>
         </label>
       </div>
       <div className="mb-2 text-sm text-slate-500">{rows.length} resources · {inr(total)}/month</div>
       <div className="card overflow-x-auto">
-        <table className="w-full min-w-[900px] text-sm">
+        <table className="w-full min-w-[1080px] text-sm">
           <thead className="bg-slate-50 text-left text-xs uppercase text-slate-500">
-            <tr><th className="px-3 py-2">Name</th><th>Env</th><th>Region</th><th>Team</th><th>Size</th><th>Avg CPU</th><th>p99 CPU</th><th>p99 Mem</th><th>Findings</th><th className="px-3 text-right">₹ / month</th></tr>
+            <tr><th className="px-3 py-2">Name</th><th>Env</th><th>Region</th><th>Team</th><th>Size</th><th>Avg CPU</th><th>p99 CPU</th><th>p99 Mem</th><th>Disk used</th><th>Egress 30d</th><th>Findings</th><th className="px-3 text-right">₹ / month</th></tr>
           </thead>
           <tbody>
             {rows.map((r) => (
@@ -76,6 +76,8 @@ export default function Resources() {
                 <td>{r.stats ? <Meter v={r.stats.cpu_avg} /> : "—"}</td>
                 <td>{r.stats ? <Meter v={r.stats.cpu_p99} /> : "—"}</td>
                 <td>{r.stats ? <Meter v={r.stats.mem_p99} /> : "—"}</td>
+                <td>{r.stats ? <Meter v={r.stats.disk_now} warn={85} /> : r.type === "volume" ? <span className="text-xs text-slate-400">{r.attached_to ? "attached" : "unattached"}</span> : "—"}</td>
+                <td className="text-xs tabular-nums text-slate-600">{r.stats ? `${r.stats.egress_gb_30d.toLocaleString("en-IN")} GB` : "—"}</td>
                 <td className="text-xs">
                   {(recByRes[r.id] ?? []).map((a) => (
                     <span key={a} className={cls("chip mr-1", a === "keep" ? "bg-emerald-50 text-emerald-700" : a === "investigate" ? "bg-red-50 text-red-700" : "bg-slate-100 text-slate-600")}>{ACTION_LABEL[a]}</span>

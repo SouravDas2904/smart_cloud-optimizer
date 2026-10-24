@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import type { Alert, Assumptions, Forecast, Recommendation, Resource, Role, Summary } from "@/lib/types";
+import type { Alert, Assumptions, Fleet, Forecast, Recommendation, Resource, Role, Summary } from "@/lib/types";
 
 interface Data {
   summary: Summary;
@@ -10,6 +10,7 @@ interface Data {
   alerts: Alert[];
   forecast: Forecast;
   assumptions: Assumptions;
+  fleet: Fleet;
 }
 
 interface Ctx {
@@ -53,9 +54,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
       if (!r.ok) throw new Error(`${n}.json: ${r.status}`);
       return r.json();
     });
-    Promise.all(["summary", "resources", "recommendations", "alerts", "forecast", "assumptions"].map(get))
-      .then(([summary, resources, recs, alerts, forecast, assumptions]) => {
-        setData({ summary, resources, recs, alerts, forecast, assumptions });
+    Promise.all(["summary", "resources", "recommendations", "alerts", "forecast", "assumptions", "fleet"].map(get))
+      .then(([summary, resources, recs, alerts, forecast, assumptions, fleet]) => {
+        setData({ summary, resources, recs, alerts, forecast, assumptions, fleet });
         const defaults = Object.fromEntries((recs as Recommendation[]).map((r) => [r.id, r.default_accepted]));
         setAccepted({ ...defaults, ...(readStore<Record<string, boolean>>(KEY) ?? {}) });
         const savedRole = readStore<Role>("sco.role");
