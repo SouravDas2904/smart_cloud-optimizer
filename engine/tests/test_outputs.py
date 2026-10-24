@@ -55,3 +55,23 @@ def test_showcase_vms():
     assert names["prod-reports-01"]["action"] == "keep"
     assert names["prod-pay-api-07"]["action"] == "investigate"
     assert any(a["kind"] == "anomaly" and a["resource_name"] == "prod-pay-api-07" for a in load("alerts"))
+
+
+def test_memory_leak_is_caught_as_a_capacity_trend():
+    leak = [a for a in load("alerts") if a["id"].startswith("memtrend-")]
+    assert len(leak) == 1 and 0 < leak[0]["days_left"] < 21
+
+
+def test_usage_forecast_covers_90_days_within_0_to_100():
+    u = load("forecast")["usage"]
+    for k in ("cpu", "mem"):
+        assert len(u[k]["forecast"]) == 90
+        assert all(0 <= d["lo"] <= d["pct"] <= d["hi"] <= 100 for d in u[k]["forecast"])
+
+
+def test_filter_cells_add_up_to_the_fleet():
+    cells, fleet = load("fleet_cells")["cells"], load("fleet")["timeline"]
+    for i in (0, 300, 700):
+        used = sum(c["vcpu_used"][i] for c in cells)
+        prov = sum(c["vcpu_prov"][i] for c in cells)
+        assert abs(used / prov * 100 - fleet["cpu_pct"][i]) < 0.2

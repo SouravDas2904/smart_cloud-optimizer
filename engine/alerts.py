@@ -102,6 +102,25 @@ def build_alerts(vms, stats, series, daily_cost, projected_month, recs_by_vm):
                     "metric": "disk", "days_left": round(days_left, 1), "cost_impact": 0,
                 })
 
+        # capacity: CPU or memory trending toward the limit (linear fit of the daily p95, see stats.daily_trend)
+        for metric, label in (("cpu", "CPU"), ("mem", "Memory")):
+            tr = st[f"{metric}_trend"]
+            if a or tr["slope"] < C.TREND_MIN_SLOPE or tr["r2"] < C.TREND_MIN_R2 or tr["level"] >= C.CAPACITY_WARN_PCT:
+                continue
+            days_left = (C.CAPACITY_WARN_PCT - tr["level"]) / tr["slope"]
+            if days_left < C.CAPACITY_HORIZON_DAYS:
+                alerts.append({
+                    "id": f"{metric}trend-{r['id']}", "kind": "capacity", "severity": "warning", "resource_id": r["id"],
+                    "resource_name": r["name"], "team": r["team"], "env": r["env"], "region": r["region"],
+                    "title": f"{label} climbing toward its limit on {r['name']}",
+                    "why": (f"Daily peak (p95) {label.lower()} is {tr['level']:.0f}% and has risen {tr['slope']:.2f}% per day over the last "
+                            f"{C.TREND_DAYS} days (straight-line fit, R² {tr['r2']:.2f}). At this rate it passes {C.CAPACITY_WARN_PCT:.0f}% "
+                            f"in about {days_left:.0f} days. "
+                            + ("A steady climb in memory with flat traffic usually means a memory leak: check the last deploy."
+                               if metric == "mem" else "Plan an upsize or find what is driving the growth.")),
+                    "metric": metric, "days_left": round(days_left, 1), "cost_impact": 0,
+                })
+
         # capacity: CPU saturated (an anomalous VM is already covered by its anomaly alert)
         if st["cpu_p99"] > C.UNDER_P99 and not a:
             alerts.append({

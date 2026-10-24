@@ -8,7 +8,7 @@
  "current_monthly": 930948,
  "projected_next_month": 966581,
  "budget_monthly": 850000,
- "potential_saving": 208735,
+ "potential_saving": 212877,
  "by_env": {
   "prod": 630257,
   "dev": 186381,
@@ -70,7 +70,7 @@
  ],
  "counts": {
   "resize": 45,
-  "schedule": 21,
+  "schedule": 23,
   "stop": 6,
   "review": 2,
   "delete_volume": 10,

@@ -136,6 +136,56 @@ def bill_history(resources, months=7) -> list[dict]:
     return out
 
 
+def fleet_cells(vms, series) -> dict:
+    """Hourly fleet sums split by every (region, env, team) combination that exists.
+
+    Sums add up, so the dashboard can filter by any mix of regions, environments and teams and get the exact
+    capacity-weighted utilisation: CPU % = sum(vCPU used) / sum(vCPU provisioned) over the selected cells.
+    """
+    hours = C.N_POINTS // 12
+    cells: dict[tuple, list] = {}
+    for r in vms:
+        cells.setdefault((r["region"], r["env"], r["team"]), []).append(r)
+    out = []
+    for (region, env, team), group in sorted(cells.items()):
+        acc = {k: np.zeros(hours) for k in ("vcpu_used", "vcpu_prov", "ram_used", "ram_prov", "disk_used", "disk_prov", "net_in", "net_out")}
+        for r in group:
+            s = series[r["id"]]
+            with np.errstate(all="ignore"):
+                h = {m: np.nanmean(s[m].reshape(hours, 12), axis=1) for m in ("cpu", "mem", "disk", "net_in", "net_out")}
+            alive = ~np.isnan(h["cpu"])
+            acc["vcpu_used"] += np.nan_to_num(h["cpu"]) / 100 * r["vcpu"]
+            acc["vcpu_prov"] += alive * r["vcpu"]
+            acc["ram_used"] += np.nan_to_num(h["mem"]) / 100 * r["ram_gb"]
+            acc["ram_prov"] += alive * r["ram_gb"]
+            acc["disk_used"] += np.nan_to_num(h["disk"]) / 100 * r["disk_gb"]
+            acc["disk_prov"] += alive * r["disk_gb"]
+            acc["net_in"] += np.nan_to_num(h["net_in"])
+            acc["net_out"] += np.nan_to_num(h["net_out"])
+        out.append({"region": region, "env": env, "team": team, "vms": len(group),
+                    **{k: [round(float(v), 2) for v in a] for k, a in acc.items()}})
+    return {"start": C.START, "step_min": 60, "cells": out}
+
+
+def usage_forecast(timeline: dict, horizon=90) -> dict:
+    """The same Holt-Winters as the cost forecast, run on daily fleet CPU % and memory %."""
+    out = {}
+    for key, name in (("cpu_pct", "cpu"), ("mem_pct", "mem")):
+        hourly = np.array(timeline[key], dtype=float)
+        daily = hourly.reshape(-1, 24).mean(axis=1)
+        fc, band, _ = holt_winters(daily, horizon=horizon)
+        start = pd.Timestamp(C.START)
+        out[name] = {
+            "history": [{"date": (start + pd.Timedelta(days=d)).date().isoformat(), "pct": round(float(v), 2)} for d, v in enumerate(daily)],
+            "forecast": [{"date": (start + pd.Timedelta(days=C.DAYS + h)).date().isoformat(),
+                          "pct": round(float(np.clip(fc[h], 0, 100)), 2),
+                          "lo": round(float(np.clip(fc[h] - band[h], 0, 100)), 2),
+                          "hi": round(float(np.clip(fc[h] + band[h], 0, 100)), 2)} for h in range(horizon)],
+            "mape_7d": round(backtest(daily), 1),
+        }
+    return out
+
+
 def carbon_kg(vcpu: float) -> dict:
     kwh = vcpu * C.WATTS_PER_VCPU * C.HOURS_PER_MONTH * C.PUE / 1000
     return {"kwh": round(kwh, 1), "kg_co2": round(kwh * C.GRID_KG_CO2_PER_KWH, 1)}
@@ -237,6 +287,8 @@ def main():
     assumptions["OFF_HOURS_FRACTION"] = round(C.off_hours_fraction(), 4)
 
     fleet = fleet_rollup(vms, series, stats)
+    forecast["usage"] = usage_forecast(fleet["timeline"])
+    (OUT / "fleet_cells.json").write_text(json.dumps(fleet_cells(vms, series), separators=(",", ":")))
 
     for name, obj in [("fleet", fleet), ("resources", resources), ("recommendations", recs), ("alerts", alerts),
                       ("forecast", forecast), ("summary", summary), ("assumptions", assumptions)]:

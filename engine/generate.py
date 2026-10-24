@@ -242,6 +242,12 @@ def build():
         add_vm("healthy", "prod", "s-16-64", team="Data", region="Mumbai", name=f"prod-ml-train-{i + 1:02d}",
                created_day=20.0)
 
+    # 4b) a slow memory leak: after a deploy on day 12, memory on one prod API VM creeps up ~0.9% a day.
+    #     Deterministic (no random draws), so every other series stays exactly as before.
+    leak = next(r for r in resources if r.persona == "healthy" and r.env == "prod" and r.plan == "s-4-8")
+    leak.notes = "planted memory leak"
+    series[leak.id]["mem"] = clip(series[leak.id]["mem"] + np.maximum(0.0, T / C.POINTS_PER_DAY - 12) * 0.9)
+
     # 5) a few metric gaps (agent outages) so the confidence score has something to react to
     for vid in ["vm-005", "vm-031", "vm-058"]:
         if vid in series:

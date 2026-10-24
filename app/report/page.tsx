@@ -36,12 +36,23 @@ function toTerraform(recs: Recommendation[]) {
     "",
     "  # Off-hours schedules (stop 20:00, start 08:00 IST, off weekends)",
     "  offhours_schedule = [",
-    ...recs.filter((r) => r.action === "schedule").map((r) => `    "${r.resource_name}",`),
+    ...recs.filter((r) => r.action === "schedule").map((r) => `    "${r.resource_name}",${r.keep_hours?.length ? ` # stays on ${keepWindows(r.keep_hours).map(([a, b]) => `${hh(a)}–${hh(b)}`).join(", ")} daily for its night job` : ""}`),
     "  ]",
     "}",
   ];
   return lines.join("\n");
 }
+
+// [1, 2, 3, 9] -> [[1, 4], [9, 10]]: start/end hours of each window the VM stays on for a night job
+function keepWindows(hours: number[]): [number, number][] {
+  const out: [number, number][] = [];
+  hours.forEach((h, i) => {
+    if (i > 0 && h === hours[i - 1] + 1) out[out.length - 1][1] = (h + 1) % 24;
+    else out.push([h, (h + 1) % 24]);
+  });
+  return out;
+}
+const hh = (h: number) => `${String(h).padStart(2, "0")}:00`;
 
 function toShell(recs: Recommendation[]) {
   const by = (a: string) => recs.filter((r) => r.action === a);
@@ -66,6 +77,10 @@ function toShell(recs: Recommendation[]) {
       `# ${r.resource_name}: saves ₹${r.saving}/mo`,
       `#   0 20 * * 1-5  $CLOUD_CLI server stop  --id ${r.resource_id}`,
       `#   0 8  * * 1-5  $CLOUD_CLI server start --id ${r.resource_id}`,
+      ...keepWindows(r.keep_hours ?? []).flatMap(([a, b]) => [
+        `#   0 ${a} * * *    $CLOUD_CLI server start --id ${r.resource_id}   # night job window ${hh(a)}–${hh(b)}`,
+        `#   0 ${b} * * *    $CLOUD_CLI server stop  --id ${r.resource_id}`,
+      ]),
     ]),
   ].join("\n");
 }

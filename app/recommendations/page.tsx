@@ -19,22 +19,25 @@ export default function Recommendations() {
   const [envs, setEnvs] = useState(["prod", "staging", "dev"]);
   const [risks, setRisks] = useState(["LOW", "MEDIUM", "HIGH"]);
   const [regions, setRegions] = useState<string[] | null>(null);
+  const [teams, setTeams] = useState<string[] | null>(null);
   const [sort, setSort] = useState<"saving" | "risk" | "confidence">("saving");
 
   const list = useMemo(() => {
     if (!data) return [];
     const acts = TABS.find((t) => t.id === tab)!.actions;
     const regs = regions ?? Object.keys(data.summary.by_region);
+    const tms = teams ?? Object.keys(data.summary.by_team);
     const rank = { LOW: 0, MEDIUM: 1, HIGH: 2 };
     return data.recs
-      .filter((r) => acts.includes(r.action) && envs.includes(r.env) && risks.includes(r.risk) && regs.includes(r.region))
+      .filter((r) => acts.includes(r.action) && envs.includes(r.env) && risks.includes(r.risk) && regs.includes(r.region) && tms.includes(r.team))
       .sort((a, b) => sort === "saving" ? Math.abs(b.saving) - Math.abs(a.saving)
         : sort === "risk" ? rank[a.risk] - rank[b.risk] : b.confidence - a.confidence);
-  }, [data, tab, envs, risks, regions, sort]);
+  }, [data, tab, envs, risks, regions, teams, sort]);
 
   if (!data) return <Loading />;
   const t = totals(data.resources, data.recs, accepted);
   const regs = Object.keys(data.summary.by_region);
+  const tms = Object.keys(data.summary.by_team);
   const visibleSaving = list.filter((r) => accepted[r.id]).reduce((s, r) => s + r.saving, 0);
 
   return (
@@ -55,6 +58,7 @@ export default function Recommendations() {
       <div className="card mb-4 flex flex-wrap items-center gap-x-6 gap-y-3 p-3">
         <MultiSelect label="Env" options={["prod", "staging", "dev"]} value={envs} onChange={setEnvs} />
         <MultiSelect label="Region" options={regs} value={regions ?? regs} onChange={setRegions} />
+        <MultiSelect label="Team" options={tms} value={teams ?? tms} onChange={setTeams} />
         <MultiSelect label="Risk" options={["LOW", "MEDIUM", "HIGH"]} value={risks} onChange={setRisks} />
         <label className="flex items-center gap-2 text-xs text-slate-500">Sort
           <select className="select" value={sort} onChange={(e) => setSort(e.target.value as typeof sort)}>

@@ -17,6 +17,25 @@ def off_mask(start=C.OFF_START_HOUR, end=C.OFF_END_HOUR, weekends=C.OFF_WEEKENDS
     return night | IS_WEEKEND if weekends else night
 
 
+def daily_trend(x: np.ndarray, days=C.TREND_DAYS) -> dict:
+    """Least-squares line through the daily p95 of the last `days` days.
+
+    slope   = % per day,  level = the fitted p95 today,  r2 = share of the day-to-day variation the line explains.
+    Daily p95 (not every 5-min reading) so the daily cycle doesn't hide or fake a trend.
+    """
+    days_x = [x[d * C.POINTS_PER_DAY:(d + 1) * C.POINTS_PER_DAY] for d in range(C.DAYS - days, C.DAYS)]
+    ok = np.array([np.isfinite(v).mean() > 0.5 for v in days_x])      # skip days the VM didn't exist / agent was down
+    if ok.sum() < 7:
+        return {"slope": 0.0, "level": 0.0, "r2": 0.0}
+    daily = np.array([pct(v, 95) for v in days_x])[ok]
+    t = np.arange(days, dtype=float)[ok]
+    slope, icpt = np.polyfit(t, daily, 1)
+    fit = icpt + slope * t
+    ss_tot = float(((daily - daily.mean()) ** 2).sum())
+    r2 = 1 - float(((daily - fit) ** 2).sum()) / ss_tot if ss_tot > 0 else 0.0
+    return {"slope": round(float(slope), 3), "level": round(float(fit[-1]), 1), "r2": round(r2, 2)}
+
+
 def vm_stats(s: dict[str, np.ndarray]) -> dict:
     cpu, mem = s["cpu"], s["mem"]
     valid = ~np.isnan(cpu)
@@ -31,6 +50,8 @@ def vm_stats(s: dict[str, np.ndarray]) -> dict:
 
     # hourly profile and a weekday x hour heat-map of average CPU
     hour_idx = HOUR.astype(int)
+    # night jobs: hours of the day whose off-window readings have a p95 above the busy threshold
+    busy = [h for h in range(24) if (off & (hour_idx == h)).any() and pct(cpu[off & (hour_idx == h)], 95) > C.OFFHOURS_BUSY_P95]
     hourly = [round(float(np.nanmean(cpu[hour_idx == h])), 1) for h in range(24)]
     heat = [[round(float(np.nanmean(cpu[(WEEKDAY == d) & (hour_idx == h)])), 1) for h in range(24)] for d in range(7)]
 
@@ -43,6 +64,8 @@ def vm_stats(s: dict[str, np.ndarray]) -> dict:
         x = np.arange(last)[ok] / C.POINTS_PER_DAY
         slope_per_day = float(np.polyfit(x, d[ok], 1)[0])
     disk_now = float(np.nanmean(s["disk"][-C.POINTS_PER_DAY // 4:]))
+
+    trend = {"cpu": daily_trend(cpu), "mem": daily_trend(mem)}
 
     net = s["net_in"] + s["net_out"]
     egress_gb = float(np.nansum(s["net_out"]) * C.STEP_MIN * 60 / 1024)   # MB/s * seconds -> GB
@@ -59,6 +82,9 @@ def vm_stats(s: dict[str, np.ndarray]) -> dict:
         "mem_max": round(pct(mem, 100), 2),
         "cpu_time_above_80": round(float(np.nanmean(cpu[valid] > 80) * 100), 2),
         "offhours_cpu_avg": round(float(np.nanmean(cpu[off])), 2),
+        "offhours_cpu_p99": round(pct(cpu[off], 99), 2),
+        "offhours_busy_hours": busy,
+        "offhours_quiet_avg": round(float(np.nanmean(cpu[off & ~np.isin(hour_idx, busy)])) if (off & ~np.isin(hour_idx, busy)).any() else 0.0, 2),
         "work_cpu_avg": round(float(np.nanmean(cpu[work])), 2),
         "net_p95_mbps": round(pct(net, 95), 3),
         "iops_p95": round(pct(s["iops"], 95), 1),
@@ -68,6 +94,8 @@ def vm_stats(s: dict[str, np.ndarray]) -> dict:
         "cv": round(cv, 2),
         "days_of_data": round(float(days_of_data), 1),
         "missing_frac": round(missing, 3),
+        "cpu_trend": trend["cpu"],
+        "mem_trend": trend["mem"],
         "hourly_cpu": hourly,
         "heatmap_cpu": heat,
     }

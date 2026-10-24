@@ -11,9 +11,11 @@ Source of truth: `engine/config.py` (also rendered in the app at `/assumptions`)
 | Idle | p95 CPU < 5%, p95 net < 0.5 MB/s, p95 IOPS < 10, ≥ 14 days | Three signals must agree |
 | Idle in prod | Flagged for owner review, never stopped | Safety |
 | Spike check | busiest single 5-min CPU reading ≤ 95% on the new plan (`MAX_CPU_CEILING`) | catches spikes shorter than ~15 min/day that p99 misses |
+| Memory ceiling | busiest single memory reading ≤ 90% on the new plan (`MAX_MEM_CEILING`) | a short memory spike kills processes (OOM) |
 | Under-provisioned | p99 CPU or memory > 90% → upsize | Reliability first |
-| Off-hours schedule | Non-prod with avg off-window CPU < 5%; window 20:00–08:00 weekdays + weekends = 108/168 = 64.3% | |
-| Schedule saving | (resized) plan price × 64.3%; storage still billed | No double counting |
+| Off-hours schedule | Non-prod with avg CPU < 5% in the quiet off-window hours; window 20:00–08:00 weekdays + weekends = 108/168 = 64.3% | |
+| Night job | An off-window hour whose p95 CPU > 15% is "busy"; it stays on every day, plus 1 h warm-up before it. More than 6 busy hours a night → not scheduled | the job is never killed |
+| Schedule saving | (resized) plan price × (108 − kept hours a week) ÷ 168; storage still billed | No double counting |
 | Orphans | Unattached ≥ 7 days. Volume saving = GB × (₹6 − ₹2 snapshot); IP ₹300/mo | Snapshot before delete |
 | Risk | HIGH if peak after > 75%, memory-bound, or prod delete; MEDIUM if 60–75%, prod, or bursty (p99/p95 > 2); else LOW | |
 | Confidence | 100 − gaps (up to 30) − 20 if < 14 days − 15 if CV > 1 − 10 if rare peaks | |
@@ -21,10 +23,11 @@ Source of truth: `engine/config.py` (also rendered in the app at `/assumptions`)
 | Anomalous VMs | Excluded from sizing until investigated | Don't size on incident data |
 | Cost jump | Daily cost > 15% above trailing 7-day average | |
 | Capacity | Disk reaches 90% within 21 days (14-day linear fit) | |
+| CPU / memory trend | Least-squares line through the daily p95 of the last 14 days; slope ≥ 0.3 %/day and R² ≥ 0.6; alert if (90 − today's level) ÷ slope < 21 days | catches memory leaks and steady growth |
 | Budget | ₹8.5 L/month; projection = last day's cost × 30.4 | |
 | Prices | s-2-4 ₹1,500 … s-16-64 ₹16,000/month; block ₹6/GB-mo; snapshot ₹2/GB-mo; IP ₹300/mo; egress ₹0.80/GB; same in all regions | Illustrative |
 | Carbon | 4 W/vCPU × 730 h × PUE 1.4; 0.716 kg CO₂/kWh (India CEA); 21 kg CO₂/tree/yr | Estimate |
-| Forecast | Additive Holt-Winters (α 0.4, β 0.05, γ 0.3, weekly season) on daily cost; 7-day back-test MAPE shown | |
+| Forecast | Additive Holt-Winters (α 0.4, β 0.05, γ 0.3, weekly season) on daily cost, and on daily fleet CPU % and memory % (clipped 0–100); 7-day back-test MAPE shown | |
 | Seed | 42 | Reproducible demo |
 
 ## Data generation

@@ -46,6 +46,7 @@ TARGET_MEM_UTIL = 0.75            # memory exhaustion kills processes -> 25% buf
 MIN_MEM_MARGIN_GB = 1.0
 MAX_CPU_CEILING = 0.95             # the single busiest 5-min reading must stay below 95% after a resize
                                   # (catches spikes shorter than ~15 min/day that p99 cannot see)
+MAX_MEM_CEILING = 0.90            # same for memory: the highest reading must stay below 90% (out-of-memory kills)
 
 # --- classification thresholds ---
 IDLE_CPU_P95 = 5.0                # %
@@ -55,6 +56,9 @@ IDLE_MIN_DAYS = 14
 UNDER_P99 = 90.0                  # % -> upsize
 ORPHAN_GRACE_DAYS = 7
 OFFHOURS_CPU_MAX = 5.0            # avg CPU in the off window to be "schedulable"
+OFFHOURS_BUSY_P95 = 15.0          # an hour of the off window is "busy" (a night job runs) if its p95 CPU is above this;
+                                  # the schedule keeps the VM on for busy hours (+1 h warm-up) instead of killing the job
+OFFHOURS_MAX_KEEP_HOURS = 6       # more busy night hours than this and it is not an off-hours VM
 OFF_START_HOUR = 20               # 8 PM IST
 OFF_END_HOUR = 8                  # 8 AM IST
 OFF_WEEKENDS = True
@@ -65,6 +69,9 @@ ANOMALY_MIN_POINTS = 6            # 6 x 5 min = 30 min sustained
 COST_JUMP_PCT = 15.0              # daily cost vs trailing 7-day average
 CAPACITY_WARN_PCT = 90.0
 CAPACITY_HORIZON_DAYS = 21
+TREND_DAYS = 14                   # CPU / memory trend: linear fit of the daily p95 over the last 14 days
+TREND_MIN_SLOPE = 0.3             # % per day; flatter than this is not a trend
+TREND_MIN_R2 = 0.6                # the straight line must explain >= 60% of the day-to-day movement
 
 # --- sustainability ---
 WATTS_PER_VCPU = 4.0
