@@ -227,7 +227,7 @@ def build():
     off = ((HOUR >= 20) | (HOUR < 8)) | IS_WEEKEND
     s["cpu"] = np.where(off, clip(1.4 + noise(0.3)), s["cpu"])
 
-    # 3) the anomaly: a prod VM that suddenly pegs CPU and sends 40x traffic from day 26
+    # 3) the anomaly: a prod VM that suddenly pegs CPU and sends 25x traffic from day 26.4
     r, s = add_vm("healthy", "prod", "s-8-16", team="Payments", region="Noida", name="prod-pay-api-07",
                   cpu_mem=(22 + bump(14, 4, 8) + noise(3), 48 + noise(2), 1.0))
     start = int(26.4 * C.POINTS_PER_DAY)
