@@ -31,3 +31,7 @@ Each VM gets a workload pattern: steady-low, healthy, bursty (short daily peak),
 
 ## Simplifications
 No reserved/committed-use discounts; no autoscaling groups; same prices in every region; bill history before the 30-day window is synthetic (+40% over six months, per the scenario).
+
+## Real-world check
+
+The simulation is benchmarked against the [Azure Public Dataset V2](https://github.com/Azure/AzurePublicDataset/blob/master/AzurePublicDatasetV2.md), using its CPU summary (`azure2019_data_cpu.txt`, 2.7 M VMs, 30 days, 5-minute readings). 58% of real Azure VMs average 10% CPU or less, compared with 50% in our estate, so the savings estimate is conservative. Azure only has CPU (no memory, disk or network), so it is used as a benchmark and does not replace the simulated data. The comparison table is on the Assumptions page.

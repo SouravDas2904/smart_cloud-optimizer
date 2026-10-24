@@ -3,6 +3,13 @@
 import { useApp } from "../providers";
 import { Loading, PageTitle } from "@/components/ui";
 import { inr } from "@/lib/format";
+import type { Resource, Stats } from "@/lib/types";
+
+// [CPU %, % of Azure VMs with avg CPU <= x, % with p95 max CPU <= x] from azure2019_data_cpu.txt
+const AZURE_CPU_CDF: [number, number, number][] = [[5, 44, 15], [10, 58, 21], [20, 75, 30], [50, 94, 54], [90, 99, 82]];
+
+const share = (vms: Resource[], f: (s: Stats) => boolean) =>
+  Math.round((vms.filter((r) => f(r.stats!)).length / vms.length) * 100);
 
 export default function Assumptions() {
   const { data } = useApp();
@@ -30,6 +37,7 @@ export default function Assumptions() {
     ["Random seed", `${a.SEED}`, "Same data every run: reproducible demo"],
   ];
   const plans = Object.entries(a.PLANS);
+  const vms = data.resources.filter((r) => r.type === "vm" && r.stats);
 
   return (
     <div className="space-y-5">
@@ -56,6 +64,15 @@ export default function Assumptions() {
           <p>A Python generator (engine/generate.py) builds {data.summary.n_vms} VMs, 10 block volumes and 36 public IPs across Noida, Bangalore and Mumbai for 6 teams. Each VM&apos;s series is <span className="mono">base + daily shape × weekday factor + noise + events</span>.</p>
           <p>Patterns planted on purpose, as the brief asks: steady low-usage VMs, bursty VMs with short daily peaks, batch jobs idle most of the day, dev environments idle nights and weekends, memory-heavy VMs, saturated VMs, growing disks, unattached volumes and unused IPs, a cost jump (8 large ML VMs on day 20) and one genuine anomaly (a prod VM pegged at ~97% CPU with 25× network-out).</p>
           <p>A few VMs have metric gaps (agent outages) so the confidence score is exercised. The engine never sees which pattern a VM was given. It only sees the metrics.</p>
+          <div className="font-semibold text-slate-900">Real-world check (Azure Public Dataset V2)</div>
+          <p>Share of VMs at or below each CPU level: 2.7 M real Azure VMs (30 days, 5-min readings) next to our simulated estate. Real VMs are even more idle than ours, so our savings estimate is conservative.</p>
+          <table className="w-full text-xs">
+            <thead className="text-left uppercase text-slate-500"><tr><th className="py-1">CPU ≤</th><th className="text-right">Azure avg</th><th className="text-right">Ours avg</th><th className="text-right">Azure p95</th><th className="text-right">Ours p95</th></tr></thead>
+            <tbody>{AZURE_CPU_CDF.map(([x, az, azp]) => (
+              <tr key={x} className="border-t border-slate-100"><td className="py-1">{x}%</td><td className="text-right tabular-nums">{az}%</td><td className="text-right tabular-nums">{share(vms, (s) => s.cpu_avg <= x)}%</td><td className="text-right tabular-nums">{azp}%</td><td className="text-right tabular-nums">{share(vms, (s) => s.cpu_p95 <= x)}%</td></tr>
+            ))}</tbody>
+          </table>
+          <p className="text-xs text-slate-500">Source: <a className="underline" href="https://github.com/Azure/AzurePublicDataset/blob/master/AzurePublicDatasetV2.md" target="_blank" rel="noreferrer">Azure Public Dataset V2</a>, azure2019_data_cpu.txt. Azure&apos;s p95 is of the per-5-minute maximum, so it reads slightly higher than ours. Azure has CPU only (no memory, disk or network), which is why it benchmarks the simulation rather than replacing it.</p>
           <div className="font-semibold text-slate-900">Simplifications</div>
           <ul className="list-disc space-y-1 pl-5">
             <li>No reserved-instance / committed-use discounts.</li>
