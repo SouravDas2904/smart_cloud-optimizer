@@ -76,17 +76,33 @@ export function ConfidenceBar({ value }: { value: number }) {
   );
 }
 
+/**
+ * Filter chips. With nothing narrowed down every option counts and the "All" chip is lit.
+ * The first click on an option shows ONLY that option; further clicks add or remove more.
+ * Removing the last selected option (or clicking "All") goes back to everything.
+ */
 export function MultiSelect({ label, options, value, onChange }: {
   label: string; options: string[]; value: string[]; onChange: (v: string[]) => void;
 }) {
+  const all = options.every((o) => value.includes(o));
+  const pick = (o: string) => {
+    if (all) return onChange([o]);
+    const next = value.includes(o) ? value.filter((x) => x !== o) : [...value, o];
+    onChange(next.length ? next : options);
+  };
+  const chip = "rounded-md border px-2.5 py-0.5 text-xs transition-colors";
   return (
     <div className="flex flex-wrap items-center gap-1.5">
       <span className="label mr-1">{label}</span>
+      <button onClick={() => onChange(options)} aria-pressed={all}
+        className={cls(chip, all ? "border-brand-500 bg-brand-500 font-medium text-ink" : "border-slate-200 text-slate-500 hover:text-slate-800")}>
+        All
+      </button>
       {options.map((o) => {
-        const on = value.includes(o);
+        const on = !all && value.includes(o);
         return (
-          <button key={o} onClick={() => onChange(on ? value.filter((x) => x !== o) : [...value, o])}
-            className={cls("rounded-md border px-2.5 py-0.5 text-xs transition-colors", on ? "border-slate-300 bg-slate-100 text-slate-900" : "border-slate-200 bg-transparent text-slate-500 line-through decoration-slate-400 hover:text-slate-700")}>
+          <button key={o} onClick={() => pick(o)} aria-pressed={on}
+            className={cls(chip, on ? "border-brand-500 bg-brand-500 font-medium text-ink" : "border-slate-200 bg-transparent text-slate-500 hover:border-slate-300 hover:text-slate-800")}>
             {o}
           </button>
         );
