@@ -29,6 +29,18 @@ def pick_plan(req_vcpu: float, req_ram: float) -> str:
     return min(fits, key=lambda p: (C.PLANS[p][2], C.PLANS[p][0]))
 
 
+def hour_windows(hours: list[int]) -> str:
+    """[1, 2, 3, 9] -> "01:00–04:00, 09:00–10:00" """
+    if not hours:
+        return "none"
+    out, start = [], hours[0]
+    for a, b in zip(hours, hours[1:] + [None]):
+        if b != a + 1:
+            out.append(f"{start:02d}:00–{(a + 1) % 24:02d}:00")
+            start = b
+    return ", ".join(out)
+
+
 def size_for(vcpu, ram, cpu_p, mem_p, target_cpu=C.TARGET_CPU_UTIL, target_mem=C.TARGET_MEM_UTIL, cpu_max=None, mem_max=None):
     req_vcpu = vcpu * (cpu_p / 100) / target_cpu
     if cpu_max is not None:   # the busiest single reading must also fit under the ceiling
@@ -174,23 +186,37 @@ def recommend_vm(r: dict, st: dict, cost: dict) -> list[dict]:
                      "vcpu_removed": 0,
                      "peak_check": {**peak, "cpu_p99_after": round(crash, 1), "safe": False, "avg_based_plan": avg_plan}})
 
-    # 4. off-hours schedule for non-prod
-    # the night-time average must be low AND the busiest 1% of night readings too, so a short nightly job
-    # (which barely moves the average) is never switched off
-    if env != "prod" and st["offhours_cpu_avg"] < C.OFFHOURS_CPU_MAX and st["offhours_cpu_p99"] < C.OFFHOURS_CPU_P99_MAX:
-        frac = C.off_hours_fraction()
+    # 4. off-hours schedule for non-prod. A night job does not block the schedule: the VM stays on for the job's busy
+    #    hours (+1 h warm-up before each run) and is off for the rest, so the job never gets killed.
+    busy = st.get("offhours_busy_hours", [])
+    keep = sorted(set(busy) | {(h - 1) % 24 for h in busy})
+    if env != "prod" and len(keep) <= C.OFFHOURS_MAX_KEEP_HOURS and st.get("offhours_quiet_avg", st["offhours_cpu_avg"]) < C.OFFHOURS_CPU_MAX:
         nightly = (24 - C.OFF_START_HOUR + C.OFF_END_HOUR) % 24
+        off_weekly = nightly * 5 + 48
+        # each kept hour is on every weekend day, and on weekdays too when it falls inside the night window
+        kept_weekly = sum(2 + (5 if (h >= C.OFF_START_HOUR or h < C.OFF_END_HOUR) else 0) for h in keep)
+        frac = (off_weekly - kept_weekly) / 168
         saving = effective_price * frac
         kept_vcpu = C.PLANS[recs[0]["target_plan"]][0] if recs and recs[0]["action"] == "resize" else vcpu
-        recs.append({**base, "action": "schedule", "title": "Auto-stop nights & weekends",
-                     "reason": f"Average CPU outside office hours is {st['offhours_cpu_avg']:.1f}% versus {st['work_cpu_avg']:.0f}% "
-                               f"during the work day. Stop it 8 PM–8 AM on weekdays and all weekend.",
+        windows = hour_windows(keep)
+        recs.append({**base, "action": "schedule",
+                     "title": "Auto-stop nights & weekends" + (f" (on {windows} for its night job)" if keep else ""),
+                     "reason": (f"Apart from a night job at {hour_windows(busy)}, average CPU outside office hours is {st['offhours_quiet_avg']:.1f}%. "
+                                f"Stop it 8 PM–8 AM on weekdays and all weekend, but keep it on {windows} every day so the job still runs."
+                                if keep else
+                                f"Average CPU outside office hours is {st['offhours_cpu_avg']:.1f}% versus {st['work_cpu_avg']:.0f}% "
+                                f"during the work day. Stop it 8 PM–8 AM on weekdays and all weekend."),
                      "target_plan": None, "saving": round(saving), "risk": "LOW" if env == "dev" else "MEDIUM",
-                     "maths": [f"off-window CPU: average {st['offhours_cpu_avg']:.1f}% < {C.OFFHOURS_CPU_MAX:.0f}% and "
-                               f"p99 {st['offhours_cpu_p99']:.1f}% < {C.OFFHOURS_CPU_P99_MAX:.0f}% → nothing important runs at night",
-                               f"off window = {nightly} h × 5 weekdays + 48 weekend h = {nightly * 5 + 48} of 168 weekly hours = {frac:.1%}",
-                               f"Saving = {INR(effective_price)} {'(after resize) ' if effective_price != price else ''}× {frac:.1%} = {INR(saving)}/month",
-                               "Storage keeps billing while stopped (not counted as saving)"],
+                     "keep_hours": keep,
+                     "maths": ([f"busy night hours (p95 CPU > {C.OFFHOURS_BUSY_P95:.0f}%): {hour_windows(busy)} → keep on {windows} (1 h warm-up)",
+                                f"rest of the night: average CPU {st['offhours_quiet_avg']:.1f}% < {C.OFFHOURS_CPU_MAX:.0f}% → safe to stop"]
+                               if keep else
+                               [f"off-window CPU: average {st['offhours_cpu_avg']:.1f}% < {C.OFFHOURS_CPU_MAX:.0f}%, "
+                                f"no hour with p95 > {C.OFFHOURS_BUSY_P95:.0f}% → nothing runs at night"]) + [
+                         f"off window = {nightly} h × 5 weekdays + 48 weekend h = {off_weekly} of 168 weekly hours"
+                         + (f"; minus {kept_weekly} h kept on = {off_weekly - kept_weekly} h" if keep else "") + f" = {frac:.1%}",
+                         f"Saving = {INR(effective_price)} {'(after resize) ' if effective_price != price else ''}× {frac:.1%} = {INR(saving)}/month",
+                         "Storage keeps billing while stopped (not counted as saving)"],
                      "vcpu_removed": kept_vcpu * frac,   # on top of any vCPUs the resize already removed
                      "peak_check": None})
     return recs

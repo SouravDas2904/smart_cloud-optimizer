@@ -17,7 +17,8 @@ def stats(**kw):
     base = dict(cpu_avg=10, cpu_p50=9, cpu_p95=12, cpu_p99=15, cpu_max=20, mem_avg=25, mem_p95=28, mem_p99=30,
                 mem_max=32, cpu_time_above_80=0, offhours_cpu_avg=10, work_cpu_avg=10, net_p95_mbps=2,
                 iops_p95=200, disk_now=50, disk_slope_per_day=0, egress_gb_30d=10, cv=0.3, days_of_data=30,
-                missing_frac=0, hourly_cpu=[10] * 24, heatmap_cpu=[[10] * 24] * 7, offhours_cpu_p99=4)
+                missing_frac=0, hourly_cpu=[10] * 24, heatmap_cpu=[[10] * 24] * 7, offhours_cpu_p99=4,
+                offhours_busy_hours=[])
     base.update(kw)
     return base
 
@@ -104,12 +105,20 @@ def test_resize_keeps_busiest_reading_under_ceiling():
     assert r["peak_check"]["cpu_max_after"] <= C.MAX_CPU_CEILING * 100
 
 
-def test_short_nightly_job_blocks_the_off_hours_schedule():
-    """A 30-minute job at 2 AM barely moves the night-time average, but its p99 shows it: don't switch it off."""
-    quiet = stats(cpu_p99=15, cpu_p95=13, offhours_cpu_avg=2.5, offhours_cpu_p99=4, work_cpu_avg=14)
-    nightly_job = {**quiet, "offhours_cpu_p99": 70}
-    assert "schedule" in [r["action"] for r in recommend_vm(vm("s-8-32", env="dev"), quiet, COST)]
-    assert "schedule" not in [r["action"] for r in recommend_vm(vm("s-8-32", env="dev"), nightly_job, COST)]
+def test_nightly_job_keeps_the_vm_on_only_for_the_job():
+    """A short job at 2-3 AM barely moves the night-time average, but its hourly p95 shows it: schedule around it."""
+    quiet = stats(cpu_p99=15, cpu_p95=13, offhours_cpu_avg=2.5, offhours_busy_hours=[], offhours_quiet_avg=2.5, work_cpu_avg=14)
+    nightly_job = {**quiet, "offhours_busy_hours": [2, 3], "offhours_quiet_avg": 2.0}
+    plain = next(r for r in recommend_vm(vm("s-8-32", env="dev"), quiet, COST) if r["action"] == "schedule")
+    around = next(r for r in recommend_vm(vm("s-8-32", env="dev"), nightly_job, COST) if r["action"] == "schedule")
+    assert around["keep_hours"] == [1, 2, 3]                 # job hours + 1 h warm-up
+    assert around["saving"] < plain["saving"]                # 3 h x 7 nights = 21 h a week stay on
+    assert around["saving"] == round(plain["saving"] * (108 - 21) / 108)
+
+
+def test_vm_busy_most_of_the_night_is_not_scheduled():
+    busy_nights = stats(offhours_cpu_avg=20, offhours_busy_hours=list(range(0, 8)), offhours_quiet_avg=2, work_cpu_avg=14)
+    assert "schedule" not in [r["action"] for r in recommend_vm(vm("s-8-32", env="dev"), busy_nights, COST)]
 
 
 def test_memory_spike_blocks_a_ram_shrink():

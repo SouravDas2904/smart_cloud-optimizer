@@ -50,6 +50,8 @@ def vm_stats(s: dict[str, np.ndarray]) -> dict:
 
     # hourly profile and a weekday x hour heat-map of average CPU
     hour_idx = HOUR.astype(int)
+    # night jobs: hours of the day whose off-window readings have a p95 above the busy threshold
+    busy = [h for h in range(24) if (off & (hour_idx == h)).any() and pct(cpu[off & (hour_idx == h)], 95) > C.OFFHOURS_BUSY_P95]
     hourly = [round(float(np.nanmean(cpu[hour_idx == h])), 1) for h in range(24)]
     heat = [[round(float(np.nanmean(cpu[(WEEKDAY == d) & (hour_idx == h)])), 1) for h in range(24)] for d in range(7)]
 
@@ -81,6 +83,8 @@ def vm_stats(s: dict[str, np.ndarray]) -> dict:
         "cpu_time_above_80": round(float(np.nanmean(cpu[valid] > 80) * 100), 2),
         "offhours_cpu_avg": round(float(np.nanmean(cpu[off])), 2),
         "offhours_cpu_p99": round(pct(cpu[off], 99), 2),
+        "offhours_busy_hours": busy,
+        "offhours_quiet_avg": round(float(np.nanmean(cpu[off & ~np.isin(hour_idx, busy)])) if (off & ~np.isin(hour_idx, busy)).any() else 0.0, 2),
         "work_cpu_avg": round(float(np.nanmean(cpu[work])), 2),
         "net_p95_mbps": round(pct(net, 95), 3),
         "iops_p95": round(pct(s["iops"], 95), 1),

@@ -24,7 +24,7 @@ export default function Assumptions() {
     ["Under-provisioned", `p99 CPU or memory > ${a.UNDER_P99}%`, "Recommend an upsize: reliability first"],
     ["Off-hours window", `${a.OFF_START_HOUR}:00–0${a.OFF_END_HOUR}:00 weekdays + weekends (IST) = ${(a.OFF_HOURS_FRACTION * 100).toFixed(1)}% of the week`, "Typical Indian engineering hours"],
     ["Spike ceiling after resize", `busiest 5-min CPU ≤ ${a.MAX_CPU_CEILING * 100}%, busiest memory reading ≤ ${a.MAX_MEM_CEILING * 100}%`, "p99 ignores the top 1% (~14 min a day); this catches what p99 can't see"],
-    ["Schedulable", `non-prod, average CPU in the off window < ${a.OFFHOURS_CPU_MAX}% and its p99 < ${a.OFFHOURS_CPU_P99_MAX}%`, "Production is never scheduled; a short nightly job blocks the schedule"],
+    ["Schedulable", `non-prod, average CPU in the quiet off-window hours < ${a.OFFHOURS_CPU_MAX}%; an hour with p95 CPU > ${a.OFFHOURS_BUSY_P95}% is a night job and stays on (+1 h warm-up), up to ${a.OFFHOURS_MAX_KEEP_HOURS} h a night`, "Production is never scheduled; a night job is scheduled around, never killed"],
     ["Orphan grace period", `${a.ORPHAN_GRACE_DAYS} days`, "Don't flag a disk detached a few minutes ago"],
     ["Block storage", `₹${a.BLOCK_INR_PER_GB_MONTH}/GB-month (billed while a VM is stopped)`, "Illustrative"],
     ["Snapshot", `₹${a.SNAPSHOT_INR_PER_GB_MONTH}/GB-month`, "Kept as a safety net before deleting a volume"],

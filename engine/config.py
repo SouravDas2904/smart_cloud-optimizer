@@ -56,8 +56,9 @@ IDLE_MIN_DAYS = 14
 UNDER_P99 = 90.0                  # % -> upsize
 ORPHAN_GRACE_DAYS = 7
 OFFHOURS_CPU_MAX = 5.0            # avg CPU in the off window to be "schedulable"
-OFFHOURS_CPU_P99_MAX = 15.0       # ...and its busiest 1% of off-window readings must stay below this:
-                                  # a short nightly job averages ~3% but would be killed by a shutdown
+OFFHOURS_BUSY_P95 = 15.0          # an hour of the off window is "busy" (a night job runs) if its p95 CPU is above this;
+                                  # the schedule keeps the VM on for busy hours (+1 h warm-up) instead of killing the job
+OFFHOURS_MAX_KEEP_HOURS = 6       # more busy night hours than this and it is not an off-hours VM
 OFF_START_HOUR = 20               # 8 PM IST
 OFF_END_HOUR = 8                  # 8 AM IST
 OFF_WEEKENDS = True

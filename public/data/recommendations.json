@@ -1255,6 +1255,45 @@
   "default_accepted": false
  },
  {
+  "resource_id": "vm-044",
+  "resource_name": "stg-ab-test-01",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Bangalore",
+  "team": "Growth",
+  "current_plan": "s-4-16",
+  "confidence": 85,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 2.5 (−15)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends (on 02:00–05:00 for its night job)",
+  "reason": "Apart from a night job at 03:00–05:00, average CPU outside office hours is 2.0%. Stop it 8 PM–8 AM on weekdays and all weekend, but keep it on 02:00–05:00 every day so the job still runs.",
+  "target_plan": null,
+  "saving": 2071,
+  "risk": "MEDIUM",
+  "keep_hours": [
+   2,
+   3,
+   4
+  ],
+  "maths": [
+   "busy night hours (p95 CPU > 15%): 03:00–05:00 → keep on 02:00–05:00 (1 h warm-up)",
+   "rest of the night: average CPU 2.0% < 5% → safe to stop",
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours; minus 21 h kept on = 87 h = 51.8%",
+   "Saving = ₹4,000 × 51.8% = ₹2,071/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 2.0714285714285716,
+  "peak_check": null,
+  "id": "rec-029",
+  "carbon": {
+   "kwh": 8.5,
+   "kg_co2": 6.1
+  },
+  "default_accepted": true
+ },
+ {
   "resource_id": "vm-045",
   "resource_name": "stg-media-01",
   "resource_type": "vm",
@@ -1292,12 +1331,52 @@
    "safe": false,
    "avg_based_plan": "s-2-8"
   },
-  "id": "rec-029",
+  "id": "rec-030",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
   },
   "default_accepted": false
+ },
+ {
+  "resource_id": "vm-045",
+  "resource_name": "stg-media-01",
+  "resource_type": "vm",
+  "env": "staging",
+  "region": "Mumbai",
+  "team": "Mobile-API",
+  "current_plan": "s-4-16",
+  "confidence": 75,
+  "confidence_notes": [
+   "erratic usage, coefficient of variation 2.5 (−15)",
+   "short peaks seen: a monthly job could be outside the 30-day window (−10)"
+  ],
+  "action": "schedule",
+  "title": "Auto-stop nights & weekends (on 00:00–03:00 for its night job)",
+  "reason": "Apart from a night job at 01:00–03:00, average CPU outside office hours is 2.0%. Stop it 8 PM–8 AM on weekdays and all weekend, but keep it on 00:00–03:00 every day so the job still runs.",
+  "target_plan": null,
+  "saving": 2071,
+  "risk": "MEDIUM",
+  "keep_hours": [
+   0,
+   1,
+   2
+  ],
+  "maths": [
+   "busy night hours (p95 CPU > 15%): 01:00–03:00 → keep on 00:00–03:00 (1 h warm-up)",
+   "rest of the night: average CPU 2.0% < 5% → safe to stop",
+   "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours; minus 21 h kept on = 87 h = 51.8%",
+   "Saving = ₹4,000 × 51.8% = ₹2,071/month",
+   "Storage keeps billing while stopped (not counted as saving)"
+  ],
+  "vcpu_removed": 2.0714285714285716,
+  "peak_check": null,
+  "id": "rec-031",
+  "carbon": {
+   "kwh": 8.5,
+   "kg_co2": 6.1
+  },
+  "default_accepted": true
  },
  {
   "resource_id": "vm-046",
@@ -1337,7 +1416,7 @@
    "mem_max_after": 45.5,
    "safe": true
   },
-  "id": "rec-030",
+  "id": "rec-032",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -1362,15 +1441,16 @@
   "target_plan": null,
   "saving": 3214,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.2% < 5% and p99 3.5% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
-  "id": "rec-031",
+  "id": "rec-033",
   "carbon": {
    "kwh": 10.5,
    "kg_co2": 7.5
@@ -1415,7 +1495,7 @@
    "mem_max_after": 46.0,
    "safe": true
   },
-  "id": "rec-032",
+  "id": "rec-034",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -1440,15 +1520,16 @@
   "target_plan": null,
   "saving": 3214,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.2% < 5% and p99 3.5% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
-  "id": "rec-033",
+  "id": "rec-035",
   "carbon": {
    "kwh": 10.5,
    "kg_co2": 7.5
@@ -1493,7 +1574,7 @@
    "mem_max_after": 45.6,
    "safe": true
   },
-  "id": "rec-034",
+  "id": "rec-036",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -1518,15 +1599,16 @@
   "target_plan": null,
   "saving": 3214,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.3% < 5% and p99 3.6% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
-  "id": "rec-035",
+  "id": "rec-037",
   "carbon": {
    "kwh": 10.5,
    "kg_co2": 7.5
@@ -1571,7 +1653,7 @@
    "mem_max_after": 45.2,
    "safe": true
   },
-  "id": "rec-036",
+  "id": "rec-038",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -1596,15 +1678,16 @@
   "target_plan": null,
   "saving": 3214,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.2% < 5% and p99 3.5% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
-  "id": "rec-037",
+  "id": "rec-039",
   "carbon": {
    "kwh": 10.5,
    "kg_co2": 7.5
@@ -1649,7 +1732,7 @@
    "mem_max_after": 46.0,
    "safe": true
   },
-  "id": "rec-038",
+  "id": "rec-040",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -1674,15 +1757,16 @@
   "target_plan": null,
   "saving": 3214,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.3% < 5% and p99 3.5% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
-  "id": "rec-039",
+  "id": "rec-041",
   "carbon": {
    "kwh": 10.5,
    "kg_co2": 7.5
@@ -1727,7 +1811,7 @@
    "mem_max_after": 45.0,
    "safe": true
   },
-  "id": "rec-040",
+  "id": "rec-042",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -1752,15 +1836,16 @@
   "target_plan": null,
   "saving": 3214,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.3% < 5% and p99 3.5% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
-  "id": "rec-041",
+  "id": "rec-043",
   "carbon": {
    "kwh": 10.5,
    "kg_co2": 7.5
@@ -1805,7 +1890,7 @@
    "mem_max_after": 44.9,
    "safe": true
   },
-  "id": "rec-042",
+  "id": "rec-044",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -1830,15 +1915,16 @@
   "target_plan": null,
   "saving": 3214,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.3% < 5% and p99 3.5% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
-  "id": "rec-043",
+  "id": "rec-045",
   "carbon": {
    "kwh": 10.5,
    "kg_co2": 7.5
@@ -1883,7 +1969,7 @@
    "mem_max_after": 45.1,
    "safe": true
   },
-  "id": "rec-044",
+  "id": "rec-046",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -1908,15 +1994,16 @@
   "target_plan": null,
   "saving": 3214,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.2% < 5% and p99 3.5% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹5,000 (after resize) × 64.3% = ₹3,214/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
-  "id": "rec-045",
+  "id": "rec-047",
   "carbon": {
    "kwh": 10.5,
    "kg_co2": 7.5
@@ -1961,7 +2048,7 @@
    "mem_max_after": 45.5,
    "safe": true
   },
-  "id": "rec-046",
+  "id": "rec-048",
   "carbon": {
    "kwh": 8.2,
    "kg_co2": 5.9
@@ -1986,15 +2073,16 @@
   "target_plan": null,
   "saving": 1671,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.2% < 5% and p99 3.5% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
-  "id": "rec-047",
+  "id": "rec-049",
   "carbon": {
    "kwh": 5.3,
    "kg_co2": 3.8
@@ -2039,7 +2127,7 @@
    "mem_max_after": 44.9,
    "safe": true
   },
-  "id": "rec-048",
+  "id": "rec-050",
   "carbon": {
    "kwh": 8.2,
    "kg_co2": 5.9
@@ -2064,15 +2152,16 @@
   "target_plan": null,
   "saving": 1671,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.2% < 5% and p99 3.4% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
-  "id": "rec-049",
+  "id": "rec-051",
   "carbon": {
    "kwh": 5.3,
    "kg_co2": 3.8
@@ -2117,7 +2206,7 @@
    "mem_max_after": 46.0,
    "safe": true
   },
-  "id": "rec-050",
+  "id": "rec-052",
   "carbon": {
    "kwh": 8.2,
    "kg_co2": 5.9
@@ -2142,15 +2231,16 @@
   "target_plan": null,
   "saving": 1671,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.2% < 5% and p99 3.6% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
-  "id": "rec-051",
+  "id": "rec-053",
   "carbon": {
    "kwh": 5.3,
    "kg_co2": 3.8
@@ -2195,7 +2285,7 @@
    "mem_max_after": 44.3,
    "safe": true
   },
-  "id": "rec-052",
+  "id": "rec-054",
   "carbon": {
    "kwh": 8.2,
    "kg_co2": 5.9
@@ -2220,15 +2310,16 @@
   "target_plan": null,
   "saving": 1671,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.3% < 5% and p99 3.5% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
-  "id": "rec-053",
+  "id": "rec-055",
   "carbon": {
    "kwh": 5.3,
    "kg_co2": 3.8
@@ -2274,7 +2365,7 @@
    "mem_max_after": 45.3,
    "safe": true
   },
-  "id": "rec-054",
+  "id": "rec-056",
   "carbon": {
    "kwh": 8.2,
    "kg_co2": 5.9
@@ -2300,15 +2391,16 @@
   "target_plan": null,
   "saving": 1671,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.3% < 5% and p99 3.5% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
-  "id": "rec-055",
+  "id": "rec-057",
   "carbon": {
    "kwh": 5.3,
    "kg_co2": 3.8
@@ -2353,7 +2445,7 @@
    "mem_max_after": 45.0,
    "safe": true
   },
-  "id": "rec-056",
+  "id": "rec-058",
   "carbon": {
    "kwh": 8.2,
    "kg_co2": 5.9
@@ -2378,15 +2470,16 @@
   "target_plan": null,
   "saving": 1671,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.3% < 5% and p99 3.5% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
-  "id": "rec-057",
+  "id": "rec-059",
   "carbon": {
    "kwh": 5.3,
    "kg_co2": 3.8
@@ -2431,7 +2524,7 @@
    "mem_max_after": 46.4,
    "safe": true
   },
-  "id": "rec-058",
+  "id": "rec-060",
   "carbon": {
    "kwh": 8.2,
    "kg_co2": 5.9
@@ -2456,15 +2549,16 @@
   "target_plan": null,
   "saving": 1671,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.3% < 5% and p99 3.5% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
-  "id": "rec-059",
+  "id": "rec-061",
   "carbon": {
    "kwh": 5.3,
    "kg_co2": 3.8
@@ -2509,7 +2603,7 @@
    "mem_max_after": 45.4,
    "safe": true
   },
-  "id": "rec-060",
+  "id": "rec-062",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -2534,15 +2628,16 @@
   "target_plan": null,
   "saving": 2571,
   "risk": "MEDIUM",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.3% < 5% and p99 3.5% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹4,000 (after resize) × 64.3% = ₹2,571/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
-  "id": "rec-061",
+  "id": "rec-063",
   "carbon": {
    "kwh": 10.5,
    "kg_co2": 7.5
@@ -2587,7 +2682,7 @@
    "mem_max_after": 44.8,
    "safe": true
   },
-  "id": "rec-062",
+  "id": "rec-064",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -2612,15 +2707,16 @@
   "target_plan": null,
   "saving": 2571,
   "risk": "MEDIUM",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.3% < 5% and p99 3.5% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹4,000 (after resize) × 64.3% = ₹2,571/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
-  "id": "rec-063",
+  "id": "rec-065",
   "carbon": {
    "kwh": 10.5,
    "kg_co2": 7.5
@@ -2665,7 +2761,7 @@
    "mem_max_after": 44.7,
    "safe": true
   },
-  "id": "rec-064",
+  "id": "rec-066",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -2690,15 +2786,16 @@
   "target_plan": null,
   "saving": 2571,
   "risk": "MEDIUM",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.2% < 5% and p99 3.5% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹4,000 (after resize) × 64.3% = ₹2,571/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
-  "id": "rec-065",
+  "id": "rec-067",
   "carbon": {
    "kwh": 10.5,
    "kg_co2": 7.5
@@ -2743,7 +2840,7 @@
    "mem_max_after": 45.3,
    "safe": true
   },
-  "id": "rec-066",
+  "id": "rec-068",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -2768,15 +2865,16 @@
   "target_plan": null,
   "saving": 2571,
   "risk": "MEDIUM",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.2% < 5% and p99 3.6% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.2% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹4,000 (after resize) × 64.3% = ₹2,571/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
-  "id": "rec-067",
+  "id": "rec-069",
   "carbon": {
    "kwh": 10.5,
    "kg_co2": 7.5
@@ -2821,7 +2919,7 @@
    "mem_max_after": 44.9,
    "safe": true
   },
-  "id": "rec-068",
+  "id": "rec-070",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -2846,15 +2944,16 @@
   "target_plan": null,
   "saving": 2571,
   "risk": "MEDIUM",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.3% < 5% and p99 3.6% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.3% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹4,000 (after resize) × 64.3% = ₹2,571/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 2.5714285714285716,
   "peak_check": null,
-  "id": "rec-069",
+  "id": "rec-071",
   "carbon": {
    "kwh": 10.5,
    "kg_co2": 7.5
@@ -2886,7 +2985,7 @@
   ],
   "vcpu_removed": 4,
   "peak_check": null,
-  "id": "rec-070",
+  "id": "rec-072",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -2918,7 +3017,7 @@
   ],
   "vcpu_removed": 4,
   "peak_check": null,
-  "id": "rec-071",
+  "id": "rec-073",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -2950,7 +3049,7 @@
   ],
   "vcpu_removed": 4,
   "peak_check": null,
-  "id": "rec-072",
+  "id": "rec-074",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -2982,7 +3081,7 @@
   ],
   "vcpu_removed": 4,
   "peak_check": null,
-  "id": "rec-073",
+  "id": "rec-075",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -3014,7 +3113,7 @@
   ],
   "vcpu_removed": 8,
   "peak_check": null,
-  "id": "rec-074",
+  "id": "rec-076",
   "carbon": {
    "kwh": 32.7,
    "kg_co2": 23.4
@@ -3046,7 +3145,7 @@
   ],
   "vcpu_removed": 8,
   "peak_check": null,
-  "id": "rec-075",
+  "id": "rec-077",
   "carbon": {
    "kwh": 32.7,
    "kg_co2": 23.4
@@ -3078,7 +3177,7 @@
   ],
   "vcpu_removed": 4,
   "peak_check": null,
-  "id": "rec-076",
+  "id": "rec-078",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -3110,7 +3209,7 @@
   ],
   "vcpu_removed": 4,
   "peak_check": null,
-  "id": "rec-077",
+  "id": "rec-079",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -3155,7 +3254,7 @@
    "mem_max_after": 42.1,
    "safe": true
   },
-  "id": "rec-078",
+  "id": "rec-080",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -3200,7 +3299,7 @@
    "mem_max_after": 44.6,
    "safe": true
   },
-  "id": "rec-079",
+  "id": "rec-081",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -3245,7 +3344,7 @@
    "mem_max_after": 42.1,
    "safe": true
   },
-  "id": "rec-080",
+  "id": "rec-082",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -3290,7 +3389,7 @@
    "mem_max_after": 42.8,
    "safe": true
   },
-  "id": "rec-081",
+  "id": "rec-083",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -3335,7 +3434,7 @@
    "mem_max_after": 42.2,
    "safe": true
   },
-  "id": "rec-082",
+  "id": "rec-084",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -3380,7 +3479,7 @@
    "mem_max_after": 43.8,
    "safe": true
   },
-  "id": "rec-083",
+  "id": "rec-085",
   "carbon": {
    "kwh": 16.4,
    "kg_co2": 11.7
@@ -3425,7 +3524,7 @@
    "mem_max_after": 41.2,
    "safe": true
   },
-  "id": "rec-084",
+  "id": "rec-086",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -3470,7 +3569,7 @@
    "mem_max_after": 40.7,
    "safe": true
   },
-  "id": "rec-085",
+  "id": "rec-087",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -3515,7 +3614,7 @@
    "mem_max_after": 40.5,
    "safe": true
   },
-  "id": "rec-086",
+  "id": "rec-088",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -3560,7 +3659,7 @@
    "mem_max_after": 41.3,
    "safe": true
   },
-  "id": "rec-087",
+  "id": "rec-089",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -3604,7 +3703,7 @@
    "safe": false,
    "avg_based_plan": "s-2-8"
   },
-  "id": "rec-088",
+  "id": "rec-090",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -3649,7 +3748,7 @@
    "mem_max_after": 65.2,
    "safe": true
   },
-  "id": "rec-089",
+  "id": "rec-091",
   "carbon": {
    "kwh": 24.5,
    "kg_co2": 17.6
@@ -3674,15 +3773,16 @@
   "target_plan": null,
   "saving": 1671,
   "risk": "LOW",
+  "keep_hours": [],
   "maths": [
-   "off-window CPU: average 1.4% < 5% and p99 2.1% < 15% → nothing important runs at night",
+   "off-window CPU: average 1.4% < 5%, no hour with p95 > 15% → nothing runs at night",
    "off window = 12 h × 5 weekdays + 48 weekend h = 108 of 168 weekly hours = 64.3%",
    "Saving = ₹2,600 (after resize) × 64.3% = ₹1,671/month",
    "Storage keeps billing while stopped (not counted as saving)"
   ],
   "vcpu_removed": 1.2857142857142858,
   "peak_check": null,
-  "id": "rec-090",
+  "id": "rec-092",
   "carbon": {
    "kwh": 5.3,
    "kg_co2": 3.8
@@ -3713,7 +3813,7 @@
   ],
   "vcpu_removed": 0,
   "peak_check": null,
-  "id": "rec-091",
+  "id": "rec-093",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -3745,7 +3845,7 @@
    "snapshot 250 GB × ₹2 = ₹500/month",
    "Saving = ₹1,500 − ₹500 = ₹1,000/month"
   ],
-  "id": "rec-092",
+  "id": "rec-094",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -3777,7 +3877,7 @@
    "snapshot 200 GB × ₹2 = ₹400/month",
    "Saving = ₹1,200 − ₹400 = ₹800/month"
   ],
-  "id": "rec-093",
+  "id": "rec-095",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -3809,7 +3909,7 @@
    "snapshot 250 GB × ₹2 = ₹500/month",
    "Saving = ₹1,500 − ₹500 = ₹1,000/month"
   ],
-  "id": "rec-094",
+  "id": "rec-096",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -3841,7 +3941,7 @@
    "snapshot 100 GB × ₹2 = ₹200/month",
    "Saving = ₹600 − ₹200 = ₹400/month"
   ],
-  "id": "rec-095",
+  "id": "rec-097",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -3873,7 +3973,7 @@
    "snapshot 100 GB × ₹2 = ₹200/month",
    "Saving = ₹600 − ₹200 = ₹400/month"
   ],
-  "id": "rec-096",
+  "id": "rec-098",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -3905,7 +4005,7 @@
    "snapshot 100 GB × ₹2 = ₹200/month",
    "Saving = ₹600 − ₹200 = ₹400/month"
   ],
-  "id": "rec-097",
+  "id": "rec-099",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -3937,7 +4037,7 @@
    "snapshot 500 GB × ₹2 = ₹1,000/month",
    "Saving = ₹3,000 − ₹1,000 = ₹2,000/month"
   ],
-  "id": "rec-098",
+  "id": "rec-100",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -3969,7 +4069,7 @@
    "snapshot 500 GB × ₹2 = ₹1,000/month",
    "Saving = ₹3,000 − ₹1,000 = ₹2,000/month"
   ],
-  "id": "rec-099",
+  "id": "rec-101",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -4001,7 +4101,7 @@
    "snapshot 100 GB × ₹2 = ₹200/month",
    "Saving = ₹600 − ₹200 = ₹400/month"
   ],
-  "id": "rec-100",
+  "id": "rec-102",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -4033,7 +4133,7 @@
    "snapshot 250 GB × ₹2 = ₹500/month",
    "Saving = ₹1,500 − ₹500 = ₹1,000/month"
   ],
-  "id": "rec-101",
+  "id": "rec-103",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -4063,7 +4163,7 @@
   "maths": [
    "Saving = ₹300/month per idle IP"
   ],
-  "id": "rec-102",
+  "id": "rec-104",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -4093,7 +4193,7 @@
   "maths": [
    "Saving = ₹300/month per idle IP"
   ],
-  "id": "rec-103",
+  "id": "rec-105",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -4123,7 +4223,7 @@
   "maths": [
    "Saving = ₹300/month per idle IP"
   ],
-  "id": "rec-104",
+  "id": "rec-106",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -4153,7 +4253,7 @@
   "maths": [
    "Saving = ₹300/month per idle IP"
   ],
-  "id": "rec-105",
+  "id": "rec-107",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -4183,7 +4283,7 @@
   "maths": [
    "Saving = ₹300/month per idle IP"
   ],
-  "id": "rec-106",
+  "id": "rec-108",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0
@@ -4213,7 +4313,7 @@
   "maths": [
    "Saving = ₹300/month per idle IP"
   ],
-  "id": "rec-107",
+  "id": "rec-109",
   "carbon": {
    "kwh": 0.0,
    "kg_co2": 0.0

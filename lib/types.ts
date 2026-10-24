@@ -7,7 +7,8 @@ export type Action =
 export interface Stats {
   cpu_avg: number; cpu_p50: number; cpu_p95: number; cpu_p99: number; cpu_max: number;
   mem_avg: number; mem_p95: number; mem_p99: number; mem_max: number;
-  cpu_time_above_80: number; offhours_cpu_avg: number; offhours_cpu_p99: number; work_cpu_avg: number;
+  cpu_time_above_80: number; offhours_cpu_avg: number; offhours_cpu_p99: number;
+  offhours_busy_hours: number[]; offhours_quiet_avg: number; work_cpu_avg: number;
   cpu_trend: Trend; mem_trend: Trend;
   net_p95_mbps: number; iops_p95: number; disk_now: number; disk_slope_per_day: number;
   egress_gb_30d: number; cv: number; days_of_data: number; missing_frac: number;
@@ -35,7 +36,7 @@ export interface Recommendation {
   env: Env; region: string; team: string; action: Action; title: string; reason: string;
   current_plan: string | null; target_plan: string | null; saving: number; risk: Risk;
   confidence: number; confidence_notes: string[]; maths: string[]; vcpu_removed: number;
-  peak_check: PeakCheck | null; carbon: { kwh: number; kg_co2: number }; default_accepted: boolean;
+  peak_check: PeakCheck | null; keep_hours?: number[]; carbon: { kwh: number; kg_co2: number }; default_accepted: boolean;
 }
 
 export interface Alert {
