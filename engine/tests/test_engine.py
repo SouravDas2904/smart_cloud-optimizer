@@ -85,3 +85,19 @@ def test_confidence_drops_for_gaps_and_short_history():
 def test_holt_winters_follows_a_flat_series():
     fc, _, _ = holt_winters([100.0] * 28, horizon=7)
     assert np.allclose(fc, 100, atol=1)
+
+
+def test_short_spike_invisible_to_p99_still_blocks_downsize():
+    """A ~10-minute daily spike sits above p99 (which ignores the top 1% = 14 min/day). The max check catches it."""
+    st = stats(cpu_avg=10, cpu_p95=12, cpu_p99=15, cpu_max=90)
+    recs = recommend_vm(vm("s-8-16"), st, COST)
+    assert [r["action"] for r in recs] == ["keep"]
+    assert recs[0]["peak_check"]["cpu_p99_after"] > 100
+    # without the spike the same VM is resized
+    assert recommend_vm(vm("s-8-16"), stats(cpu_avg=10, cpu_p95=12, cpu_p99=15, cpu_max=20), COST)[0]["action"] == "resize"
+
+
+def test_resize_keeps_busiest_reading_under_ceiling():
+    r = recommend_vm(vm("s-8-32", env="staging"), stats(cpu_p99=28, cpu_p95=25, cpu_max=45, mem_p99=35), COST)[0]
+    assert r["action"] == "resize"
+    assert r["peak_check"]["cpu_max_after"] <= C.MAX_CPU_CEILING * 100

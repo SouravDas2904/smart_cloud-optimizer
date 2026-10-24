@@ -14,7 +14,7 @@ import pandas as pd
 import config as C
 from alerts import build_alerts, robust_anomaly
 from forecast import backtest, holt_winters
-from generate import DATA_DIR, METRICS, START, bill_history
+from generate import DATA_DIR, METRICS, START
 from recommend import monthly_cost, recommend_orphan, recommend_vm
 from stats import vm_stats
 
@@ -112,6 +112,30 @@ def fleet_rollup(vms, series, stats):
     return {"timeline": timeline, "by_region": groups("region"), "by_team": groups("team"), "by_env": groups("env")}
 
 
+def bill_history(resources, months=7) -> list[dict]:
+    """Monthly bills for the last `months` calendar months, reconstructed from the inventory.
+
+    bill(month) = sum over resources of  monthly cost x (days the resource existed in that month / days in month)
+
+    Each resource's monthly cost is the same one the dashboard shows today; its launch date (`created_at`)
+    decides from which day it is billed. Nothing is assumed about growth: the curve is whatever the
+    launch dates produce.
+    """
+    end = pd.Period(pd.Timestamp(NOW) - pd.Timedelta(minutes=1), "M")
+    out = []
+    for m in pd.period_range(end=end, periods=months, freq="M"):
+        m0, m1 = m.start_time.tz_localize(START.tz), (m + 1).start_time.tz_localize(START.tz)
+        month_days = (m1 - m0) / pd.Timedelta(days=1)
+        total = 0.0
+        for r in resources:
+            born = pd.Timestamp(r["created_at"])
+            if born >= m1:
+                continue
+            total += r["cost"]["total"] * ((m1 - max(born, m0)) / pd.Timedelta(days=1)) / month_days
+        out.append({"month": str(m), "inr": round(total)})
+    return out
+
+
 def carbon_kg(vcpu: float) -> dict:
     kwh = vcpu * C.WATTS_PER_VCPU * C.HOURS_PER_MONTH * C.PUE / 1000
     return {"kwh": round(kwh, 1), "kg_co2": round(kwh * C.GRID_KG_CO2_PER_KWH, 1)}
@@ -205,7 +229,7 @@ def main():
         "potential_saving": round(sum(r["saving"] for r in actionable)),
         "by_env": group("env"), "by_region": group("region"), "by_team": group("team"), "by_type": group("type"),
         "by_component": {k: round(sum(r["cost"][k] for r in resources)) for k in ("compute", "storage", "network", "ip")},
-        "bill_history": bill_history(projected_month),
+        "bill_history": bill_history(resources),
         "counts": {a: sum(1 for r in recs if r["action"] == a) for a in
                    ["resize", "schedule", "stop", "review", "delete_volume", "release_ip", "upsize", "keep", "investigate"]},
     }

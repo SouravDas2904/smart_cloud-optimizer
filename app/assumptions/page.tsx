@@ -78,7 +78,7 @@ export default function Assumptions() {
             <li>No reserved-instance / committed-use discounts.</li>
             <li>Same prices in every region; no inter-region transfer pricing.</li>
             <li>No autoscaling groups; each VM is sized individually.</li>
-            <li>Monthly bill history before the 30-day window is synthetic (+40% over six months, per the scenario).</li>
+            <li>Monthly bill history is reconstructed from each resource&apos;s launch date (today&apos;s monthly cost, billed from the day it was created). The launch dates are simulated.</li>
           </ul>
         </div>
       </div>

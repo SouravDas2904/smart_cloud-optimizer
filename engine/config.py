@@ -44,6 +44,8 @@ MONTHLY_BUDGET_INR = 850000       # budget leadership set for this month
 TARGET_CPU_UTIL = 0.70            # resized VM should run <= 70% at its p99 -> 30% headroom
 TARGET_MEM_UTIL = 0.75            # memory exhaustion kills processes -> 25% buffer
 MIN_MEM_MARGIN_GB = 1.0
+MAX_CPU_CEILING = 0.95             # the single busiest 5-min reading must stay below 95% after a resize
+                                  # (catches spikes shorter than ~15 min/day that p99 cannot see)
 
 # --- classification thresholds ---
 IDLE_CPU_P95 = 5.0                # %
