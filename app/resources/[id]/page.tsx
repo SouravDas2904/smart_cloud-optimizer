@@ -6,7 +6,7 @@ import { Fragment, isValidElement, useEffect, useMemo, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Area, Brush, ComposedChart, CartesianGrid, Line, ReferenceArea, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
 import { ChartCard } from "@/components/ChartCard";
-import { AXIS, BRUSH, GRID } from "@/lib/chart";
+import { AXIS, TOOLTIP, BRUSH, GRID } from "@/lib/chart";
 import { useApp } from "../../providers";
 import { EnvPill, Loading } from "@/components/ui";
 import { RecCard } from "@/components/RecCard";
@@ -61,7 +61,7 @@ export default function ResourceDetail() {
           <CartesianGrid {...GRID} />
           <XAxis dataKey="t" type="number" domain={["dataMin", "dataMax"]} scale="time" tickFormatter={big ? fmtFull : fmtT} {...AXIS} minTickGap={big ? 60 : 36} />
           <YAxis domain={domain ?? ["auto", "auto"]} {...AXIS} unit={unit} width={44} tickCount={5} />
-          <Tooltip labelFormatter={(t: number) => fmtFull(t)} formatter={(v: number) => (v == null ? "—" : v.toFixed(1))} />
+          <Tooltip {...TOOLTIP} labelFormatter={(t: number) => fmtFull(t)} formatter={(v: number) => (v == null ? "—" : v.toFixed(1))} />
           {alert?.start && <ReferenceArea ifOverflow="hidden" x1={new Date(alert.start).getTime()} x2={new Date(alert.end!).getTime()} fill="#3a1512" fillOpacity={0.6} />}
           {series}
           {big && <Brush dataKey="t" {...BRUSH} tickFormatter={fmtT} />}

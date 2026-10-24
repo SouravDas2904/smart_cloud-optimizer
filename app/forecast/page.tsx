@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Area, Brush, CartesianGrid, ComposedChart, Legend, Line, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
 import { ChartCard } from "@/components/ChartCard";
-import { AXIS, BRUSH, GRID, fmtDay, inrTick } from "@/lib/chart";
+import { AXIS, TOOLTIP, BRUSH, GRID, fmtDay, inrTick } from "@/lib/chart";
 import { useApp } from "../providers";
 import { Kpi, Loading, PageTitle } from "@/components/ui";
 import { totals } from "@/lib/engine";
@@ -50,7 +50,7 @@ export default function Forecast() {
             <CartesianGrid {...GRID} />
             <XAxis dataKey="date" {...AXIS} minTickGap={big ? 50 : 36} tickFormatter={(d: string) => fmtDay(new Date(d).getTime())} />
             <YAxis tickFormatter={inrTick} {...AXIS} width={60} domain={["auto", "auto"]} tickCount={5} />
-            <Tooltip formatter={(v: number | number[]) => Array.isArray(v) ? `${inr(v[0])} – ${inr(v[1])}` : inr(v)} />
+            <Tooltip {...TOOLTIP} formatter={(v: number | number[]) => Array.isArray(v) ? `${inr(v[0])} – ${inr(v[1])}` : inr(v)} />
             <Legend verticalAlign="top" height={30} iconType="plainline" wrapperStyle={{ fontSize: 12 }} />
             <Area dataKey="band" name="Forecast range" stroke="none" fill="#26262b" isAnimationActive={false} />
             <Line dataKey="actual" name="Actual daily cost" stroke="#e8e8ea" dot={false} strokeWidth={1.6} isAnimationActive={false} />

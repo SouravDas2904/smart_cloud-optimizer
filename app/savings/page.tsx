@@ -2,7 +2,7 @@
 
 import { Bar, BarChart, CartesianGrid, Cell, LabelList, Tooltip, XAxis, YAxis } from "recharts";
 import { ChartCard } from "@/components/ChartCard";
-import { AXIS, CURSOR, GRID, INK, barLabel, inrTick } from "@/lib/chart";
+import { AXIS, TOOLTIP, CURSOR, GRID, INK, barLabel, inrTick } from "@/lib/chart";
 import { useApp } from "../providers";
 import { Kpi, Loading, PageTitle } from "@/components/ui";
 import { totals } from "@/lib/engine";
@@ -42,12 +42,12 @@ export default function Savings() {
         render={(big) => (
           <BarChart data={water} margin={{ left: 10, right: 10, top: 22 }}>
             <CartesianGrid {...GRID} />
-            <XAxis dataKey="name" {...AXIS} interval={0} tick={{ fontSize: big ? 12 : 10, fill: "#8c8c94" }} />
-            <YAxis tickFormatter={inrTick} {...AXIS} width={64} allowDataOverflow tickCount={5}
-              domain={[Math.floor((t.after * 0.85) / 50000) * 50000, Math.ceil((t.before * 1.02) / 50000) * 50000]} />
-            <Tooltip formatter={(v: number, n) => (n === "base" ? null : inr(v))} cursor={CURSOR} />
-            <Bar isAnimationActive={false} dataKey="base" stackId="a" fill="transparent" />
-            <Bar isAnimationActive={false} dataKey="value" stackId="a" radius={[6, 6, 0, 0]} maxBarSize={72}>
+            {/* the axis starts at ₹0 and its line is drawn, so Current and After stand on a visible floor */}
+            <XAxis dataKey="name" {...AXIS} axisLine={{ stroke: INK.axis }} interval={0} tick={{ fontSize: big ? 12 : 10, fill: INK.tick }} />
+            <YAxis tickFormatter={inrTick} {...AXIS} width={64} tickCount={5} domain={[0, Math.ceil((t.before * 1.08) / 100000) * 100000]} />
+            <Tooltip {...TOOLTIP} formatter={(v: number) => inr(v)} cursor={CURSOR} />
+            <Bar isAnimationActive={false} dataKey="base" stackId="a" fill="transparent" tooltipType="none" />
+            <Bar isAnimationActive={false} dataKey="value" name="Amount" stackId="a" radius={[6, 6, 0, 0]} maxBarSize={72} minPointSize={3}>
               {water.map((w, i) => <Cell key={i} fill={color[w.kind]} />)}
               <LabelList dataKey="value" position="top" formatter={inrTick} style={{ ...barLabel(big), fill: INK.text, fontWeight: 600 }} />
             </Bar>
