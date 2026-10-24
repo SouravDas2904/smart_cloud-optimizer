@@ -69,6 +69,7 @@ export function RecCard({ r, compact = false }: { r: Recommendation; compact?: b
             {r.saving > 0 ? `−${inr(r.saving)}` : r.saving < 0 ? `+${inr(-r.saving)}` : "₹0"}
           </div>
           <div className="text-xs text-slate-400">per month</div>
+          {role === "finance" && r.saving !== 0 && <div className="mt-0.5 text-xs font-medium text-slate-600">{r.saving > 0 ? "" : "+"}{inr(Math.abs(r.saving) * 12)} / year</div>}
         </div>
       </div>
 
@@ -77,7 +78,8 @@ export function RecCard({ r, compact = false }: { r: Recommendation; compact?: b
           <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
             <RiskPill risk={r.risk} />
             <span className="flex items-center gap-1.5 text-slate-500">Confidence <ConfidenceBar value={r.confidence} /></span>
-            {r.peak_check && (
+            {role === "finance" && <span className="text-slate-500">Owner: <b className="text-slate-700">{r.team}</b></span>}
+            {role !== "finance" && r.peak_check && (
               <span className={cls("flex items-center gap-1", r.peak_check.safe ? "text-emerald-700" : "text-red-700")}>
                 {r.peak_check.safe ? <ShieldCheck size={14} /> : <ShieldAlert size={14} />}
                 Peak check: p99 {r.peak_check.cpu_p99_before.toFixed(0)}% → {r.peak_check.cpu_p99_after.toFixed(0)}%

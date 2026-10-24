@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Area, CartesianGrid, ComposedChart, Legend, Line, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, Brush, CartesianGrid, ComposedChart, Legend, Line, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
+import { ChartCard } from "@/components/ChartCard";
+import { AXIS, BRUSH, GRID, fmtDay, inrTick } from "@/lib/chart";
 import { useApp } from "../providers";
 import { Kpi, Loading, PageTitle } from "@/components/ui";
 import { totals } from "@/lib/engine";
@@ -36,30 +38,29 @@ export default function Forecast() {
           </div>
         } />
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Kpi label={`Next ${horizon} days: do nothing`} value={inrShort(doNothing)} tone="bad" />
-        <Kpi label={`Next ${horizon} days: optimised`} value={inrShort(optimised)} tone="save" />
+        <Kpi label={`Next ${horizon} days: do nothing`} count={doNothing} fmt={inrShort} tone="bad" />
+        <Kpi label={`Next ${horizon} days: optimised`} count={optimised} fmt={inrShort} tone="save" />
         <Kpi label="Avoided spend" value={inrShort(doNothing - optimised)} tone="save" sub={`with ${t.count} accepted actions`} />
         <Kpi label="Budget (same period)" value={inrShort(budgetDaily * horizon)} sub={doNothing > budgetDaily * horizon ? "do-nothing path overruns" : "within budget"} />
       </div>
-      <div className="card card-pad">
-        <div className="h-80">
-          <ResponsiveContainer>
-            <ComposedChart data={rows} margin={{ left: 10, right: 10, top: 8 }}>
-              <CartesianGrid vertical={false} stroke="#eef2f7" />
-              <XAxis dataKey="date" tick={{ fontSize: 10 }} stroke="#94a3b8" minTickGap={30} />
-              <YAxis tickFormatter={(v) => inrShort(v)} tick={{ fontSize: 10 }} stroke="#94a3b8" width={60} domain={["auto", "auto"]} />
-              <Tooltip formatter={(v: number | number[]) => Array.isArray(v) ? `${inr(v[0])} – ${inr(v[1])}` : inr(v)} />
-              <Legend />
-              <Area dataKey="band" name="Forecast range" stroke="none" fill="#e2e8f0" isAnimationActive={false} />
-              <Line dataKey="actual" name="Actual daily cost" stroke="#0f172a" dot={false} strokeWidth={1.6} isAnimationActive={false} />
-              <Line dataKey="forecast" name="Do nothing" stroke="#ef4444" dot={false} strokeDasharray="5 3" isAnimationActive={false} />
-              <Line dataKey="optimised" name="With accepted recommendations" stroke="#10b981" dot={false} strokeWidth={2} isAnimationActive={false} />
-              <ReferenceLine y={budgetDaily} stroke="#f59e0b" strokeDasharray="4 4" label={{ value: "daily budget", fontSize: 10, fill: "#b45309", position: "insideBottomRight" }} />
-            </ComposedChart>
-          </ResponsiveContainer>
-        </div>
-        <p className="mt-2 text-xs text-slate-500">The jump mid-window is the 8 ML VMs launched by the Data team; the bump near the end is the anomaly&apos;s extra egress. The model has 30 days of history, so the range widens with the horizon.</p>
-      </div>
+      <ChartCard title="Daily cost: actual, forecast and optimised" height={320}
+        sub="Black = actual, red dashed = do nothing, green = with your accepted recommendations, grey band = likely range."
+        render={(big) => (
+          <ComposedChart data={rows} margin={{ left: 4, right: 10, top: 8 }}>
+            <CartesianGrid {...GRID} />
+            <XAxis dataKey="date" {...AXIS} minTickGap={big ? 50 : 36} tickFormatter={(d: string) => fmtDay(new Date(d).getTime())} />
+            <YAxis tickFormatter={inrTick} {...AXIS} width={60} domain={["auto", "auto"]} tickCount={5} />
+            <Tooltip formatter={(v: number | number[]) => Array.isArray(v) ? `${inr(v[0])} – ${inr(v[1])}` : inr(v)} />
+            <Legend verticalAlign="top" height={30} iconType="plainline" wrapperStyle={{ fontSize: 12 }} />
+            <Area dataKey="band" name="Forecast range" stroke="none" fill="#e2e8f0" isAnimationActive={false} />
+            <Line dataKey="actual" name="Actual daily cost" stroke="#0f172a" dot={false} strokeWidth={1.6} isAnimationActive={false} />
+            <Line dataKey="forecast" name="Do nothing" stroke="#ef4444" dot={false} strokeDasharray="5 3" isAnimationActive={false} />
+            <Line dataKey="optimised" name="With accepted recommendations" stroke="#10b981" dot={false} strokeWidth={2} isAnimationActive={false} />
+            <ReferenceLine y={budgetDaily} stroke="#f59e0b" strokeDasharray="4 4" label={{ value: "daily budget", fontSize: 10, fill: "#b45309", position: "insideBottomRight" }} />
+            {big && <Brush dataKey="date" {...BRUSH} />}
+          </ComposedChart>
+        )}
+        footer={<p className="mt-2 text-xs text-slate-500">The jump mid-window is the 8 ML VMs launched by the Data team; the bump near the end is the anomaly&apos;s extra egress. The model has 30 days of history, so the range widens with the horizon.</p>} />
     </div>
   );
 }

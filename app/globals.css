@@ -5,7 +5,14 @@
 :root { color-scheme: light; }
 body { @apply bg-slate-50 text-slate-800 antialiased; }
 
-.card { @apply rounded-xl border border-slate-200 bg-white shadow-sm; }
+.card { @apply relative rounded-xl border border-slate-200 bg-white shadow-sm transition-[box-shadow,border-color] duration-300; }
+.card:hover { @apply border-slate-300 shadow-md; }
+/* spotlight that follows the cursor (position set by components/motion.tsx) */
+.card::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgb(36 87 214 / .06), transparent 45%);
+}
+.card:hover::after { opacity: 1; }
 .card-pad { @apply p-4 md:p-5; }
 .h-section { @apply text-sm font-semibold uppercase tracking-wide text-slate-500; }
 .btn { @apply inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors disabled:opacity-50; }
@@ -19,5 +26,16 @@ body { @apply bg-slate-50 text-slate-800 antialiased; }
   .no-print { display: none !important; }
   body { background: white; }
   .card { box-shadow: none; break-inside: avoid; }
+  .card::after { display: none; }
   main { padding: 0 !important; margin: 0 !important; }
 }
+
+/* charts */
+@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+@keyframes popIn { from { opacity: 0; transform: translateY(8px) scale(.98) } to { opacity: 1; transform: none } }
+.recharts-default-tooltip {
+  border-radius: 10px !important; border: 1px solid #e2e8f0 !important; font-size: 12px;
+  box-shadow: 0 10px 30px -10px rgb(15 23 42 / .25); padding: 8px 10px !important;
+}
+.recharts-tooltip-label { font-weight: 600; color: #0f172a; margin-bottom: 2px !important; }
+.recharts-brush-texts text { font-size: 10px; fill: #64748b; }

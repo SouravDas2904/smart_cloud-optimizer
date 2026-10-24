@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Cpu, HardDrive, MemoryStick, Network } from "lucide-react";
-import { CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Brush, CartesianGrid, Legend, Line, LineChart, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
+import { ChartCard } from "@/components/ChartCard";
+import { AXIS, BRUSH, GRID, fmtDateTime } from "@/lib/chart";
 import { useApp } from "../providers";
 import { Kpi, Loading, PageTitle } from "@/components/ui";
 import { cls, inr } from "@/lib/format";
@@ -99,10 +101,9 @@ export default function Utilization() {
           sub={`${inr(egressCost)}/month at ₹${data.assumptions.EGRESS_INR_PER_GB as number}/GB`} />
       </div>
 
-      <div className="card card-pad">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="font-semibold text-slate-900">Fleet usage over 30 days (hourly)</h2>
-          <div className="flex flex-wrap gap-1 rounded-lg bg-slate-100 p-1 text-sm">
+      <ChartCard title="Fleet usage over 30 days (hourly)" sub={chart.note} height={260}
+        actions={
+          <div className="flex flex-wrap gap-1 rounded-lg bg-slate-100 p-1 text-sm" onClick={(e) => e.stopPropagation()}>
             {METRICS.map(({ id, label, icon: Icon }) => (
               <button key={id} onClick={() => setMetric(id)}
                 className={cls("flex items-center gap-1.5 rounded-md px-3 py-1", metric === id ? "bg-white font-medium text-slate-900 shadow-sm" : "text-slate-500")}>
@@ -110,22 +111,19 @@ export default function Utilization() {
               </button>
             ))}
           </div>
-        </div>
-        <p className="mt-1 text-xs text-slate-500">{chart.note}</p>
-        <div className="mt-3 h-64">
-          <ResponsiveContainer>
-            <LineChart data={rows} margin={{ left: 0, right: 8, top: 8 }}>
-              <CartesianGrid vertical={false} stroke="#eef2f7" />
-              <XAxis dataKey="t" type="number" scale="time" domain={["dataMin", "dataMax"]} tickFormatter={fmtT} tick={{ fontSize: 11 }} stroke="#94a3b8" minTickGap={40} />
-              <YAxis tick={{ fontSize: 11 }} stroke="#94a3b8" width={44} unit={chart.unit} domain={chart.unit === "%" ? [0, 100] : [0, "auto"]} />
-              <Tooltip labelFormatter={(x: number) => new Date(x).toLocaleString("en-IN", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Asia/Kolkata" })}
-                formatter={(v: number) => v.toFixed(1)} />
-              {chart.unit === "%" && <ReferenceLine y={70} stroke="#94a3b8" strokeDasharray="4 4" label={{ value: "70% target", fontSize: 10, fill: "#64748b", position: "insideTopRight" }} />}
-              {chart.keys.map(([k, name, color]) => <Line key={k} isAnimationActive={false} dataKey={k} name={name} stroke={color} dot={false} strokeWidth={1.5} />)}
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
+        }
+        render={(big) => (
+          <LineChart data={rows} margin={{ left: 0, right: 8, top: 8 }}>
+            <CartesianGrid {...GRID} />
+            <XAxis dataKey="t" type="number" scale="time" domain={["dataMin", "dataMax"]} tickFormatter={big ? fmtDateTime : fmtT} {...AXIS} minTickGap={big ? 70 : 44} />
+            <YAxis {...AXIS} width={44} unit={chart.unit} tickCount={5} domain={chart.unit === "%" ? [0, 100] : [0, "auto"]} />
+            <Tooltip labelFormatter={(x: number) => fmtDateTime(x)} formatter={(v: number) => v.toFixed(1)} />
+            {big && <Legend verticalAlign="top" height={28} iconType="plainline" />}
+            {chart.unit === "%" && <ReferenceLine y={70} stroke="#94a3b8" strokeDasharray="4 4" label={{ value: "70% target", fontSize: 10, fill: "#64748b", position: "insideTopRight" }} />}
+            {chart.keys.map(([k, name, color]) => <Line key={k} isAnimationActive={false} dataKey={k} name={name} stroke={color} dot={false} strokeWidth={big ? 1.6 : 1.4} />)}
+            {big && <Brush dataKey="t" {...BRUSH} tickFormatter={fmtT} />}
+          </LineChart>
+        )} />
 
       <div className="card card-pad overflow-x-auto">
         <div className="flex flex-wrap items-center justify-between gap-3">

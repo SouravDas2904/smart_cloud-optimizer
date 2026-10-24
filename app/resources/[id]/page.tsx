@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Fragment, isValidElement, useEffect, useMemo, useState } from "react";
 import { ArrowLeft } from "lucide-react";
-import { Area, ComposedChart, CartesianGrid, Line, ReferenceArea, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, Brush, ComposedChart, CartesianGrid, Line, ReferenceArea, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
+import { ChartCard } from "@/components/ChartCard";
+import { AXIS, BRUSH, GRID } from "@/lib/chart";
 import { useApp } from "../../providers";
 import { EnvPill, Loading } from "@/components/ui";
 import { RecCard } from "@/components/RecCard";
@@ -54,21 +56,17 @@ export default function ResourceDetail() {
     const series = isValidElement(children) && children.type === Fragment
       ? (children.props as { children: React.ReactNode }).children : children;
     return (
-    <div className="card card-pad">
-      <h3 className="mb-2 text-sm font-semibold text-slate-800">{title}</h3>
-      <div className="h-48">
-        <ResponsiveContainer>
-          <ComposedChart data={rows} margin={{ left: -10, right: 8, top: 4 }}>
-            <CartesianGrid vertical={false} stroke="#eef2f7" />
-            <XAxis dataKey="t" type="number" domain={["dataMin", "dataMax"]} scale="time" tickFormatter={fmtT} tick={{ fontSize: 10 }} stroke="#94a3b8" />
-            <YAxis domain={domain ?? ["auto", "auto"]} tick={{ fontSize: 10 }} stroke="#94a3b8" unit={unit} />
-            <Tooltip labelFormatter={(t: number) => fmtFull(t)} formatter={(v: number) => (v == null ? "—" : v.toFixed(1))} />
-            {alert?.start && <ReferenceArea ifOverflow="hidden" x1={new Date(alert.start).getTime()} x2={new Date(alert.end!).getTime()} fill="#fee2e2" fillOpacity={0.6} />}
-            {series}
-          </ComposedChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
+      <ChartCard title={title} height={200} render={(big) => (
+        <ComposedChart data={rows} margin={{ left: big ? 4 : -10, right: 8, top: big ? 10 : 4 }}>
+          <CartesianGrid {...GRID} />
+          <XAxis dataKey="t" type="number" domain={["dataMin", "dataMax"]} scale="time" tickFormatter={big ? fmtFull : fmtT} {...AXIS} minTickGap={big ? 60 : 36} />
+          <YAxis domain={domain ?? ["auto", "auto"]} {...AXIS} unit={unit} width={44} tickCount={5} />
+          <Tooltip labelFormatter={(t: number) => fmtFull(t)} formatter={(v: number) => (v == null ? "—" : v.toFixed(1))} />
+          {alert?.start && <ReferenceArea ifOverflow="hidden" x1={new Date(alert.start).getTime()} x2={new Date(alert.end!).getTime()} fill="#fee2e2" fillOpacity={0.6} />}
+          {series}
+          {big && <Brush dataKey="t" {...BRUSH} tickFormatter={fmtT} />}
+        </ComposedChart>
+      )} />
     );
   };
 
@@ -105,15 +103,15 @@ export default function ResourceDetail() {
           <div className="grid gap-5 lg:grid-cols-2">
             {chart("CPU (30-min average, with 30-min peak)", <>
               <Area dataKey="cpu_max" stroke="none" fill="#bfd0ff" fillOpacity={0.6} name="peak" isAnimationActive={false} />
-              <Line dataKey="cpu" stroke="#2457d6" dot={false} strokeWidth={1.4} name="avg" isAnimationActive={false} />
+              <Line dataKey="cpu" stroke="#2457d6" dot={false} strokeWidth={1.5} name="avg" isAnimationActive={false} />
               <ReferenceLine y={st.cpu_p95} stroke="#f59e0b" strokeDasharray="4 3" label={{ value: `p95 ${st.cpu_p95.toFixed(0)}%`, fontSize: 10, position: "insideTopLeft", fill: "#b45309" }} />
               <ReferenceLine y={st.cpu_p99} stroke="#ef4444" strokeDasharray="4 3" label={{ value: `p99 ${st.cpu_p99.toFixed(0)}%`, fontSize: 10, position: "insideTopRight", fill: "#b91c1c" }} />
             </>, [0, 100])}
             {chart("Memory", <>
-              <Line dataKey="mem" stroke="#8b5cf6" dot={false} strokeWidth={1.4} name="mem" isAnimationActive={false} />
+              <Line dataKey="mem" stroke="#8b5cf6" dot={false} strokeWidth={1.5} name="mem" isAnimationActive={false} />
               <ReferenceLine y={st.mem_p99} stroke="#ef4444" strokeDasharray="4 3" label={{ value: `p99 ${st.mem_p99.toFixed(0)}%`, fontSize: 10, position: "insideTopRight", fill: "#b91c1c" }} />
             </>, [0, 100])}
-            {chart("Disk used", <Line dataKey="disk" stroke="#0ea5e9" dot={false} strokeWidth={1.4} name="disk" isAnimationActive={false} />, [0, 100])}
+            {chart("Disk used", <Line dataKey="disk" stroke="#0ea5e9" dot={false} strokeWidth={1.5} name="disk" isAnimationActive={false} />, [0, 100])}
             {chart("Network (MB/s)", <>
               <Line dataKey="net_in" stroke="#14b8a6" dot={false} strokeWidth={1.2} name="in" isAnimationActive={false} />
               <Line dataKey="net_out" stroke="#f97316" dot={false} strokeWidth={1.2} name="out" isAnimationActive={false} />

@@ -25,10 +25,10 @@ const NAV = [
   { href: "/assumptions", label: "Assumptions", icon: BookOpen },
 ];
 
-const ROLES: { id: Role; label: string }[] = [
-  { id: "engineer", label: "Engineer" },
-  { id: "finance", label: "Finance" },
-  { id: "leadership", label: "Leadership" },
+const ROLES: { id: Role; label: string; hint: string }[] = [
+  { id: "engineer", label: "Engineer", hint: "Full technical detail: peak checks, maths, plans" },
+  { id: "finance", label: "Finance", hint: "Money view: chargeback by team, annual savings, budget gap" },
+  { id: "leadership", label: "Leadership", hint: "One-minute summary and the decisions that need you" },
 ];
 
 export function Shell({ children }: { children: React.ReactNode }) {
@@ -76,28 +76,39 @@ export function Shell({ children }: { children: React.ReactNode }) {
           {open ? <X /> : <Menu />}
         </button>
       </div>
-      {open && <div className="no-print bg-ink px-3 pb-4 md:hidden">{nav}</div>}
+      {open && (
+        <div className="no-print bg-ink px-3 pb-4 md:hidden">
+          {nav}
+          <div className="mt-3 flex gap-1 rounded-lg bg-white/5 p-1 text-sm">
+            {ROLES.map((r) => (
+              <button key={r.id} onClick={() => { setRole(r.id); setOpen(false); }}
+                className={cls("flex-1 rounded-md px-2 py-1.5", role === r.id ? "bg-white/15 text-white" : "text-slate-400")}>{r.label}</button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="min-w-0 flex-1">
         <header className="no-print sticky top-0 z-20 hidden items-center gap-4 border-b border-slate-200 bg-white/90 px-6 py-3 backdrop-blur md:flex">
           {t && (
-            <div className="flex items-center gap-5 text-sm">
+            <div className="flex items-center gap-5 whitespace-nowrap text-sm">
               <span className="text-slate-500">Current <b className="text-slate-800">{inrShort(t.before)}</b>/mo</span>
               <span className="text-slate-400">→</span>
               <span className="text-slate-500">After accepted <b className="text-slate-800">{inrShort(t.after)}</b>/mo</span>
               <span className="chip bg-save-50 text-save-700">saving {inrShort(t.saving)} ({((t.saving / t.before) * 100).toFixed(1)}%)</span>
             </div>
           )}
-          <div className="ml-auto flex items-center gap-1 rounded-lg bg-slate-100 p-1 text-sm">
+          <span className="ml-auto hidden max-w-[220px] text-right text-xs leading-tight text-slate-500 2xl:block">{ROLES.find((r) => r.id === role)?.hint}</span>
+          <div className="ml-auto flex items-center gap-1 rounded-lg bg-slate-100 p-1 text-sm 2xl:ml-0">
             {ROLES.map((r) => (
-              <button key={r.id} onClick={() => setRole(r.id)}
+              <button key={r.id} onClick={() => setRole(r.id)} title={r.hint}
                 className={cls("rounded-md px-3 py-1", role === r.id ? "bg-white font-medium text-slate-900 shadow-sm" : "text-slate-500")}>
                 {r.label}
               </button>
             ))}
           </div>
         </header>
-        <main className="mx-auto max-w-7xl px-4 py-5 md:px-6 md:py-6">{children}</main>
+        <main key={path} className="mx-auto max-w-7xl animate-[popIn_.35s_cubic-bezier(.2,.7,.2,1)] px-4 py-5 md:px-6 md:py-6">{children}</main>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@
 import { useApp } from "@/app/providers";
 import { cls } from "@/lib/format";
 import type { Risk } from "@/lib/types";
+import { CountUp } from "./motion";
 
 export function Loading() {
   const { error } = useApp();
@@ -25,8 +26,9 @@ export function PageTitle({ title, sub, right }: { title: string; sub?: React.Re
   );
 }
 
-export function Kpi({ label, value, sub, tone = "default", icon }: {
-  label: string; value: React.ReactNode; sub?: React.ReactNode; tone?: "default" | "save" | "warn" | "bad"; icon?: React.ReactNode;
+export function Kpi({ label, value, sub, tone = "default", icon, count, fmt }: {
+  label: string; value?: React.ReactNode; sub?: React.ReactNode; tone?: "default" | "save" | "warn" | "bad"; icon?: React.ReactNode;
+  /** when given, the number counts up on first view */ count?: number; fmt?: (n: number) => string;
 }) {
   const color = { default: "text-slate-900", save: "text-save-600", warn: "text-amber-600", bad: "text-red-600" }[tone];
   return (
@@ -35,7 +37,7 @@ export function Kpi({ label, value, sub, tone = "default", icon }: {
         {label}
         {icon && <span className="text-slate-400">{icon}</span>}
       </div>
-      <div className={cls("mt-1.5 text-2xl font-semibold tabular-nums", color)}>{value}</div>
+      <div className={cls("mt-1.5 text-2xl font-semibold tabular-nums", color)}>{count !== undefined && fmt ? <CountUp value={count} format={fmt} /> : value}</div>
       {sub && <div className="mt-1 text-xs text-slate-500">{sub}</div>}
     </div>
   );

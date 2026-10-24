@@ -1,6 +1,8 @@
 "use client";
 
-import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, LabelList, Tooltip, XAxis, YAxis } from "recharts";
+import { ChartCard } from "@/components/ChartCard";
+import { AXIS } from "@/lib/chart";
 import { Leaf, TreePine, Zap } from "lucide-react";
 import { useApp } from "../providers";
 import { Kpi, Loading, PageTitle } from "@/components/ui";
@@ -30,19 +32,17 @@ export default function Sustainability() {
         <Kpi label="Tree equivalent" tone="save" value={trees.toFixed(0)} icon={<TreePine size={16} />} sub={`trees absorbing CO₂ for a year (${a.KG_CO2_PER_TREE_YEAR} kg each)`} />
       </div>
       <div className="grid gap-5 lg:grid-cols-2">
-        <div className="card card-pad">
-          <h2 className="font-semibold text-slate-900">CO₂ avoided per team (kg / month)</h2>
-          <div className="mt-3 h-64">
-            <ResponsiveContainer>
-              <BarChart data={rows} layout="vertical" margin={{ left: 10 }}>
-                <XAxis type="number" tick={{ fontSize: 11 }} stroke="#94a3b8" />
-                <YAxis type="category" dataKey="team" width={84} tick={{ fontSize: 11 }} stroke="#94a3b8" />
-                <Tooltip />
-                <Bar isAnimationActive={false} dataKey="kg" fill="#10b981" radius={[0, 4, 4, 0]} name="kg CO₂ / month" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+        <ChartCard title="CO₂ avoided per team (kg / month)" height={256}
+          render={(big) => (
+            <BarChart data={rows} layout="vertical" margin={{ left: 10, right: 40 }}>
+              <XAxis type="number" {...AXIS} tickCount={5} />
+              <YAxis type="category" dataKey="team" width={84} {...AXIS} />
+              <Tooltip cursor={{ fill: "#f1f5f9" }} />
+              <Bar isAnimationActive={false} dataKey="kg" fill="#10b981" radius={[0, 6, 6, 0]} name="kg CO₂ / month" maxBarSize={24}>
+                <LabelList dataKey="kg" position="right" formatter={(v: number) => `${v} kg`} style={{ fontSize: big ? 12 : 10, fill: "#475569" }} />
+              </Bar>
+            </BarChart>
+          )} />
         <div className="card card-pad text-sm">
           <h2 className="font-semibold text-slate-900">How it is calculated</h2>
           <div className="mono mt-3 space-y-1 rounded-lg bg-slate-900 p-3 text-xs text-slate-100">

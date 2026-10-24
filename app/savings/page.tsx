@@ -1,6 +1,8 @@
 "use client";
 
-import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, Cell, LabelList, Tooltip, XAxis, YAxis } from "recharts";
+import { ChartCard } from "@/components/ChartCard";
+import { AXIS, GRID, inrTick } from "@/lib/chart";
 import { useApp } from "../providers";
 import { Kpi, Loading, PageTitle } from "@/components/ui";
 import { totals } from "@/lib/engine";
@@ -29,30 +31,28 @@ export default function Savings() {
       <PageTitle title="Before vs after"
         sub="Projected monthly cost if the accepted recommendations are applied. It updates live as you accept or reject cards. Upsizes add cost (shown in amber) because reliability comes first." />
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Kpi label="Before" value={inrShort(t.before)} sub="per month, all resources" />
-        <Kpi label="After" value={inrShort(t.after)} tone="save" sub={`${t.count} accepted actions`} />
-        <Kpi label="Monthly saving" value={inrShort(t.saving)} tone="save" sub={`${((t.saving / t.before) * 100).toFixed(1)}% lower bill`} />
-        <Kpi label="Annual saving" value={inrShort(t.saving * 12)} tone="save" sub="if applied for 12 months" />
+        <Kpi label="Before" count={t.before} fmt={inrShort} sub="per month, all resources" />
+        <Kpi label="After" count={t.after} fmt={inrShort} tone="save" sub={`${t.count} accepted actions`} />
+        <Kpi label="Monthly saving" count={t.saving} fmt={inrShort} tone="save" sub={`${((t.saving / t.before) * 100).toFixed(1)}% lower bill`} />
+        <Kpi label="Annual saving" count={t.saving * 12} fmt={inrShort} tone="save" sub="if applied for 12 months" />
       </div>
 
-      <div className="card card-pad">
-        <h2 className="font-semibold text-slate-900">Where the savings come from</h2>
-        <div className="mt-3 h-72">
-          <ResponsiveContainer>
-            <BarChart data={water} margin={{ left: 10, right: 10 }}>
-              <CartesianGrid vertical={false} stroke="#eef2f7" />
-              <XAxis dataKey="name" tick={{ fontSize: 11 }} stroke="#94a3b8" interval={0} />
-              <YAxis tickFormatter={(v) => inrShort(v)} tick={{ fontSize: 11 }} stroke="#94a3b8" width={64} allowDataOverflow
-                domain={[Math.floor((t.after * 0.85) / 50000) * 50000, Math.ceil((t.before * 1.02) / 50000) * 50000]} />
-              <Tooltip formatter={(v: number, n) => (n === "base" ? null : inr(v))} />
-              <Bar isAnimationActive={false} dataKey="base" stackId="a" fill="transparent" />
-              <Bar isAnimationActive={false} dataKey="value" stackId="a" radius={[4, 4, 0, 0]}>
-                {water.map((w, i) => <Cell key={i} fill={color[w.kind]} />)}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
+      <ChartCard title="Where the savings come from" height={300}
+        sub="Start at today's bill, subtract each type of accepted action, end at the new bill. Amber bars add cost (upsizes)."
+        render={(big) => (
+          <BarChart data={water} margin={{ left: 10, right: 10, top: 22 }}>
+            <CartesianGrid {...GRID} />
+            <XAxis dataKey="name" {...AXIS} interval={0} tick={{ fontSize: big ? 12 : 10, fill: "#64748b" }} />
+            <YAxis tickFormatter={inrTick} {...AXIS} width={64} allowDataOverflow tickCount={5}
+              domain={[Math.floor((t.after * 0.85) / 50000) * 50000, Math.ceil((t.before * 1.02) / 50000) * 50000]} />
+            <Tooltip formatter={(v: number, n) => (n === "base" ? null : inr(v))} cursor={{ fill: "#f1f5f9" }} />
+            <Bar isAnimationActive={false} dataKey="base" stackId="a" fill="transparent" />
+            <Bar isAnimationActive={false} dataKey="value" stackId="a" radius={[6, 6, 0, 0]} maxBarSize={72}>
+              {water.map((w, i) => <Cell key={i} fill={color[w.kind]} />)}
+              <LabelList dataKey="value" position="top" formatter={inrTick} style={{ fontSize: big ? 12 : 10, fill: "#334155", fontWeight: 600 }} />
+            </Bar>
+          </BarChart>
+        )} />
 
       <div className="grid gap-5 lg:grid-cols-2">
         {([["By environment", t.byEnv], ["By team", t.byTeam]] as const).map(([title, grp]) => (
