@@ -48,29 +48,34 @@ All thresholds and prices live in `engine/config.py` and are shown in-app on `/a
 - `components/ChartCard.tsx`: any chart card can be clicked to open a large popup with a zoom slider.
 - `components/FleetGrid.tsx`, `CommandPalette.tsx` (Ctrl K), `motion.tsx` (count-up numbers, fade-in), `Spotlight.tsx` (card glow under the cursor).
 
-## Run it
+## Run locally
+
+You need **Node.js 20+** ([nodejs.org](https://nodejs.org)) and, to rebuild the data or run the tests,
+**Python 3.10+** ([python.org](https://www.python.org/downloads/); on Windows tick "Add python.exe to PATH").
+No API key and no database are needed.
 
 ```bash
-npm install
-npm run dev            # http://localhost:3000 (uses the committed data in public/data)
-```
+git clone https://github.com/SouravDas2904/smart_cloud-optimizer.git
+cd smart_cloud-optimizer
 
-Regenerate the data and run the engine tests (Python 3.11+):
-
-```bash
+# 1. (optional) rebuild the data with the Python engine. The repo already ships the built data in public/data.
 pip install -r engine/requirements.txt
-npm run data           # generate.py + build.py
-npm run test:engine    # pytest
+npm run data           # runs engine/generate.py then engine/build.py, writes public/data/*.json
+
+# 2. start the website
+npm install
+npm run dev            # then open http://localhost:3000
 ```
 
-Run the engine on your own CSVs instead of the simulated estate (format: [`DATA_FORMAT.md`](DATA_FORMAT.md)):
-
-```bash
-python3 engine/build.py --data public/samples/demo_company    # or any folder with inventory.csv, metrics.csv, pricing.csv
-python3 engine/make_sample_csv.py my_export                   # the whole demo estate written in the upload format
-```
-
-Optional AI explanations: set `ANTHROPIC_API_KEY` in Vercel → Project → Settings → Environment Variables. Without it the app uses rule-based explanations.
+- `npm run test:engine` runs the engine tests (pytest, 66 tests).
+- **Upload real data:** open http://localhost:3000/upload, drop `inventory.csv`, `metrics.csv` and `pricing.csv`
+  (try the files in `public/samples/demo_company/`). They are checked and analysed in the browser; nothing is uploaded.
+  The same from the command line: `npm run data:csv -- public/samples/demo_company` (format: [`DATA_FORMAT.md`](DATA_FORMAT.md)).
+  `npm run data` switches back to the demo estate.
+- `python engine/make_sample_csv.py my_export` writes the whole demo estate in the upload format.
+- The npm scripts find Python by themselves (`python3`, `python` or the Windows `py` launcher).
+- AI explanations work without a key (rule-based). To use Claude instead, set `ANTHROPIC_API_KEY` in a `.env.local`
+  file, or in Vercel → Project → Settings → Environment Variables.
 
 ## Deploy
 

@@ -9,9 +9,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "data": "python3 engine/generate.py && python3 engine/build.py",
-    "data:csv": "python3 engine/build.py --data",
-    "test:engine": "python3 -m pytest -q engine/tests"
+    "data": "node scripts/engine.mjs data",
+    "data:csv": "node scripts/engine.mjs csv",
+    "test:engine": "node scripts/engine.mjs test"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.3.0",
