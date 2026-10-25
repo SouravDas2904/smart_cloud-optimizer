@@ -21,6 +21,20 @@ Bonus: **Hit my target** (`/target`: type "cut 15%", get the least risky plan th
 
 ## Architecture
 
+![SmartCloud Optimizer system architecture](docs/architecture.svg)
+
+How to read it (left to right):
+
+1. **Data in**: either the simulated demo estate (`engine/generate.py`, fixed seed) or a company's own CSVs (`engine/csv_loader.py`, strict checks).
+2. **Python engine**: `engine/build.py` runs stats → recommendations → alerts → forecast → Hit my target. Thresholds and prices come from `engine/config.py`.
+3. **Static JSON**: the results land in `public/data/*.json`, committed to the repo.
+4. **Dashboard**: Next.js pages read that JSON; `lib/engine.ts` recomputes accept/reject, what-if and target plans live.
+
+Solid blue arrows are the build-time data flow. The dashed green path is **Upload real data**: the same Python files run in
+the visitor's browser (Pyodide) and the results stay in that browser. The dotted pink path is the optional **AI explanation**,
+which only rewords the numbers on one card and falls back to a rule-based text when no API key is set. A PNG copy is at
+[`docs/architecture.png`](docs/architecture.png).
+
 There is no backend server. The engine is an offline Python pipeline that writes static JSON; the Next.js dashboard
 (hosted on Vercel) reads that JSON. The only server-side code is the optional `/api/explain` route (a Vercel serverless
 function). Uploaded CSVs are processed by the same Python files running in the visitor's browser (Pyodide), so they
