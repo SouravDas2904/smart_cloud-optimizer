@@ -110,7 +110,7 @@ export default function Report() {
           <div>
             <div className="text-xs font-semibold uppercase tracking-wide text-brand-600">SmartCloud Optimizer · Cost optimisation report</div>
             <h1 className="mt-1 text-2xl font-semibold text-slate-900">Save {inr(t.saving)} per month ({((t.saving / t.before) * 100).toFixed(1)}%)</h1>
-            <p className="text-sm text-slate-500">Data window: 30 days ending {stamp} · {data.summary.n_resources} resources analysed · prices illustrative (see assumptions)</p>
+            <p className="text-sm text-slate-500">Data window: {data.summary.window_days} days ending {stamp} · {data.summary.n_resources} resources analysed · prices illustrative (see assumptions)</p>
           </div>
           <div className="text-right text-sm">
             <div>Current: <b>{inr(t.before)}</b>/mo</div>

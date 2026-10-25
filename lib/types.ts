@@ -54,17 +54,26 @@ export interface Alert {
 
 export interface DayCost { date: string; inr: number }
 export interface Forecast {
-  history: DayCost[]; mape_7d: number; sigma: number; budget_monthly: number;
+  /** mape_7d is null under 21 days of history (no week left to back-test on) */
+  history: DayCost[]; mape_7d: number | null; sigma: number | null; budget_monthly: number;
   forecast: { date: string; inr: number; lo: number; hi: number }[];
-  usage: Record<"cpu" | "mem", UsageForecast>;
+  /** false when an upload has under 14 days: forecast and usage are then empty and disabled_reason says why */
+  enabled?: boolean; disabled_reason?: string | null;
+  usage: Record<"cpu" | "mem", UsageForecast> | null;
 }
 export interface UsageForecast {
-  history: { date: string; pct: number }[]; mape_7d: number;
+  history: { date: string; pct: number }[]; mape_7d: number | null;
   forecast: { date: string; pct: number; lo: number; hi: number }[];
 }
 
+/** where the numbers come from (engine/build.py: data_source) */
+export interface DataSource {
+  kind: "simulated" | "csv"; name: string; notes: string[]; input_step_min: number[];
+  features: { forecast: boolean; backtest: boolean; trend_alerts: boolean; anomaly_alerts: boolean; idle_detection: boolean };
+}
+
 export interface Summary {
-  generated_at: string; window_days: number; step_min: number; n_resources: number; n_vms: number;
+  generated_at: string; window_start?: string; data_source?: DataSource; window_days: number; step_min: number; n_resources: number; n_vms: number;
   n_points: number; current_monthly: number; projected_next_month: number; budget_monthly: number;
   potential_saving: number; by_env: Record<string, number>; by_region: Record<string, number>;
   by_team: Record<string, number>; by_type: Record<string, number>; by_component: Record<string, number>;

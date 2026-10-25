@@ -666,6 +666,8 @@
   }
  ],
  "budget_monthly": 850000,
+ "enabled": true,
+ "disabled_reason": null,
  "usage": {
   "cpu": {
    "history": [

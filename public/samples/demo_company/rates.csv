@@ -1,0 +1,6 @@
+name,value
+block_inr_per_gb_month,6.0
+snapshot_inr_per_gb_month,2.0
+public_ip_inr_per_month,300.0
+egress_inr_per_gb,0.8
+monthly_budget_inr,120000

@@ -18,7 +18,7 @@ def _baseline(x: np.ndarray, train_days: int):
     """
     n = train_days * C.POINTS_PER_DAY
     hour = HOUR.astype(int)
-    med = np.zeros((2, 24))
+    med = np.full((2, 24), np.nan)      # a slot with no training data scores nothing (short uploads lack weekends)
     mad = np.zeros((2, 24))
     for w in (0, 1):
         for h in range(24):
@@ -32,15 +32,21 @@ def _baseline(x: np.ndarray, train_days: int):
     return med, mad
 
 
-def robust_anomaly(x: np.ndarray, train_days=21, floor=2.0):
-    """Return (start_idx, end_idx, peak_z, baseline_median) of the longest run with z > threshold."""
+def robust_anomaly(x: np.ndarray, train_days=None, floor=2.0):
+    """Return (start_idx, end_idx, peak_z, baseline_median) of the longest run with z > threshold.
+
+    Learns the normal pattern from the first 70% of the window (21 of 30 days) and scores the rest.
+    """
+    if C.DAYS < C.ANOMALY_MIN_DAYS:
+        return None
+    train_days = train_days or round(C.DAYS * 0.7)
     if np.isnan(x[: train_days * C.POINTS_PER_DAY]).mean() > 0.5:
         return None
     med, mad = _baseline(x, train_days)
     hour = HOUR.astype(int)
     w = IS_WEEKEND.astype(int)
     scale = np.maximum(1.4826 * mad[w, hour], floor)
-    z = (x - med[w, hour]) / scale
+    z = np.nan_to_num((x - med[w, hour]) / scale)
     z[: train_days * C.POINTS_PER_DAY] = 0
     hot = np.nan_to_num(z) > C.ANOMALY_Z
     best, run_start = None, None
@@ -54,7 +60,7 @@ def robust_anomaly(x: np.ndarray, train_days=21, floor=2.0):
     if best is None:
         return None
     s, e = best
-    return s, e, float(np.nanmax(z[s:e])), float(np.nanmedian(med))
+    return s, e, float(np.max(z[s:e])), float(np.nanmedian(med))
 
 
 def ts(i: int) -> str:

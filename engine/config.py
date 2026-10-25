@@ -2,7 +2,14 @@
 
 Prices are ILLUSTRATIVE (the PS allows this). Replace PLANS / unit prices with a real
 price list and nothing else in the engine needs to change.
+
+A company's own data (csv_loader.py, `build.py --data <folder>` or the website's Upload real data page)
+writes dataset.json next to the data; the block at the end of this file then replaces the data window,
+the price list and the unit prices below with the ones from the CSV files.
 """
+import json
+import os
+from pathlib import Path
 
 SEED = 42
 DAYS = 30
@@ -78,6 +85,41 @@ WATTS_PER_VCPU = 4.0
 PUE = 1.4
 GRID_KG_CO2_PER_KWH = 0.716       # India grid (CEA)
 KG_CO2_PER_TREE_YEAR = 21.0
+
+
+# --- bring your own data: what each feature needs (csv_loader.py enforces MIN_DAYS and the 1-60 min interval)
+MIN_DAYS = 7                      # fewer days cannot be loaded
+RECOMMENDED_DAYS = 30             # fewer: confidence -10 and risk one step higher on resize / schedule / stop
+FORECAST_MIN_DAYS = 14            # Holt-Winters needs two full weeks to learn the weekly pattern
+BACKTEST_MIN_DAYS = 21            # the 7-day accuracy check needs 14 days to fit + 7 to test
+ANOMALY_MIN_DAYS = 10             # anomaly detection learns from the first 70% of the window
+SAFE_SHRINK_MAX_STEP_MIN = 15     # readings further apart than this can hide a peak -> never shrink that VM
+INSUFFICIENT_MISSING_FRAC = 0.20  # a VM missing more than 20% of its readings is not sized ("not enough data")
+INSUFFICIENT_MIN_DAYS = 2         # ...nor one with under 2 days of readings
+
+# --- data source (simulated unless a dataset.json from csv_loader.py is present)
+DATA_DIR = os.environ.get("SMARTCLOUD_DATA_DIR") or str(Path(__file__).parent / "data")
+DATA_SOURCE = "simulated"
+DATA_NAME = "Simulated Indian SaaS estate"
+DATA_NOTES: list = []
+INPUT_STEP_MIN: dict = {}         # VM id -> minutes between its readings in the uploaded file
+COARSE_VMS: list = []             # VMs reporting less often than SAFE_SHRINK_MAX_STEP_MIN
+
+_dataset = Path(DATA_DIR) / "dataset.json"
+if _dataset.exists():
+    _d = json.loads(_dataset.read_text(encoding="utf-8"))
+    DATA_SOURCE, DATA_NAME, DATA_NOTES = "csv", _d["name"], _d["notes"]
+    INPUT_STEP_MIN, COARSE_VMS = _d["input_step_min"], _d["coarse_vms"]
+    START, DAYS = _d["start"], _d["days"]
+    N_POINTS = DAYS * POINTS_PER_DAY
+    PLANS = {k: tuple(v) for k, v in _d["plans"].items()}            # already sorted by price
+    PLAN_ORDER = list(PLANS)
+    _r = _d["rates"]
+    BLOCK_INR_PER_GB_MONTH = _r["block_inr_per_gb_month"]
+    SNAPSHOT_INR_PER_GB_MONTH = _r["snapshot_inr_per_gb_month"]
+    PUBLIC_IP_INR_PER_MONTH = _r["public_ip_inr_per_month"]
+    EGRESS_INR_PER_GB = _r["egress_inr_per_gb"]
+    MONTHLY_BUDGET_INR = _r["monthly_budget_inr"]
 
 
 def plan_hourly(plan: str) -> float:

@@ -1,7 +1,23 @@
 {
  "generated_at": "2026-10-24T00:00:00+05:30",
+ "window_start": "2026-09-24T00:00:00+05:30",
  "window_days": 30,
  "step_min": 5,
+ "data_source": {
+  "kind": "simulated",
+  "name": "Simulated Indian SaaS estate",
+  "notes": [],
+  "input_step_min": [
+   5
+  ],
+  "features": {
+   "forecast": true,
+   "backtest": true,
+   "trend_alerts": true,
+   "anomaly_alerts": true,
+   "idle_detection": true
+  }
+ },
  "n_resources": 142,
  "n_vms": 96,
  "n_points": 4976640,

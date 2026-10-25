@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/copy-engine.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/copy-engine.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "data": "python3 engine/generate.py && python3 engine/build.py",
+    "data:csv": "python3 engine/build.py --data",
     "test:engine": "python3 -m pytest -q engine/tests"
   },
   "dependencies": {

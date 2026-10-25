@@ -23,6 +23,8 @@ def daily_trend(x: np.ndarray, days=C.TREND_DAYS) -> dict:
     slope   = % per day,  level = the fitted p95 today,  r2 = share of the day-to-day variation the line explains.
     Daily p95 (not every 5-min reading) so the daily cycle doesn't hide or fake a trend.
     """
+    if C.DAYS < days:                                                   # short upload: not enough days for a trend
+        return {"slope": 0.0, "level": 0.0, "r2": 0.0}
     days_x = [x[d * C.POINTS_PER_DAY:(d + 1) * C.POINTS_PER_DAY] for d in range(C.DAYS - days, C.DAYS)]
     ok = np.array([np.isfinite(v).mean() > 0.5 for v in days_x])      # skip days the VM didn't exist / agent was down
     if ok.sum() < 7:
@@ -55,8 +57,8 @@ def vm_stats(s: dict[str, np.ndarray]) -> dict:
     hourly = [round(float(np.nanmean(cpu[hour_idx == h])), 1) for h in range(24)]
     heat = [[round(float(np.nanmean(cpu[(WEEKDAY == d) & (hour_idx == h)])), 1) for h in range(24)] for d in range(7)]
 
-    # disk growth: linear fit over the last 14 days
-    last = 14 * C.POINTS_PER_DAY
+    # disk growth: linear fit over the last 14 days (or the whole window if it is shorter)
+    last = min(14, C.DAYS) * C.POINTS_PER_DAY
     d = s["disk"][-last:]
     ok = ~np.isnan(d)
     slope_per_day = 0.0
