@@ -10,19 +10,20 @@ import { useApp } from "../providers";
 import { Loading, PageTitle } from "@/components/ui";
 import { cls, inr, inrShort } from "@/lib/format";
 import type { Alert, DayCost, Series } from "@/lib/types";
+import { loadSeries } from "@/lib/dataset";
 
 const ICON = { anomaly: AlertOctagon, capacity: HardDrive, cost_jump: IndianRupee, budget: Wallet };
 
 function MetricMini({ a }: { a: Alert }) {
   const [s, setS] = useState<Series | null>(null);
-  useEffect(() => { fetch(`/data/series/${a.resource_id}.json`).then((r) => r.json()).then(setS).catch(() => {}); }, [a.resource_id]);
+  useEffect(() => { loadSeries<Series>(a.resource_id!).then(setS).catch(() => {}); }, [a.resource_id]);
   if (!s) return <div className="h-28" />;
   const start = new Date(s.start).getTime();
   const key = a.metric === "disk" || a.metric === "mem" ? a.metric : "cpu";
   const label = { disk: "disk used", mem: "memory", cpu: "CPU" }[key];
   const rows = s[key].map((v, i) => ({ t: start + i * s.step_min * 60000, v, out: s.net_out[i] }));
   return (
-    <ChartCard bare title={`${a.resource_name}: ${label} over 30 days`} height={112} render={(big) => (
+    <ChartCard bare title={`${a.resource_name}: ${label} over ${Math.round(rows.length * s.step_min / 1440)} days`} height={112} render={(big) => (
         <AreaChart data={rows} margin={{ left: big ? 0 : -20, right: 4, top: 4 }}>
           <XAxis dataKey="t" type="number" scale="time" domain={["dataMin", "dataMax"]} hide={!big} tickFormatter={fmtDay} {...AXIS} minTickGap={60} />
           <YAxis domain={[0, 100]} {...AXIS} tick={{ fontSize: big ? 11 : 9, fill: "#4a4a52" }} unit="%" width={big ? 44 : 50} tickCount={big ? 5 : 3} />
@@ -38,7 +39,7 @@ function MetricMini({ a }: { a: Alert }) {
 
 function CostMini({ days, date }: { days: DayCost[]; date: string }) {
   return (
-    <ChartCard bare title="Daily cost over 30 days" sub="Amber = from the jump onwards" height={112} render={(big) => (
+    <ChartCard bare title={`Daily cost over ${days.length} days`} sub="Amber = from the jump onwards" height={112} render={(big) => (
         <BarChart data={days} margin={{ left: -10, right: 4, top: 4 }}>
           <XAxis dataKey="date" hide={!big} {...AXIS} minTickGap={40} />
           <YAxis tickFormatter={inrTick} {...AXIS} tick={{ fontSize: big ? 11 : 9, fill: "#4a4a52" }} width={big ? 60 : 50} tickCount={big ? 5 : 3} />

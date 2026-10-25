@@ -66,9 +66,9 @@ def confidence(st: dict) -> tuple[int, list[str]]:
         notes.append(f"erratic usage, coefficient of variation {st['cv']:.1f} (−15)")
     if 0 < st["cpu_time_above_80"] < 3:
         score -= 10
-        notes.append("short peaks seen: a monthly job could be outside the 30-day window (−10)")
+        notes.append(f"short peaks seen: a monthly job could be outside the {C.DAYS}-day window (−10)")
     if not notes:
-        notes.append("30 days of complete, stable data")
+        notes.append(f"{C.DAYS} days of complete, stable data")
     return int(max(10, min(100, round(score)))), notes
 
 

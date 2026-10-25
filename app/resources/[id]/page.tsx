@@ -10,6 +10,7 @@ import { AXIS, TOOLTIP, BRUSH, GRID } from "@/lib/chart";
 import { useApp } from "../../providers";
 import { EnvPill, Loading } from "@/components/ui";
 import { RecCard } from "@/components/RecCard";
+import { loadSeries } from "@/lib/dataset";
 import { inr } from "@/lib/format";
 import type { Series } from "@/lib/types";
 
@@ -27,7 +28,7 @@ export default function ResourceDetail() {
   const [range, setRange] = useState<7 | 14 | 30>(30);
 
   useEffect(() => {
-    fetch(`/data/series/${id}.json`).then((r) => r.json()).then(setSeries).catch(() => setSeries(null));
+    loadSeries<Series>(id).then(setSeries).catch(() => setSeries(null));
   }, [id]);
 
   const rows = useMemo(() => {

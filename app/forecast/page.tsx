@@ -15,6 +15,7 @@ export default function Forecast() {
   const [usage, setUsage] = useState<"cpu" | "mem">("cpu");
   if (!data) return <Loading />;
   const f = data.forecast;
+  if (f.enabled === false || !f.usage) return <ForecastOff reason={f.disabled_reason} days={data.summary.window_days} />;
   const t = totals(data.resources, data.recs, accepted);
   const dailySaving = t.saving / (730 / 24);
   const budgetDaily = f.budget_monthly / (730 / 24);
@@ -38,7 +39,7 @@ export default function Forecast() {
   return (
     <div className="space-y-5">
       <PageTitle title="Cost and usage forecast"
-        sub={`Holt-Winters exponential smoothing (level + damped trend + weekly seasonality) on daily cost. Back-tested on the last 7 days: ${f.mape_7d}% average error. The lime line applies the recommendations you have accepted.`}
+        sub={`Holt-Winters exponential smoothing (level + damped trend + weekly seasonality) on daily cost. ${f.mape_7d !== null ? `Back-tested on the last 7 days: ${f.mape_7d}% average error.` : "Not back-tested: that needs 21+ days of history."} The lime line applies the recommendations you have accepted.`}
         right={
           <div className="flex gap-1 rounded-lg bg-slate-100 p-1 text-sm">
             {([30, 60, 90] as const).map((h) => (
@@ -69,10 +70,10 @@ export default function Forecast() {
             {big && <Brush dataKey="date" {...BRUSH} />}
           </ComposedChart>
         )}
-        footer={<p className="mt-2 text-xs text-slate-500">The jump mid-window is the 8 ML VMs launched by the Data team; the bump near the end is the anomaly&apos;s extra egress. The model has 30 days of history, so the range widens with the horizon.</p>} />
+        footer={<p className="mt-2 text-xs text-slate-500">{data.summary.data_source?.kind === "csv" ? "" : "The jump mid-window is the 8 ML VMs launched by the Data team; the bump near the end is the anomaly's extra egress. "}The model has {data.summary.window_days} days of history, so the range widens with the horizon.</p>} />
 
       <ChartCard title={`Fleet ${usage === "cpu" ? "CPU" : "memory"} usage: actual and forecast`} height={260}
-        sub={`Daily average share of provisioned ${usage === "cpu" ? "vCPU" : "RAM"} in use, forecast with the same Holt-Winters model. Back-tested on the last 7 days: ${u.mape_7d}% average error. In ${horizon} days: ${uEnd.pct.toFixed(1)}% (likely ${uEnd.lo.toFixed(1)}–${uEnd.hi.toFixed(1)}%).`}
+        sub={`Daily average share of provisioned ${usage === "cpu" ? "vCPU" : "RAM"} in use, forecast with the same Holt-Winters model. ${u.mape_7d !== null ? `Back-tested on the last 7 days: ${u.mape_7d}% average error.` : "Not back-tested (needs 21+ days)."} In ${horizon} days: ${uEnd.pct.toFixed(1)}% (likely ${uEnd.lo.toFixed(1)}–${uEnd.hi.toFixed(1)}%).`}
         actions={
           <div className="flex gap-1 rounded-lg bg-slate-100 p-1 text-sm" onClick={(e) => e.stopPropagation()}>
             {([["cpu", "CPU"], ["mem", "Memory"]] as const).map(([k, l]) => (
@@ -93,6 +94,25 @@ export default function Forecast() {
             <ReferenceLine y={70} stroke="#4a4a52" strokeDasharray="4 4" label={{ value: "70% target", fontSize: 11, fill: "#8c8c94", position: "insideTopRight" }} />
           </ComposedChart>
         )} />
+    </div>
+  );
+}
+
+/** Uploaded data shorter than 14 days: say so instead of guessing (engine/build.py turns the forecast off). */
+function ForecastOff({ reason, days }: { reason?: string | null; days: number }) {
+  return (
+    <div className="space-y-5">
+      <PageTitle title="Cost and usage forecast" sub="Holt-Winters exponential smoothing on daily cost and fleet usage." />
+      <div className="card card-pad max-w-2xl border-amber-500/30">
+        <div className="label mb-2 text-amber-600">Forecast turned off for this data</div>
+        <p className="text-sm leading-relaxed text-slate-700">
+          {reason ?? `The forecast needs at least 14 days of history; this data has ${days}.`}
+        </p>
+        <p className="mt-3 text-xs leading-relaxed text-slate-500">
+          Rightsizing, the peak and spike checks, schedules, savings and Hit my target all still work on this data.
+          Trend alerts also need 14 days and are off too.
+        </p>
+      </div>
     </div>
   );
 }

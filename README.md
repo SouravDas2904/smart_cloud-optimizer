@@ -13,19 +13,29 @@
 | Before vs after cost, accept/reject with live totals | `/savings`, sticky footer |
 | Alerts that explain why: anomaly, cost jump, capacity, budget overrun | `/alerts`, `engine/alerts.py` |
 
+**Bring your own data** (`/upload`, the Upload real data button): drop a company's own `inventory.csv`, `metrics.csv` and `pricing.csv`. Every file, row and column is checked against a strict format (wrong, random or non-CSV files are refused with the file, row and column), then the same Python engine analyses them inside the browser. The format and the acceptance criteria are in [`DATA_FORMAT.md`](DATA_FORMAT.md).
+
 Bonus: **Hit my target** (`/target`: type "cut 15%", get the least risky plan that reaches it, or an honest "cannot be done safely"; `engine/target.py`), 30/60/90-day forecast (Holt-Winters), what-if simulator (shutdown windows + headroom policy), AI plain-language explanations (Claude, with rule-based fallback), CSV / Terraform / shell / PDF export, sustainability (kWh, CO₂), Engineer / Finance / Leadership views.
 
 **The safety showcase:** `prod-reports-01` averages ~10% CPU but hits ~80% every day at 10:00. An average-based tool would shrink it to 2 vCPU (peak → 322%). Our engine refuses and explains why. Similarly, `prod-pay-api-07` has an active anomaly, so sizing is paused instead of "learning" the incident.
 
 ## Architecture
 
+There is no backend server. The engine is an offline Python pipeline that writes static JSON; the Next.js dashboard
+(hosted on Vercel) reads that JSON. The only server-side code is the optional `/api/explain` route (a Vercel serverless
+function). Uploaded CSVs are processed by the same Python files running in the visitor's browser (Pyodide), so they
+never leave that computer.
+
 ```
 engine/generate.py  → simulated estate: 96 VMs, 10 volumes, 36 IPs, 30 days × 5-min metrics (seeded)
+engine/csv_loader.py → OR a company's own CSVs: strict checks, resampled to 5 min (DATA_FORMAT.md)
 engine/build.py     → stats (p50/p95/p99, profiles) → recommendations → alerts → forecast → fleet roll-up → public/data/*.json
 engine/export_csv.py → every number above as CSV files (raw 5-min metrics included)
 engine/target.py    → Hit my target planner (exact, least-risk plan for a % cut); tiers written to summary.json
 app/ (Next.js)      → dashboard reads the JSON; accept/reject, what-if, headroom and Hit my target recomputed live in lib/engine.ts
 app/api/explain     → optional Claude explanation, grounded only on the card's numbers
+app/upload          → Upload real data: public/engine-worker.js runs engine/*.py in the browser (Pyodide 0.29.5),
+                      results kept in this browser's IndexedDB (lib/dataset.ts); "Back to demo data" switches back
 ```
 
 All thresholds and prices live in `engine/config.py` and are shown in-app on `/assumptions` (also `ASSUMPTIONS.md`).
@@ -51,6 +61,13 @@ Regenerate the data and run the engine tests (Python 3.11+):
 pip install -r engine/requirements.txt
 npm run data           # generate.py + build.py
 npm run test:engine    # pytest
+```
+
+Run the engine on your own CSVs instead of the simulated estate (format: [`DATA_FORMAT.md`](DATA_FORMAT.md)):
+
+```bash
+python3 engine/build.py --data public/samples/demo_company    # or any folder with inventory.csv, metrics.csv, pricing.csv
+python3 engine/make_sample_csv.py my_export                   # the whole demo estate written in the upload format
 ```
 
 Optional AI explanations: set `ANTHROPIC_API_KEY` in Vercel → Project → Settings → Environment Variables. Without it the app uses rule-based explanations.

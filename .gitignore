@@ -9,3 +9,6 @@ engine/data/
 .env.local
 .vercel
 *.tsbuildinfo
+engine/data_uploaded/
+public/engine-py/
+public/pyodide-local/

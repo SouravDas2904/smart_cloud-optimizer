@@ -31,7 +31,9 @@ def holt_winters(y, season=7, alpha=0.5, beta=0.05, gamma=0.2, phi=0.8, horizon=
 
 
 def backtest(y, holdout=7, **kw):
-    """Fit on all but the last `holdout` days, forecast them, report MAPE."""
+    """Fit on all but the last `holdout` days, forecast them, report MAPE (None if the history is too short)."""
     y = np.asarray(y, dtype=float)
+    if len(y) - holdout < 14:            # needs two weeks to fit before the held-out week
+        return None
     fc, _, _ = holt_winters(y[:-holdout], horizon=holdout, **kw)
     return float(np.mean(np.abs(fc - y[-holdout:]) / y[-holdout:]) * 100)

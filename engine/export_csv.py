@@ -15,7 +15,9 @@ import numpy as np
 import pandas as pd
 
 import config as C
-from generate import DATA_DIR, METRICS
+from generate import METRICS
+
+DATA_DIR = Path(C.DATA_DIR)
 
 PUB = Path(__file__).resolve().parent.parent / "public" / "data"
 STAT_COLS = ["cpu_avg", "cpu_p50", "cpu_p95", "cpu_p99", "cpu_max", "mem_avg", "mem_p95", "mem_p99", "mem_max",

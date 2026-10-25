@@ -2,11 +2,24 @@
 
     python engine/generate.py   # simulated estate -> engine/data/
     python engine/build.py      # stats, recommendations, alerts, forecast -> public/data/
+
+    python engine/build.py --data <folder>   # a company's own CSVs instead (format: DATA_FORMAT.md)
 """
 from __future__ import annotations
 
 import json
+import os
+import sys
 from pathlib import Path
+
+# Bring your own data: check and load the CSVs first. config.py reads the dataset.json this writes when it is
+# imported, which is why this runs before the imports below.
+if __name__ == "__main__" and "--data" in sys.argv:
+    import csv_loader
+    if sys.argv.index("--data") + 1 >= len(sys.argv):
+        sys.exit("usage: python engine/build.py --data <folder with inventory.csv, metrics.csv, pricing.csv>")
+    _out = Path(__file__).parent / "data_uploaded"
+    os.environ["SMARTCLOUD_DATA_DIR"] = str(csv_loader.cli(sys.argv[sys.argv.index("--data") + 1], _out))
 
 import numpy as np
 import pandas as pd
@@ -14,12 +27,13 @@ import pandas as pd
 import config as C
 from alerts import build_alerts, robust_anomaly
 from forecast import backtest, holt_winters
-from generate import DATA_DIR, METRICS, START
+from generate import METRICS, START
 from recommend import attach_risk_score, monthly_cost, recommend_orphan, recommend_vm
 from target import plan_for_target, tiers
 from stats import vm_stats
 
-OUT = Path(__file__).resolve().parent.parent / "public" / "data"
+OUT = Path(os.environ.get("SMARTCLOUD_OUT_DIR") or Path(__file__).resolve().parent.parent / "public" / "data")
+DATA_DIR = Path(C.DATA_DIR)
 DAYS_PER_MONTH = C.HOURS_PER_MONTH / 24
 NOW = (START + pd.Timedelta(days=C.DAYS)).isoformat()
 
@@ -187,6 +201,56 @@ def usage_forecast(timeline: dict, horizon=90) -> dict:
     return out
 
 
+def not_enough_data(r: dict, st: dict) -> dict:
+    """A VM with too many missing readings is never sized: its peaks may be in the gaps."""
+    return {"resource_id": r["id"], "resource_name": r["name"], "resource_type": "vm", "env": r["env"],
+            "region": r["region"], "team": r["team"], "current_plan": r["plan"], "target_plan": None,
+            "action": "review", "title": "Not enough data to size this VM",
+            "reason": (f"{st['missing_frac'] * 100:.0f}% of its readings are missing ({st['days_of_data']:.1f} days of data). "
+                       f"Its peaks could be in the gaps, so no change is suggested. Fix the monitoring agent and re-run."),
+            "saving": 0, "risk": "HIGH", "confidence": 20,
+            "confidence_notes": [f"{st['missing_frac'] * 100:.0f}% of readings missing"],
+            "maths": [f"missing readings {st['missing_frac']:.0%} > {C.INSUFFICIENT_MISSING_FRAC:.0%} limit, or "
+                      f"days of data {st['days_of_data']:.1f} < {C.INSUFFICIENT_MIN_DAYS} → not sized"],
+            "vcpu_removed": 0, "peak_check": None}
+
+
+def no_shrink_on_coarse(rec: dict, r: dict) -> dict:
+    """Readings further apart than 15 min can hide a short peak, so a downsize is turned into a review card."""
+    step = C.INPUT_STEP_MIN.get(r["id"], C.STEP_MIN)
+    return {**rec, "action": "review", "title": f"Peaks cannot be checked: readings every {step:g} min",
+            "reason": (f"The numbers point to {rec['target_plan']} (saving ₹{rec['saving']:,.0f}/month), but this VM reports only every "
+                       f"{step:g} minutes, so a short spike could hide between readings. We do not shrink it. Send 5-15 minute data "
+                       f"to get a safe resize."),
+            "target_plan": None, "saving": 0, "vcpu_removed": 0, "risk": "HIGH", "peak_check": None,
+            "confidence": min(rec["confidence"], 40),
+            "confidence_notes": rec["confidence_notes"] + [f"readings every {step:g} min: short peaks are not observable"],
+            "maths": rec["maths"] + [f"reading interval {step:g} min > {C.SAFE_SHRINK_MAX_STEP_MIN} min → downsize blocked (peak not observable)"]}
+
+
+RISK_UP = {"LOW": "MEDIUM", "MEDIUM": "HIGH", "HIGH": "HIGH"}
+
+
+def short_window(rec: dict) -> None:
+    """Under 30 days a monthly job may never appear in the data: lower confidence and raise risk one step."""
+    if rec["action"] not in ("resize", "schedule", "stop"):
+        return
+    rec["confidence"] = max(10, rec["confidence"] - 10)
+    rec["confidence_notes"] = rec["confidence_notes"] + [f"based on {C.DAYS} days, {C.RECOMMENDED_DAYS} recommended (−10)"]
+    old = rec["risk"]
+    rec["risk"] = RISK_UP[old]
+    rec["maths"] = rec["maths"] + [f"only {C.DAYS} days of data (< {C.RECOMMENDED_DAYS}): risk {old} → {rec['risk']}"]
+
+
+def data_source() -> dict:
+    """Where the numbers come from, and which features the data length allows."""
+    return {"kind": C.DATA_SOURCE, "name": C.DATA_NAME, "notes": C.DATA_NOTES,
+            "input_step_min": sorted(set(C.INPUT_STEP_MIN.values())) or [C.STEP_MIN],
+            "features": {"forecast": C.DAYS >= C.FORECAST_MIN_DAYS, "backtest": C.DAYS >= C.BACKTEST_MIN_DAYS,
+                         "trend_alerts": C.DAYS >= C.TREND_DAYS, "anomaly_alerts": C.DAYS >= C.ANOMALY_MIN_DAYS,
+                         "idle_detection": C.DAYS >= C.IDLE_MIN_DAYS}}
+
+
 def carbon_kg(vcpu: float) -> dict:
     kwh = vcpu * C.WATTS_PER_VCPU * C.HOURS_PER_MONTH * C.PUE / 1000
     return {"kwh": round(kwh, 1), "kg_co2": round(kwh * C.GRID_KG_CO2_PER_KWH, 1)}
@@ -195,6 +259,8 @@ def carbon_kg(vcpu: float) -> dict:
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "series").mkdir(exist_ok=True)
+    for old in (OUT / "series").glob("*.json"):   # a different dataset has different VM ids
+        old.unlink()
     inv, series = load()
     vms = [r for r in inv if r["type"] == "vm"]
     stats = {r["id"]: vm_stats(series[r["id"]]) for r in vms}
@@ -219,6 +285,10 @@ def main():
     by_id = {r["id"]: r for r in resources}
     recs = []
     for r in vms:
+        st = stats[r["id"]]
+        if st["missing_frac"] > C.INSUFFICIENT_MISSING_FRAC or st["days_of_data"] < C.INSUFFICIENT_MIN_DAYS:
+            recs.append(not_enough_data(r, st))
+            continue
         anomaly = robust_anomaly(series[r["id"]]["cpu"])
         if anomaly:
             # don't size on abnormal data: it would "learn" the incident and recommend an upsize
@@ -235,12 +305,18 @@ def main():
                                    "Rule: VMs with an open anomaly alert are excluded from rightsizing"],
                          "vcpu_removed": 0, "peak_check": None})
             continue
-        recs += recommend_vm(r, stats[r["id"]], by_id[r["id"]]["cost"])
+        vm_recs = recommend_vm(r, stats[r["id"]], by_id[r["id"]]["cost"])
+        if r["id"] in C.COARSE_VMS:
+            vm_recs = [no_shrink_on_coarse(rec, r) if rec["action"] == "resize" else rec for rec in vm_recs]
+        recs += vm_recs
     for r in inv:
         if r["type"] in ("volume", "ip") and r["attached_to"] is None:
             rec = recommend_orphan(r, NOW)
             if rec:
                 recs.append(rec)
+    if C.DAYS < C.RECOMMENDED_DAYS:
+        for rec in recs:
+            short_window(rec)
     for i, rec in enumerate(recs):
         rec["id"] = f"rec-{i + 1:03d}"
         rec["saving"] = round(rec["saving"])
@@ -257,13 +333,18 @@ def main():
     alerts = build_alerts(vms, stats, series, daily, projected_month, recs_by_vm)
 
     y = [d["inr"] for d in daily]
-    fc, band, sigma = holt_winters(y, horizon=90)
     mape = backtest(y)
     last = pd.Timestamp(daily[-1]["date"])
-    forecast = {"history": daily, "mape_7d": round(mape, 1), "sigma": round(sigma),
-                "forecast": [{"date": (last + pd.Timedelta(days=h + 1)).date().isoformat(), "inr": round(float(fc[h])),
-                              "lo": round(float(fc[h] - band[h])), "hi": round(float(fc[h] + band[h]))} for h in range(90)],
-                "budget_monthly": C.MONTHLY_BUDGET_INR}
+    forecast = {"history": daily, "mape_7d": None if mape is None else round(mape, 1), "sigma": None, "forecast": [],
+                "budget_monthly": C.MONTHLY_BUDGET_INR, "enabled": C.DAYS >= C.FORECAST_MIN_DAYS, "disabled_reason": None}
+    if forecast["enabled"]:
+        fc, band, sigma = holt_winters(y, horizon=90)
+        forecast["sigma"] = round(sigma)
+        forecast["forecast"] = [{"date": (last + pd.Timedelta(days=h + 1)).date().isoformat(), "inr": round(float(fc[h])),
+                                 "lo": round(float(fc[h] - band[h])), "hi": round(float(fc[h] + band[h]))} for h in range(90)]
+    else:
+        forecast["disabled_reason"] = (f"The forecast needs at least {C.FORECAST_MIN_DAYS} days of history to learn the weekly "
+                                       f"pattern; this data has {C.DAYS}. Upload 30 days for a forecast.")
 
     def group(key):
         out = {}
@@ -273,7 +354,8 @@ def main():
 
     actionable = [r for r in recs if r["default_accepted"] and r["saving"] > 0]
     summary = {
-        "generated_at": NOW, "window_days": C.DAYS, "step_min": C.STEP_MIN,
+        "generated_at": NOW, "window_start": pd.Timestamp(C.START).isoformat(), "window_days": C.DAYS, "step_min": C.STEP_MIN,
+        "data_source": data_source(),
         "n_resources": len(inv), "n_vms": len(vms),
         "n_points": int(len(vms) * C.N_POINTS * len(METRICS)),
         "current_monthly": round(current_month), "projected_next_month": round(projected_month),
@@ -290,7 +372,7 @@ def main():
     assumptions["OFF_HOURS_FRACTION"] = round(C.off_hours_fraction(), 4)
 
     fleet = fleet_rollup(vms, series, stats)
-    forecast["usage"] = usage_forecast(fleet["timeline"])
+    forecast["usage"] = usage_forecast(fleet["timeline"]) if forecast["enabled"] else None
     (OUT / "fleet_cells.json").write_text(json.dumps(fleet_cells(vms, series), separators=(",", ":")))
 
     for name, obj in [("fleet", fleet), ("resources", resources), ("recommendations", recs), ("alerts", alerts),
@@ -303,7 +385,7 @@ def main():
     print("hit-my-target tiers", [f"{t['risk']} {t['pct']:.1f}%" for t in summary["target_tiers"]],
           "| 15% plan:", plan_for_target(recs, current_month, 15)["message"])
     print(f"{len(alerts)} alerts:", [a["title"] for a in alerts])
-    print(f"forecast backtest MAPE {mape:.1f}%")
+    print(f"forecast backtest MAPE {mape:.1f}%" if mape is not None else f"forecast: {forecast['disabled_reason'] or 'no backtest (under 21 days)'}")
 
 
 if __name__ == "__main__":

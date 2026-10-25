@@ -10,6 +10,7 @@ import { useApp } from "../providers";
 import { Kpi, Loading, MultiSelect, PageTitle } from "@/components/ui";
 import { cls, inr } from "@/lib/format";
 import type { FleetCells, FleetGroup, Resource } from "@/lib/types";
+import { loadJson } from "@/lib/dataset";
 
 const METRICS = [
   { id: "cpu", label: "CPU", icon: Cpu },
@@ -54,8 +55,8 @@ export default function Utilization() {
 
   // per (region, env, team) hourly sums, only needed on this page (~1 MB, so not part of the shared load)
   useEffect(() => {
-    fetch("/data/fleet_cells.json").then((r) => (r.ok ? r.json() : null)).then(setCells).catch(() => setCells(null));
-  }, []);
+    loadJson<FleetCells>("fleet_cells").then(setCells).catch(() => setCells(null));
+  }, [data]);
 
   const regs = data ? Object.keys(data.summary.by_region) : [];
   const tms = data ? Object.keys(data.summary.by_team) : [];
@@ -124,7 +125,7 @@ export default function Utilization() {
   return (
     <div className="space-y-5">
       <PageTitle title="Infrastructure utilization"
-        sub={`CPU, memory, storage and network usage across all ${vms.length} VMs and ${volumes.length} block volumes, from 30 days of 5-minute readings. Percentages are capacity-weighted: a 16-vCPU VM counts eight times a 2-vCPU one.`} />
+        sub={`CPU, memory, storage and network usage across all ${vms.length} VMs and ${volumes.length} block volumes, from ${data.summary.window_days} days of 5-minute readings. Percentages are capacity-weighted: a 16-vCPU VM counts eight times a 2-vCPU one.`} />
 
       <div className="card flex flex-wrap items-center gap-x-6 gap-y-3 p-3">
         <MultiSelect label="Env" options={["prod", "staging", "dev"]} value={envs} onChange={setEnvs} />
@@ -140,11 +141,11 @@ export default function Utilization() {
           sub={live.length ? `of ${(ramProv / 1024).toFixed(1)} TB provisioned RAM · peak hour ${Math.max(...memPct).toFixed(0)}%` : "no VMs selected"} />
         <Kpi label="Storage used" value={vmDiskGb ? `${((usedGb / vmDiskGb) * 100).toFixed(1)}%` : "–"} icon={<HardDrive size={16} />}
           sub={`${(usedGb / 1024).toFixed(1)} of ${(vmDiskGb / 1024).toFixed(1)} TB on VM disks · ${(orphanGb / 1024).toFixed(1)} TB in unattached volumes`} />
-        <Kpi label="Network egress (30 days)" value={`${(egressGb / 1024).toFixed(1)} TB`} icon={<Network size={16} />}
+        <Kpi label={`Network egress (${data.summary.window_days} days)`} value={`${(egressGb / 1024).toFixed(1)} TB`} icon={<Network size={16} />}
           sub={`${inr(egressCost)}/month at ₹${data.assumptions.EGRESS_INR_PER_GB as number}/GB`} />
       </div>
 
-      <ChartCard title={filtered ? `Usage of the ${vms.length} selected VMs over 30 days (hourly)` : "Fleet usage over 30 days (hourly)"} sub={chart.note} height={260}
+      <ChartCard title={filtered ? `Usage of the ${vms.length} selected VMs over ${data.summary.window_days} days (hourly)` : `Fleet usage over ${data.summary.window_days} days (hourly)`} sub={chart.note} height={260}
         actions={
           <div className="flex flex-wrap gap-1 rounded-lg bg-slate-100 p-1 text-sm" onClick={(e) => e.stopPropagation()}>
             {METRICS.map(({ id, label, icon: Icon }) => (
@@ -208,7 +209,7 @@ export default function Utilization() {
         {top("Highest memory (p99)", sorted((r) => r.stats!.mem_p99), (r) => r.stats!.mem_p99, (v) => `${v.toFixed(0)}%`, "Memory-bound: never shrink RAM here")}
         {top("Fullest disks", sorted((r) => r.stats!.disk_now), (r) => r.stats!.disk_now, (v) => `${v.toFixed(0)}%`, "Watch for capacity alerts")}
         {top("Busiest disk I/O (p95 IOPS)", sorted((r) => r.stats!.iops_p95), (r) => r.stats!.iops_p95, (v) => `${v.toFixed(0)} IOPS`, "Storage performance: keep these on fast disks")}
-        {top("Most network egress (30 days)", sorted((r) => r.stats!.egress_gb_30d), (r) => r.stats!.egress_gb_30d, (v) => `${(v / 1024).toFixed(1)} TB`, "Egress is billed per GB")}
+        {top(`Most network egress (${data.summary.window_days} days)`, sorted((r) => r.stats!.egress_gb_30d), (r) => r.stats!.egress_gb_30d, (v) => `${(v / 1024).toFixed(1)} TB`, "Egress is billed per GB")}
       </div>
     </div>
   );

@@ -15,8 +15,13 @@ export default function Assumptions() {
   const { data } = useApp();
   if (!data) return <Loading />;
   const a = data.assumptions as Record<string, number> & typeof data.assumptions;
+  const ds = data.summary.data_source;
+  const csv = ds?.kind === "csv";
+  const priceWhy = csv ? "From your pricing.csv / rates.csv (a default is used only where the notes below say so)" : "Illustrative";
   const rows: [string, string, string][] = [
-    ["Data window", `${a.DAYS} days at ${a.STEP_MIN}-minute granularity (${a.POINTS_PER_DAY} points/day)`, "Meets the brief: ≥ 30 days at 5–15 min"],
+    csv
+      ? ["Data window", `${a.DAYS} days of your CSV readings (every ${ds!.input_step_min.join(" / ")} min), moved onto a ${a.STEP_MIN}-minute grid`, a.DAYS >= 30 ? "Meets the brief: ≥ 30 days" : "Below the recommended 30 days: confidence lowered, risk raised one step"]
+      : ["Data window", `${a.DAYS} days at ${a.STEP_MIN}-minute granularity (${a.POINTS_PER_DAY} points/day)`, "Meets the brief: ≥ 30 days at 5–15 min"],
     ["Hours per month", `${a.HOURS_PER_MONTH}`, "Industry standard (8,760 ÷ 12)"],
     ["Target CPU at p99 after resize", `${a.TARGET_CPU_UTIL * 100}%`, "30% headroom for unexpected load"],
     ["Target memory at p99 after resize", `${a.TARGET_MEM_UTIL * 100}% and ≥ ${a.MIN_MEM_MARGIN_GB} GB free`, "Running out of memory kills processes, so we keep a bigger buffer"],
@@ -26,17 +31,17 @@ export default function Assumptions() {
     ["Spike ceiling after resize", `busiest 5-min CPU ≤ ${a.MAX_CPU_CEILING * 100}%, busiest memory reading ≤ ${a.MAX_MEM_CEILING * 100}%`, "p99 ignores the top 1% (~14 min a day); this catches what p99 can't see"],
     ["Schedulable", `non-prod, average CPU in the quiet off-window hours < ${a.OFFHOURS_CPU_MAX}%; an hour with p95 CPU > ${a.OFFHOURS_BUSY_P95}% is a night job and stays on (+1 h warm-up), up to ${a.OFFHOURS_MAX_KEEP_HOURS} h a night`, "Production is never scheduled; a night job is scheduled around, never killed"],
     ["Orphan grace period", `${a.ORPHAN_GRACE_DAYS} days`, "Don't flag a disk detached a few minutes ago"],
-    ["Block storage", `₹${a.BLOCK_INR_PER_GB_MONTH}/GB-month (billed while a VM is stopped)`, "Illustrative"],
+    ["Block storage", `₹${a.BLOCK_INR_PER_GB_MONTH}/GB-month (billed while a VM is stopped)`, priceWhy],
     ["Snapshot", `₹${a.SNAPSHOT_INR_PER_GB_MONTH}/GB-month`, "Kept as a safety net before deleting a volume"],
-    ["Public IP", `${inr(a.PUBLIC_IP_INR_PER_MONTH)}/month whether used or not`, "Illustrative"],
-    ["Egress", `₹${a.EGRESS_INR_PER_GB}/GB outbound`, "Illustrative"],
-    ["Monthly budget", inr(a.MONTHLY_BUDGET_INR), "Set by leadership for the scenario"],
-    ["Anomaly", `robust z-score > ${a.ANOMALY_Z} for ≥ ${a.ANOMALY_MIN_POINTS * a.STEP_MIN} min, vs median/MAD of the same hour on comparable days (first 21 days as baseline)`, "Robust to outliers; daily jobs aren't flagged"],
+    ["Public IP", `${inr(a.PUBLIC_IP_INR_PER_MONTH)}/month whether used or not`, priceWhy],
+    ["Egress", `₹${a.EGRESS_INR_PER_GB}/GB outbound`, priceWhy],
+    ["Monthly budget", inr(a.MONTHLY_BUDGET_INR), csv ? priceWhy : "Set by leadership for the scenario"],
+    ["Anomaly", `robust z-score > ${a.ANOMALY_Z} for ≥ ${a.ANOMALY_MIN_POINTS * a.STEP_MIN} min, vs median/MAD of the same hour on comparable days (first ${Math.round(a.DAYS * 0.7)} days as baseline)`, "Robust to outliers; daily jobs aren't flagged"],
     ["Cost jump", `daily cost > ${a.COST_JUMP_PCT}% above trailing 7-day average`, ""],
     ["Capacity", `disk projected to hit ${a.CAPACITY_WARN_PCT}% within ${a.CAPACITY_HORIZON_DAYS} days (14-day linear fit)`, ""],
     ["CPU / memory trend", `daily p95 rising ≥ ${a.TREND_MIN_SLOPE}%/day over ${a.TREND_DAYS} days (straight-line fit, R² ≥ ${a.TREND_MIN_R2}) and projected to pass ${a.CAPACITY_WARN_PCT}% within ${a.CAPACITY_HORIZON_DAYS} days`, "R² keeps noisy VMs from raising false trends"],
     ["Carbon", `${a.WATTS_PER_VCPU} W/vCPU, PUE ${a.PUE}, ${a.GRID_KG_CO2_PER_KWH} kg CO₂/kWh, ${a.KG_CO2_PER_TREE_YEAR} kg CO₂/tree/year`, "Cloud Carbon Footprint-style estimate; India CEA grid factor"],
-    ["Random seed", `${a.SEED}`, "Same data every run: reproducible demo"],
+    ...(csv ? [] : [["Random seed", `${a.SEED}`, "Same data every run: reproducible demo"] as [string, string, string]]),
   ];
   const plans = Object.entries(a.PLANS);
   const vms = data.resources.filter((r) => r.type === "vm" && r.stats);
@@ -52,16 +57,21 @@ export default function Assumptions() {
       </div>
       <div className="grid gap-5 lg:grid-cols-2">
         <div className="card overflow-x-auto">
-          <div className="px-4 pt-4 font-semibold text-slate-900">Illustrative price list (same in all regions)</div>
+          <div className="px-4 pt-4 font-semibold text-slate-900">{csv ? "Your price list (pricing.csv)" : "Illustrative price list (same in all regions)"}</div>
           <table className="mt-2 w-full text-sm">
             <thead className="text-left text-xs uppercase text-slate-500"><tr><th className="px-4 py-2">Plan</th><th>vCPU</th><th>RAM</th><th className="text-right">₹/hour</th><th className="px-4 text-right">₹/month</th></tr></thead>
             <tbody>{plans.map(([p, [v, m, price]]) => (
               <tr key={p} className="border-t border-slate-100"><td className="mono px-4 py-1.5">{p}</td><td>{v}</td><td>{m} GB</td><td className="text-right tabular-nums">{(price / a.HOURS_PER_MONTH).toFixed(2)}</td><td className="px-4 text-right tabular-nums">{inr(price)}</td></tr>
             ))}</tbody>
           </table>
-          <p className="px-4 pb-4 pt-2 text-xs text-slate-500">s- = standard, m- = memory-optimised.</p>
+          <p className="px-4 pb-4 pt-2 text-xs text-slate-500">{csv ? "Sorted by price; the engine picks the cheapest plan that fits." : "s- = standard, m- = memory-optimised."}</p>
         </div>
         <div className="card card-pad space-y-3 text-sm text-slate-600">
+          {csv ? (<>
+            <div className="font-semibold text-slate-900">Where the data came from</div>
+            <p>Your CSV files ({ds!.name}): {data.summary.n_vms} VMs and {data.summary.n_resources - data.summary.n_vms} volumes / IPs, checked row by row and analysed in this browser by the same Python engine (engine/csv_loader.py, then engine/build.py).</p>
+            {ds!.notes.length > 0 && <ul className="list-disc space-y-1 pl-5">{ds!.notes.map((n) => <li key={n}>{n}</li>)}</ul>}
+          </>) : (<>
           <div className="font-semibold text-slate-900">How the data was generated</div>
           <p>A Python generator (engine/generate.py) builds {data.summary.n_vms} VMs, 10 block volumes and 36 public IPs across Noida, Bangalore and Mumbai for 6 teams. Each VM&apos;s series is <span className="mono">base + daily shape × weekday factor + noise + events</span>.</p>
           <p>Patterns planted on purpose, as the brief asks: steady low-usage VMs, bursty VMs with short daily peaks, batch jobs idle most of the day, dev environments idle nights and weekends, memory-heavy VMs, saturated VMs, growing disks, unattached volumes and unused IPs, a cost jump (8 large ML VMs on day 20) and one genuine anomaly (a prod VM pegged at ~97% CPU with 25× network-out).</p>
@@ -75,12 +85,13 @@ export default function Assumptions() {
             ))}</tbody>
           </table>
           <p className="text-xs text-slate-500">Source: <a className="underline" href="https://github.com/Azure/AzurePublicDataset/blob/master/AzurePublicDatasetV2.md" target="_blank" rel="noreferrer">Azure Public Dataset V2</a>, azure2019_data_cpu.txt. Azure&apos;s p95 is of the per-5-minute maximum, so it reads slightly higher than ours. Azure has CPU only (no memory, disk or network), which is why it benchmarks the simulation rather than replacing it.</p>
+          </>)}
           <div className="font-semibold text-slate-900">Simplifications</div>
           <ul className="list-disc space-y-1 pl-5">
             <li>No reserved-instance / committed-use discounts.</li>
             <li>Same prices in every region; no inter-region transfer pricing.</li>
             <li>No autoscaling groups; each VM is sized individually.</li>
-            <li>Monthly bill history is reconstructed from each resource&apos;s launch date (today&apos;s monthly cost, billed from the day it was created). The launch dates are simulated.</li>
+            <li>Monthly bill history is reconstructed from each resource&apos;s launch date (today&apos;s monthly cost, billed from the day it was created).{csv ? "" : " The launch dates are simulated."}</li>
           </ul>
         </div>
       </div>

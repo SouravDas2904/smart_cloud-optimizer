@@ -1,0 +1,25 @@
+id,name,type,region,env,team,created_at,plan,vcpu,ram_gb,disk_gb,attached_to,detached_since
+vm-086,prod-reports-01,vm,Mumbai,prod,Growth,2025-03-23 20:59:23,s-8-16,8,16,50,,
+vm-087,dev-search-04,vm,Mumbai,dev,Search,2026-02-01 21:05:05,s-8-32,8,32,500,,
+vm-088,prod-pay-api-07,vm,Noida,prod,Payments,2025-02-17 10:12:08,s-8-16,8,16,200,,
+vm-001,prod-ledger-01,vm,Mumbai,prod,Payments,2025-10-29 08:09:55,s-8-32,8,32,500,,
+vm-007,stg-push-01,vm,Bangalore,staging,Mobile-API,2025-07-14 07:14:34,s-8-16,8,16,100,,
+vm-012,dev-kafka-01,vm,Noida,dev,Platform,2025-01-02 06:57:54,s-4-16,4,16,100,,
+vm-019,prod-etl-01,vm,Bangalore,prod,Data,2026-07-28 03:55:06,s-8-16,8,16,200,,
+vm-035,prod-ab-test-01,vm,Bangalore,prod,Growth,2026-04-28 22:46:48,s-8-16,8,16,50,,
+vm-040,prod-gateway-02,vm,Noida,prod,Platform,2025-04-25 20:50:10,s-8-32,8,32,100,,
+vm-044,stg-ab-test-01,vm,Bangalore,staging,Growth,2025-11-16 17:55:37,s-4-16,4,16,50,,
+vm-046,dev-redis-01,vm,Mumbai,dev,Platform,2025-09-13 23:04:32,s-8-32,8,32,100,,
+vm-061,stg-es-node-01,vm,Mumbai,staging,Search,2026-01-05 03:44:33,s-8-16,8,16,200,,
+vm-066,dev-media-01,vm,Noida,dev,Mobile-API,2025-08-16 13:14:44,s-4-8,4,8,500,,
+vm-070,stg-kafka-01,vm,Noida,staging,Platform,2025-12-27 08:10:31,s-8-16,8,16,50,,
+vm-072,prod-airflow-01,vm,Bangalore,prod,Data,2026-01-04 15:33:45,s-4-16,4,16,500,,
+vm-074,prod-airflow-02,vm,Bangalore,prod,Data,2025-01-10 23:42:41,s-8-16,8,16,500,,
+ip-001,eip-prod-ledger-01,ip,Mumbai,prod,Payments,2025-10-29 08:09:55,,,,,vm-001,
+ip-007,eip-prod-etl-01,ip,Bangalore,prod,Data,2026-07-28 03:55:06,,,,,vm-019,
+ip-023,eip-prod-ab-test-01,ip,Bangalore,prod,Growth,2026-04-28 22:46:48,,,,,vm-035,
+ip-028,eip-prod-gateway-02,ip,Noida,prod,Platform,2025-04-25 20:50:10,,,,,vm-040,
+vol-001,migr-upi-gw-vol-01,volume,Bangalore,staging,Payments,2026-03-28 07:31:25,,,,250,,2026-09-01 13:53:23
+vol-002,tmp-ledger-vol-02,volume,Bangalore,prod,Payments,2026-02-16 07:42:30,,,,200,,2026-08-16 07:59:45
+vol-003,tmp-upi-gw-vol-03,volume,Bangalore,dev,Payments,2026-01-04 23:21:18,,,,250,,2026-06-19 23:51:59
+vol-004,old-indexer-vol-04,volume,Mumbai,prod,Search,2026-05-08 10:40:20,,,,100,,2026-07-11 16:57:30

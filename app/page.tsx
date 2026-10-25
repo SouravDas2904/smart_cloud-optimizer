@@ -187,7 +187,10 @@ function Hero() {
   if (!data) return null;
   const { summary: s, recs } = data;
   const actionable = recs.filter((r) => r.default_accepted && r.saving > 0);
-  const kicker = { engineer: "Monday morning · 30-day analysis", finance: "Cost and savings · 30-day analysis", leadership: "Executive summary · 30-day analysis" }[role];
+  const n = data.summary.window_days;
+  // the demo's showcase VM; on uploaded data, the first VM whose peak blocked a shrink (if any)
+  const trap = s.data_source?.kind === "csv" ? recs.find((r) => r.action === "keep")?.resource_id : "vm-086";
+  const kicker = { engineer: `Monday morning · ${n}-day analysis`, finance: `Cost and savings · ${n}-day analysis`, leadership: `Executive summary · ${n}-day analysis` }[role];
 
   return (
     <section className="card overflow-hidden">
@@ -210,7 +213,7 @@ function Hero() {
           </div>
           <div className="mt-6 flex flex-wrap gap-2 lg:mt-auto lg:pt-6">
             <Link href="/recommendations" className="btn-primary">Review {actionable.length} actions <ArrowRight size={14} /></Link>
-            <Link href="/resources/vm-086" className="btn-ghost">See the trap VM</Link>
+            {trap && <Link href={`/resources/${trap}`} className="btn-ghost">See the trap VM</Link>}
           </div>
         </div>
         <div className="p-5 md:p-7">
