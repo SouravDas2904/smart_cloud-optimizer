@@ -129,37 +129,41 @@ export function Shell({ children }: { children: React.ReactNode }) {
       {open && (
         <div className="no-print border-b border-slate-200 bg-ink px-3 pb-4 md:hidden">
           {nav}
-          <RoleSwitch role={role} setRole={setRole} className="mt-3" />
+          <RoleSwitch role={role} setRole={setRole} className="mt-3" tips={false} />
           <p className="mt-2 px-1 text-xs text-slate-500">{ROLES.find((r) => r.id === role)?.hint}</p>
         </div>
       )}
 
       <div className="min-w-0 flex-1">
-        <header className="no-print sticky top-0 z-20 hidden h-14 items-center gap-3 border-b border-slate-200 bg-ink/80 px-6 backdrop-blur-md md:flex">
-          <div className="font-mono text-xs text-slate-500">
-            smartcloud <span className="text-slate-300">/</span> <span className="text-slate-800">{crumb.toLowerCase()}</span>
+        <header className="no-print sticky top-0 z-20 hidden h-14 items-center gap-4 border-b border-slate-200 bg-ink/80 px-6 backdrop-blur-md md:flex">
+          <div className="shrink-0 whitespace-nowrap font-mono text-xs text-slate-500">
+            <span className="hidden xl:inline">smartcloud <span className="text-slate-300">/</span> </span><span className="text-slate-800">{crumb.toLowerCase()}</span>
           </div>
           {t && (
-            <div className="hidden items-center gap-3 whitespace-nowrap font-mono text-xs lg:flex">
-              <span className="text-slate-400">NOW</span><span className="text-slate-800">{inrShort(t.before)}</span>
+            <div title="Monthly bill now → after the accepted recommendations"
+              className="hidden items-center gap-2 whitespace-nowrap rounded-md border border-slate-200 px-2.5 py-1 font-mono text-xs lg:flex">
+              <span className="text-slate-500">{inrShort(t.before)}</span>
               <span className="text-slate-300">→</span>
-              <span className="text-slate-400">AFTER</span><span className="text-slate-800"><CountUp value={t.after} format={inrShort} ms={500} /></span>
-              <span className="rounded bg-brand-50 px-1.5 py-0.5 text-brand-500">
-                saving <CountUp value={t.saving} format={inrShort} ms={500} /> ({((t.saving / t.before) * 100).toFixed(1)}%)
+              <span className="text-slate-800"><CountUp value={t.after} format={inrShort} ms={500} /></span>
+              <span className="h-3 w-px bg-slate-200" />
+              <span className="text-brand-500">
+                −<CountUp value={t.saving} format={inrShort} ms={500} /> <span className="text-brand-500/70">{((t.saving / t.before) * 100).toFixed(1)}%</span>
               </span>
             </div>
           )}
-          <Link href="/upload"
-            className="upload-cta ml-auto flex shrink-0 items-center gap-2 whitespace-nowrap rounded-md border border-brand-500/40 bg-brand-500/10 px-3 py-1.5 text-xs font-medium text-brand-600 transition-all hover:border-brand-500/80 hover:bg-brand-500/15 hover:shadow-[0_0_18px_-6px_rgb(var(--brand-500)/0.8)]">
-            <Upload size={13} /> Upload real data
-          </Link>
-          <button onClick={() => setPalette(true)}
-            className="flex w-40 shrink-0 items-center gap-2 whitespace-nowrap rounded-md border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-500 transition-colors hover:border-slate-300 hover:text-slate-700">
-            <Search size={13} /> <span className="truncate">Jump to a VM</span>
-            <kbd className="ml-auto rounded border border-slate-300 px-1 font-mono text-[11px] text-slate-500">Ctrl K</kbd>
-          </button>
-          <span className="hidden max-w-[200px] text-right text-xs leading-tight text-slate-500 2xl:block">{ROLES.find((r) => r.id === role)?.hint}</span>
-          <RoleSwitch role={role} setRole={setRole} />
+          <div className="ml-auto flex shrink-0 items-center gap-2">
+            <Link href="/upload"
+              className="upload-cta flex items-center gap-1.5 whitespace-nowrap rounded-md border border-brand-500/40 bg-brand-500/10 px-2.5 py-1.5 text-xs font-medium text-brand-600 transition-all hover:border-brand-500/80 hover:bg-brand-500/15 hover:shadow-[0_0_18px_-6px_rgb(var(--brand-500)/0.8)]">
+              <Upload size={13} /> Upload data
+            </Link>
+            <button onClick={() => setPalette(true)} title="Jump to a VM (Ctrl K)" aria-label="Jump to a VM"
+              className="flex items-center gap-1.5 whitespace-nowrap rounded-md border border-slate-200 px-2 py-1.5 text-xs text-slate-500 transition-colors hover:border-slate-300 hover:text-slate-700">
+              <Search size={13} />
+              <kbd className="rounded border border-slate-300 px-1 font-mono text-[10px] text-slate-500">Ctrl K</kbd>
+            </button>
+            <span className="h-5 w-px bg-slate-200" />
+            <RoleSwitch role={role} setRole={setRole} />
+          </div>
         </header>
         {source === "upload" && (
           <div className="no-print flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-brand-500/25 bg-brand-500/[0.07] px-4 py-2 text-xs text-slate-700 md:px-6">
@@ -176,14 +180,22 @@ export function Shell({ children }: { children: React.ReactNode }) {
   );
 }
 
-function RoleSwitch({ role, setRole, className }: { role: Role; setRole: (r: Role) => void; className?: string }) {
+function RoleSwitch({ role, setRole, className, tips = true }: { role: Role; setRole: (r: Role) => void; className?: string; tips?: boolean }) {
   return (
     <div className={cls("flex items-center rounded-md border border-slate-200 p-0.5 text-xs", className)}>
       {ROLES.map((r) => (
-        <button key={r.id} onClick={() => setRole(r.id)} title={r.hint}
-          className={cls("rounded px-2.5 py-1 transition-colors", role === r.id ? "bg-slate-100 text-slate-900" : "text-slate-500 hover:text-slate-800")}>
-          {r.label}
-        </button>
+        <span key={r.id} className="group relative">
+          <button onClick={() => setRole(r.id)} aria-describedby={tips ? `role-hint-${r.id}` : undefined}
+            className={cls("rounded px-2.5 py-1 transition-colors", role === r.id ? "bg-slate-100 text-slate-900" : "text-slate-500 hover:text-slate-800")}>
+            {r.label}
+          </button>
+          {/* Hover / keyboard-focus card explaining what this role shows (the mobile menu prints the hint instead). */}
+          {tips && <span id={`role-hint-${r.id}`} role="tooltip"
+            className="pointer-events-none invisible absolute right-0 top-full z-40 mt-2 w-60 translate-y-1 rounded-md border border-slate-200 bg-white px-3 py-2 text-left text-xs leading-snug text-slate-600 opacity-0 shadow-lg transition-all duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+            <span className="mb-0.5 block font-medium text-slate-900">{r.label} view</span>
+            {r.hint}
+          </span>}
+        </span>
       ))}
     </div>
   );
