@@ -1,2 +1,5 @@
-engine/
+# Keep engine/*.py: the build copies them into public/engine-py so the Upload page runs the same engine in the browser.
+engine/tests/
+engine/data/
+engine/data_uploaded/
 .venv/

@@ -12,14 +12,18 @@ async function boot(base) {
   if (pyodide) return pyodide;
   post({ type: "progress", step: "boot", detail: "Downloading the Python engine (about 15 MB, cached after the first time)" });
   importScripts(base + "pyodide.js");
-  pyodide = await self.loadPyodide({ indexURL: base, stdout: (line) => post({ type: "progress", step: "log", detail: line }), stderr: () => {} });
-  await pyodide.loadPackage(["numpy", "pandas"], { messageCallback: () => {}, errorCallback: () => {} });
-  const files = await (await fetch("/engine-py/manifest.json", { cache: "no-store" })).json();
-  pyodide.FS.mkdirTree("/engine");
-  for (const f of files) {
-    const text = await (await fetch(`/engine-py/${f}`, { cache: "no-store" })).text();
-    pyodide.FS.writeFile(`/engine/${f}`, text);
-  }
+  const py = await self.loadPyodide({ indexURL: base, stdout: (line) => post({ type: "progress", step: "log", detail: line }), stderr: () => {} });
+  await py.loadPackage(["numpy", "pandas"], { messageCallback: () => {}, errorCallback: () => {} });
+  const get = async (f) => {
+    const r = await fetch(`/engine-py/${f}`, { cache: "no-store" });
+    if (!r.ok) throw new Error(`The engine file ${f} could not be downloaded (HTTP ${r.status}). This site build is missing the engine; please report it.`);
+    return r.text();
+  };
+  const files = JSON.parse(await get("manifest.json"));
+  if (!files.includes("csv_loader.py")) throw new Error("This site build is missing the engine files (engine-py is empty); please report it.");
+  py.FS.mkdirTree("/engine");
+  for (const f of files) py.FS.writeFile(`/engine/${f}`, await get(f));
+  pyodide = py;                          // only cache a fully set-up engine, so a failed start is retried next time
   return pyodide;
 }
 
